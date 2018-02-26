@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+
+    <include layout="@layout/title_daily_reimbursement"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
+            <TextView
+                android:id="@+id/tv_daily_reim_cause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="报销事由: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <EditText
+                android:id="@+id/et_daily_reim_cause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:text="国家级项目研发费用" />
+        </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:id="@+id/project_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_project_daily_reim"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="选择项目: "
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+        <EditText
+            android:id="@+id/et_project_name_daily_reim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_project_daily_reim"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint=""
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="14sp"
+            android:focusableInTouchMode="false"
+            android:drawableRight="@drawable/down_arrow"
+            />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_amount_daily_reim"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="报销金额:"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+        <EditText
+            android:id="@+id/et_amount_daily_reim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0"
+            android:layout_toRightOf="@id/tv_amount_daily_reim"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:editable="false"
+            android:background="@null"
+            />
+
+        <Button
+            android:id="@+id/btn_add_daily_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/et_amount_daily_reim"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/green"
+            android:textSize="14sp"
+            android:text="添加消费记录"
+            android:drawableRight="@drawable/arrow_select_huafei"
+            />
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/list_view_daily_reimburse_uniform_cost"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+        </ListView>
+        <Button
+            android:id="@+id/btn_save_daily_reimbursement"
+            android:text="保存"
+            android:layout_below="@id/list_view_daily_reimburse_uniform_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</LinearLayout>

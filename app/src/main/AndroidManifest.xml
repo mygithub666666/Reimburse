@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="reimburse.cuc.com.reimburse">
+
+    <!-- Required -->
+    <permission
+        android:name="reimburse.cuc.com.reimburse.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="reimburse.cuc.com.reimburse.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="reimburse.cuc.com.util.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ListActivity" />
+        <activity android:name="com.yongchun.library.view.ImageSelectorActivity" />
+        <activity android:name="com.yongchun.library.view.ImagePreviewActivity" />
+        <activity android:name="com.yongchun.library.view.ImageCropActivity" />
+        <activity android:name=".FormActivity" />
+        <activity android:name=".NoteActivity" />
+        <activity android:name=".GlideActivity" />
+        <activity android:name="reimburse.cuc.com.base.GlideBaseActivity" />
+        <activity android:name="reimburse.cuc.com.base.GlideRecycleViewActivity" />
+        <activity android:name=".RecyclerViewActivity" />
+        <activity android:name=".ConsumptionDetaialActivity" />
+        <activity android:name=".ReimburseFormActivity" />
+        <activity android:name=".ExpenseItemSelectActivity" />
+        <activity android:name=".ActivityWaitSelected" />
+        <activity android:name=".OkHttpTest" />
+        <activity android:name=".BaoxiaodanXiaofeidetailActivity" />
+        <activity android:name=".Baoxiaodan_xiaofeilist" />
+        <activity android:name=".CaigouActivity" />
+        <activity android:name=".XuanzeJizhangLeixing" />
+        <activity android:name=".MyCaigouActivity" />
+        <activity android:name=".PhotoActivity" />
+        <activity android:name=".XiaofeiListActivity" />
+        <activity android:name=".DengdaiXuanzedeXiaofeiList" />
+        <activity android:name=".CaigoufeiActivity" />
+        <activity android:name=".JiaotongfeiActivity" />
+        <activity android:name=".CanfeiActivity" />
+        <activity android:name=".CaigoufeiDisplayActivity" />
+        <activity android:name=".CanfeiDisplayActivity" />
+        <activity android:name=".JiaotongfeiDisplayActivity" />
+        <activity android:name=".MyBaoxiaodanDetail" />
+        <activity android:name=".MyBaoxiaodanList" />
+        <activity android:name=".ReimburseFormDisplayActivity" />
+        <activity android:name=".LineChartActivity"/>
+        <activity android:name=".BarChartActivity"/>
+        <activity android:name=".PieChartActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.DailyCostActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.OnlyShowLocalLargePicActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.TravelReimDisplayActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.DailyReimDisplay"/>
+        <activity android:name="reimburse.cuc.com.activity.MyDailyReimbursementListActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.MyTravelReimbursementListActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.OnlyShowLargePicActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.TrafficCostFormActivityBackup"/>
+        <activity android:name="reimburse.cuc.com.activity.WaitSelectedCostActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.DailyCostDisplayActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.DailyCostListActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.AddOrDelImgGridView"/>
+        <activity android:name="reimburse.cuc.com.activity.ShowInvoiceLargePicTestActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.HorizontalScrollViewActivityTest"/>
+        <activity android:name="reimburse.cuc.com.activity.TrafficCostFormActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.DailyCostActivity_back"/>
+        <activity android:name="reimburse.cuc.com.activity.ShowInvoiceLargePicActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.TrafficCostDisplayActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.DailyReimbursementActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.TravelReimbursementActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.StoryTestActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.TestActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.DynamicActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.ReimburseFormAllActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.ShowCostCategory"/>
+        <activity android:name="reimburse.cuc.com.activity.TrafficCostActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.ViewPagerActivity"/>
+        <activity android:name="reimburse.cuc.com.util.JiguangTestActivity" />
+        <activity android:name="reimburse.cuc.com.activity.OpenCVTestActivity"/>
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+
+
+        <!-- Rich push 核心功能 since 2.0.6 -->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:exported="false"
+            android:theme="@style/MyDialogStyle" />
+
+        <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="reimburse.cuc.com.reimburse" />
+            </intent-filter>
+        </activity>
+
+        <!-- Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:exported="false"
+            android:process=":mult">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+        <!-- since 3.0.9 Required SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="reimburse.cuc.com.reimburse.DataProvider"
+            android:exported="true" />
+
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="reimburse.cuc.com.reimburse" />
+            </intent-filter>
+        </service>
+
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <!-- Required  显示通知栏 -->
+                <category android:name="reimburse.cuc.com.reimburse" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
+
+        <!-- User defined.  For test only  用户自定义的广播接收器 -->
+        <receiver
+            android:name="reimburse.cuc.com.revicer.MyAppReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="reimburse.cuc.com.reimburse" />
+            </intent-filter>
+        </receiver>
+
+        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
+        <!--
+        <receiver android:name="com.example.jpushdemo.MyJPushMessageReceiver">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <category android:name="reimburse.cuc.com.reimburse"></category>
+            </intent-filter>
+        </receiver>
+        -->
+        <!-- Required  . Enable it you can get statistics data with channel -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="1f27b259af30cbeaf0e08530" />
+        <!-- 1f27b259af30cbeaf0e08530 -->
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+    </application>
+
+</manifest>

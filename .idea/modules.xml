@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JPushExample(740677)/JPushExample(740677).iml" filepath="$PROJECT_DIR$/JPushExample(740677)/JPushExample(740677).iml" />
+      <module fileurl="file://$PROJECT_DIR$/PhotoView-/PhotoView-.iml" filepath="$PROJECT_DIR$/PhotoView-/PhotoView-.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Reimburse.iml" filepath="$PROJECT_DIR$/Reimburse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/openCVLibrary320/openCVLibrary320.iml" filepath="$PROJECT_DIR$/openCVLibrary320/openCVLibrary320.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PhotoView-/sample/sample.iml" filepath="$PROJECT_DIR$/PhotoView-/sample/sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tess-two/tess-two.iml" filepath="$PROJECT_DIR$/tess-two/tess-two.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/baoxiaodan_xiaofeijilu"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="消费内容"
+        android:id="@+id/editText_content1"
+        />
+
+    <RelativeLayout
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/riqi_jizhang1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/riqi"
+            android:layout_margin="3dp"/>
+        <EditText
+            android:layout_margin="3dp"
+            android:layout_toRightOf="@id/riqi_jizhang1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="日期"
+            android:id="@+id/editText_date1"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_rmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:src="@drawable/rmb"/>
+        <EditText
+            android:layout_margin="3dp"
+            android:layout_toRightOf="@+id/img_rmb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="金额"
+            android:id="@+id/et_money1"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/tv_add_fapiao1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text="发票"/>
+        <!--<Button
+            android:layout_margin="6dp"
+            android:id="@+id/picSelect"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/tianxiexiaofeijilu_takeohoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />-->
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/reciclerview_form1"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <!--<Button
+        android:layout_margin="6dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/save_zhangdan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_submit"
+        android:text="保存"
+        />-->
+
+
+</LinearLayout>

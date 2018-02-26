@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<TextView
+        android:text="success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />-->
+    <ListView
+        android:id="@+id/lv_test"
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+
+    </ListView>
+
+    <ImageView
+        android:id="@+id/img_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+   <!-- <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="110dp"
+        android:background="#eef1eff5" >
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView_invoice"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:fillViewport="false">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal" >
+
+                <GridView
+                    android:id="@+id/gridview_invoice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:fastScrollEnabled="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:horizontalSpacing="0dp"
+                    android:scrollbars="none"
+                    android:scrollingCache="false"
+                    android:stretchMode="spacingWidthUniform"
+                    android:verticalSpacing="1dp" >
+                </GridView>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>-->
+
+
+</LinearLayout>

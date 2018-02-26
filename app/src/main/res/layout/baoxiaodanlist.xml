@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="match_parent">
+    <include layout="@layout/baoxiaodanlist_title"/>
+    <!--<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#fff">
+
+        &lt;!&ndash;<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            android:text="选择消费记录"
+            android:textColor="#303235"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_shopcart_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="编辑"
+            android:textColor="#303235" />&ndash;&gt;
+    </RelativeLayout>-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#eeee" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--线性布局-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_baoxiaodanlist"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:background="#eee" />
+            <RelativeLayout
+                android:id="@+id/ll_check_all_baoxiaodanlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <CheckBox
+                    android:id="@+id/checkbox_all_baoxiaodanlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/checkbox_selector"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:paddingLeft="0dp"
+                    android:text="全选"
+                    android:textColor="#303235"
+                    android:textSize="15sp" />
+
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="合计:"
+                    android:textColor="#303235"
+                    android:textSize="15sp" />-->
+
+                <!--<TextView
+                    android:id="@+id/tv_expense_select_total_submit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="￥0.00"
+                    android:textColor="#ed3f3f"
+                    android:textSize="15sp" />-->
+
+                <Button
+                    android:id="@+id/btn_submit_baoxiaodanlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#ed3f3f"
+                    android:text="提交"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="6dp"
+                    android:textColor="#fff" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <!--去结算-->
+
+
+        <!-- <LinearLayout
+             android:id="@+id/ll_delete"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="#fff"
+             android:orientation="horizontal"
+             android:padding="5dp"
+             android:visibility="gone">
+
+             <CheckBox
+                 android:id="@+id/cb_all"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_weight="1"
+                 android:button="@null"
+                 android:drawableLeft="@drawable/checkbox_selector"
+                 android:drawablePadding="10dp"
+                 android:padding="10dp"
+                 android:paddingLeft="0dp"
+                 android:text="全选"
+                 android:textColor="#303235"
+                 android:textSize="15sp" />
+
+             <Button
+                 android:id="@+id/btn_delete"
+                 android:layout_width="wrap_content"
+                 android:layout_height="35dp"
+                 android:background="@drawable/words"
+                 android:text="删除"
+                 android:textColor="#303235"
+                 android:textSize="15sp" />
+
+         </LinearLayout>-->
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

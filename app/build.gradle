@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "reimburse.cuc.com.reimburse"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile files('libs/universal-image-loader-1.9.5.jar')
+    compile files('libs/jpush-android-3.0.9.jar')
+    compile files('libs/jcore-android-1.1.7.jar')
+    compile files('libs/android-smart-image-view-1.0.0.jar')
+    compile files('src/main/lib/mpandroidchartlibrary-2-1-6.jar')
+    compile project(':library')
+    compile project(':openCVLibrary320')
+    compile project(':tess-two')
+}
+
+dependencies {
+    //compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'com.commit451:PhotoView:1.2.4'
+    compile 'com.isseiaoki:simplecropview:1.0.13'
+    compile 'com.yongchun:com.yongchun.imageselector:1.1.0'
+    /*新添加的*/
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+}
+dependencies {
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okio:okio:1.9.0'
+    compile 'com.lzy.net:okhttputils:1.6.6'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+}
+
+dependencies {
+    compile 'com.android.support:design:23.+'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+}
+
+dependencies{
+
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: "$buildDir/native-libs", include: 'native-libs.jar')
+}
+
+dependencies{
+
+    compile 'com.edmodo:cropper:1.0.1'
+}
+
+/*dependencies {
+    compile ('com.rmtheis:tess-two:8.0.0') {
+        exclude  group: 'com.googlecode.leptonica.android'
+    }
+
+}*/
+
+task nativeLibsToJar(type: Jar, description: 'create a jar archive of the native libs') {
+    destinationDir file("$buildDir/native-libs")
+    baseName 'native-libs'
+    from fileTree(dir: 'libs', include: '**/*.so')
+    into 'lib/'
+}
+
+tasks.withType(org.gradle.api.tasks.compile.JavaCompile) {
+    compileTask -> compileTask.dependsOn(nativeLibsToJar)
+}
+
+configurations {
+    all*.exclude  module: 'PhotoView'  //去除重复依赖库
+    //all*.exclude  group: 'com.googlecode.leptonica.android'
+}
+
+
+
+

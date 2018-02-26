@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativelayout_gridview_item_top"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativelayout_gridview_item"
+        android:layout_width="110dp"
+        android:layout_height="110dp" >
+
+        <ImageView
+            android:id="@+id/img_gridview_item"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <Button
+            android:id="@+id/btn_del_gridview_item"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:background="@drawable/bt_dynamic_del"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
+
+

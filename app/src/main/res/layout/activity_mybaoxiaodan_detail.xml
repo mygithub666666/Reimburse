@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/title_mybaoxiaodanlist"/>
+
+    <EditText
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="报销事由"
+        android:id="@+id/et_my_baoxiaoshiyou"
+        />
+
+    <EditText
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="报销金额"
+        android:id="@+id/et_my_baoxiaojine"
+        />
+    <EditText
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="所属项目"
+        android:id="@+id/et_my_baoxiaoproject"
+        />
+    <!--<Button
+        android:layout_marginLeft="10dp"
+        android:id="@+id/tianjiaxiaofei_btn"
+        android:layout_width="wrap_content"
+        android:drawableRight="@drawable/arrow_select_huafei"
+        android:layout_height="wrap_content"
+        android:text="添加消费记录"
+        />-->
+    <ListView
+        android:id="@+id/listview_form"
+        android:layout_width="wrap_content"
+        android:layout_height="242dp">
+
+    </ListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+
+        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/shenhe_state_tv"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="审核状态:"
+            android:textColor="#333333"
+            android:textSize="20sp"
+            />
+
+        <EditText
+            android:id="@+id/shenhe_state_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/shenhe_state_tv"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="20sp"
+            android:editable="false"
+            android:text="已通过" />
+        />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+
+        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/shenpi_tv"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="审批意见:"
+            android:textColor="#333333"
+            android:textSize="20sp"
+            />
+
+        <EditText
+            android:id="@+id/shenpi_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/shenpi_tv"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="20sp"
+            android:text="报销合格" />
+        />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

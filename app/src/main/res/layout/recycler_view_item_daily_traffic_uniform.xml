@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_recyclerview_item_daily_traffic_uniform"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+            <CheckBox
+                android:id="@+id/checkbox_recyclerview_item_daily_traffic_uniform"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_gravity="center_vertical"
+                android:button="@drawable/checkbox_selector"
+                android:checked="true"
+                android:focusable="false"
+                />
+
+            <TextView
+                android:id="@+id/tv_type_recyclerview_item_daily_traffic_uniform"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_toRightOf="@+id/checkbox_recyclerview_item_daily_traffic_uniform"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textSize="20sp"
+                android:text="消费1"
+                android:ellipsize="marquee"
+                />
+            <TextView
+                android:id="@+id/tv_date_recyclerview_item_daily_traffic_uniform"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/tv_type_recyclerview_item_daily_traffic_uniform"
+                android:layout_marginLeft="15dp"
+                android:singleLine="true"
+                android:textSize="20sp"
+                android:text="消费日期"
+                />
+            <TextView
+                android:id="@+id/tv_invoice_pic_urls_recyclerview_item_daily_traffic_uniform"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/tv_type_recyclerview_item_daily_traffic_uniform"
+                android:layout_marginLeft="15dp"
+                android:singleLine="true"
+                android:textSize="20sp"
+                android:text="图片uri"
+                />
+            <TextView
+                android:id="@+id/tv_total_amount_recyclerview_item_daily_traffic_uniform"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_alignParentRight="true"
+                android:textSize="20sp"
+                android:text="30.0"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                />
+
+
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+    <!--线-->
+    <View
+        android:layout_below="@+id/xiaofei_form_show"
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:background="#22000000" />
+
+
+</LinearLayout>

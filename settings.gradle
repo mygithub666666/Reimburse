@@ -1,0 +1,2 @@
+include ':app', ':JPushExample(740677)', ':library', 'PhotoView-:sample', ':tess-two'
+include ':openCVLibrary320'

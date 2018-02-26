@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jizhang_grid_item_imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/atguigu_logo"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/jizhang_grid_item_textview"
+        android:layout_below="@+id/jizhang_grid_item_imageView"
+        android:layout_alignRight="@+id/jizhang_grid_item_imageView"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:textColor="#0000aa"
+        />
+</RelativeLayout>
