@@ -35,6 +35,7 @@ public class DailyCostDisplayActivity extends Activity {
 
     private static final String TAG = DailyCostDisplayActivity.class.getSimpleName() ;
     private EditText et_daily_cost_type_display;
+    private EditText et_daily_cost_display_tag;
     private EditText et_daily_cost__date_display;
     private EditText et_daily_cost_unit_price_display;
     private EditText et_daily_cost_ticket_number_display;
@@ -47,6 +48,7 @@ public class DailyCostDisplayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_cost_display);
         et_daily_cost_type_display = (EditText) findViewById(R.id.et_daily_cost_type_display);
+        et_daily_cost_display_tag = (EditText) findViewById(R.id.et_daily_cost_display_tag);
         et_daily_cost__date_display = (EditText) findViewById(R.id.et_daily_cost__date_display);
         et_daily_cost_unit_price_display = (EditText) findViewById(R.id.et_daily_cost_unit_price_display);
         et_daily_cost_ticket_number_display = (EditText) findViewById(R.id.et_daily_cost_ticket_number_display);
@@ -65,6 +67,7 @@ public class DailyCostDisplayActivity extends Activity {
         DailyCost cost = JSON.parseObject(DailyCostJsonString, DailyCost.class);
 
         et_daily_cost_type_display.setText(cost.getDaily_cost_type());
+        et_daily_cost_display_tag.setText(cost.getDaily_cost_tag());
         et_daily_cost__date_display.setText(cost.getDaily_cost_date());
         et_daily_cost_unit_price_display.setText(cost.getDaily_cost_unit_price());
         et_daily_cost_ticket_number_display.setText(cost.getDaily_cost_ticket_number());
