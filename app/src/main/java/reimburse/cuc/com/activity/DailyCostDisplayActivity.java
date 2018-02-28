@@ -32,13 +32,13 @@ import reimburse.cuc.com.reimburse.R;
  * Created by hp1 on 2018/1/1.
  */
 public class DailyCostDisplayActivity extends Activity {
-
+    /**
+     * git提交成功
+     */
     private static final String TAG = DailyCostDisplayActivity.class.getSimpleName() ;
     private EditText et_daily_cost_type_display;
     private EditText et_daily_cost_display_tag;
     private EditText et_daily_cost__date_display;
-    /*private EditText et_daily_cost_unit_price_display;
-    private EditText et_daily_cost_ticket_number_display;*/
     private EditText et_daily_cost_total_amount_display;
     private EditText et_daily_cost_desc_display;
     private GridView gw_daily_cost_invoice_display;
