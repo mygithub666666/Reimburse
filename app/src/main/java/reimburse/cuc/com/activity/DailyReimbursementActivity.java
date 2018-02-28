@@ -95,7 +95,7 @@ public class DailyReimbursementActivity extends Activity {
     private List<String> projectNameList;
 
     /**
-     * 项目的可报销余额
+     * 项目的可报销余额,成功了!
      */
     String p_reimbursable_amount;
 
@@ -271,8 +271,7 @@ public class DailyReimbursementActivity extends Activity {
                 Integer daily_reim_user_id = LauncherActivity.ANDROID_USER_ID;
 
                 DailyReim dailyReim = new DailyReim(daily_reim_cause,daily_reim_project_name,daily_reim_amount,
-                        daily_reim_traffic_cost_ids,daily_reim_daily_cost_ids,
-                        daily_reim_submitTime,daily_reim_user_id,project_uuid);
+                        daily_reim_traffic_cost_ids,daily_reim_daily_cost_ids,daily_reim_user_id,project_uuid);
 
                 // Java对象转JSON串
                 String dailyCost_jsonString = JSON.toJSONString(dailyReim);

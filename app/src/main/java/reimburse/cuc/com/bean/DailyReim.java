@@ -54,6 +54,19 @@ public class DailyReim {
 		this.project_uuid = project_uuid;
 	}
 
+	public DailyReim(String daily_reim_cause, String daily_reim_project_name,
+			String daily_reim_amount, String daily_reim_traffic_cost_ids,
+			String daily_reim_daily_cost_ids, Integer daily_reim_user_id,Integer project_uuid) {
+
+		this.daily_reim_cause = daily_reim_cause;
+		this.daily_reim_project_name = daily_reim_project_name;
+		this.daily_reim_amount = daily_reim_amount;
+		this.daily_reim_traffic_cost_ids = daily_reim_traffic_cost_ids;
+		this.daily_reim_daily_cost_ids = daily_reim_daily_cost_ids;
+		this.daily_reim_user_id = daily_reim_user_id;
+		this.project_uuid = project_uuid;
+	}
+
 
 
 	public Integer getDaily_reim_uuid() {
