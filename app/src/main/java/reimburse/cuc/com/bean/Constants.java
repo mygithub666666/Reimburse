@@ -5,6 +5,7 @@ package reimburse.cuc.com.bean;
  */
 public interface Constants {
     String URL_PREFIX = "http://";
+    //10.192.126.142
     String IPADDR = "10.192.126.142";
     String APPADDR = ":8080/ssmweb";
     String BASE_URL = URL_PREFIX+IPADDR+APPADDR;
@@ -89,4 +90,5 @@ public interface Constants {
      * 查询安卓用户所有的差率报销
      */
     String ANDROID_GET_OWN_TRAVEL_REIM_LIST_BY_USER_ID =  BASE_URL+"/travel_Reimbursement_Controller/androidGetOwnTravelReimListByUserID";
+    String android_GET_All_DAILY_AND_TRAFFIC_COST_JSON_BY_TAG = BASE_URL+"/allXiaofeiController/android_GET_All_DAILY_AND_TRAFFIC_COST_JSON_BY_TAG";
 }

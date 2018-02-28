@@ -12,6 +12,7 @@ public class TongyiXiaofeiBean implements Serializable{
     private boolean isSelected = false;
     private Integer id;
     private String xiaofei_type;
+    private String cost_tag;
     private String riqi;
     private String totalMoney;
     private String otherInfo;
@@ -68,12 +69,21 @@ public class TongyiXiaofeiBean implements Serializable{
         this.otherInfo = otherInfo;
     }
 
+    public String getCost_tag() {
+        return cost_tag;
+    }
+
+    public void setCost_tag(String cost_tag) {
+        this.cost_tag = cost_tag;
+    }
+
     @Override
     public String toString() {
         return "TongyiXiaofeiBean{" +
                 "isSelected=" + isSelected +
                 ", id=" + id +
                 ", xiaofei_type='" + xiaofei_type + '\'' +
+                ", cost_tag='" + cost_tag + '\'' +
                 ", riqi='" + riqi + '\'' +
                 ", totalMoney='" + totalMoney + '\'' +
                 ", otherInfo='" + otherInfo + '\'' +

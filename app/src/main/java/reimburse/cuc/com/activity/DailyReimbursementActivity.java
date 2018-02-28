@@ -32,6 +32,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.Bind;
@@ -284,7 +285,9 @@ public class DailyReimbursementActivity extends Activity {
                 if(this_time_amount > pro_can_reim) {
                     Toast.makeText(DailyReimbursementActivity.this,"本次报销总额: "+this_time_amount+" 大于项目可报销余额："+p_reimbursable_amount,Toast.LENGTH_LONG).show();
                 }else {
-
+                    /**
+                     * 保存日常报销单到服务器
+                     */
                     uploadDailyCost(dailyCost_jsonString);
                 }
 
@@ -295,9 +298,54 @@ public class DailyReimbursementActivity extends Activity {
 
     }
 
-    public void uploadDailyCost(final String jsonString){
+    public void uploadDailyCost(final String dailyCost_jsonString){
 
-        new Thread(new Runnable() {
+
+        new Thread() {
+            public void run() {
+                try {
+                    // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
+                    String path = Constants.AndroidSaveDailyReimbursement;
+                    URL url = new URL(path);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    //2.指定请求方式为post
+                    conn.setRequestMethod("POST");
+                    //3.设置http协议的请求头
+                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");//设置发送的数据为表单类型
+
+                    //String data = "user_name="+URLEncoder.encode(un, "utf-8")+"&password="+URLEncoder.encode(pawd);
+                    String data ="dailyCost_jsonString="+ URLEncoder.encode(dailyCost_jsonString, "utf-8");
+
+                    conn.setRequestProperty("Content-Length", String.valueOf(data.length()));//告诉服务器发送的数据的长度
+                    //post的请求是把数据以流的方式写给了服务器
+                    //指定请求的输出模式
+                    conn.setDoOutput(true);//运行当前的应用程序给服务器写数据
+                    conn.getOutputStream().write(data.getBytes());
+                    Log.e("post size", String.valueOf(data.getBytes().length));
+                    int code = conn.getResponseCode();
+
+                    if(code == 200){
+                        InputStream is = conn.getInputStream();
+                        final String resultInfo = StreamTools.readStream(is);
+                        if(resultInfo.equals("保存成功")) {
+                            showToastInAnyThread(resultInfo);
+                            finish();
+                        }
+
+
+                    }else{
+                        showToastInAnyThread("请求失败");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToastInAnyThread("请求失败");
+                }
+
+            };
+        }.start();
+
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -331,7 +379,7 @@ public class DailyReimbursementActivity extends Activity {
                 }
 
             }
-        }).start();
+        }).start();*/
 
     }
 
@@ -463,101 +511,6 @@ public class DailyReimbursementActivity extends Activity {
 
 
 
-    /**
-     * 得到所有的项目信息，展示成下拉框
-     */
-   /* public void getAllProject(){
-        new Thread() {
-            public void run() {
-                try {
-                    // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
-                    String path = Constants.GET_ALL_PROJECT_URL;
-                    URL url = new URL(path);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    //2.指定请求方式为post
-                    conn.setRequestMethod("POST");
-                    //3.设置http协议的请求头
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");//设置发送的数据为表单类型
-
-                    String data ="&user_id="+ URLEncoder.encode(String.valueOf(LauncherActivity.ANDROID_USER_ID), "utf-8");
-
-                    conn.setRequestProperty("Content-Length", String.valueOf(data.length()));//告诉服务器发送的数据的长度
-                    //post的请求是把数据以流的方式写给了服务器
-                    //指定请求的输出模式
-                    conn.setDoOutput(true);//运行当前的应用程序给服务器写数据
-                    conn.getOutputStream().write(data.getBytes());
-                    Log.e("post size", String.valueOf(data.getBytes().length));
-                    int code = conn.getResponseCode();
-
-                    if(code == 200){
-                        InputStream is = conn.getInputStream();
-                        final String result = StreamTools.readStream(is);
-                        projectNameList = JSON.parseArray(result, String.class);
-
-                        Message msg = Message.obtain();
-                        msg.what = SHOW_ALL_PROJECT;
-                        msg.obj = projectNameList;
-                        handler.sendMessage(msg);
-                        Log.e("返回的JSON数据", result);
-                        //showToastInAnyThread(result);
-                        if(result.equals("保存成功")) {
-                        }
-                    }else{
-                        showToastInAnyThread("请求失败");
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    showToastInAnyThread("请求失败");
-                }
-
-            };
-        }.start();
-    }*/
-
-
-
-    /*class ProjectListAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return  projectNameList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return  projectNameList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return  position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ProjectViewHolder viewHolder;
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if(convertView == null){
-                viewHolder = new ProjectViewHolder();
-                convertView = layoutInflater.inflate(R.layout.lv_item_projectname,null);
-                viewHolder.projectName = (TextView) convertView.findViewById(R.id.tv_project_name);
-                convertView.setTag(viewHolder);
-            }else{
-                viewHolder = (ProjectViewHolder) convertView.getTag();
-
-            }
-            String  projectName = projectNameList.get(position);
-
-            viewHolder.projectName.setText(projectName);
-            return convertView;
-        }
-    }
-
-    static  class  ProjectViewHolder{
-        public TextView projectName;
-    }*/
 
     private void showToastInAnyThread(final String result) {
         runOnUiThread(new Runnable() {

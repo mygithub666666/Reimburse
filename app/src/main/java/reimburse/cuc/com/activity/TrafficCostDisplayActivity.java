@@ -42,15 +42,15 @@ public class TrafficCostDisplayActivity extends Activity {
     private EditText et_traffic_cost_display_start_time;
     private EditText et_traffic_cost_display_end_date;
     private EditText et_traffic_cost_display_end_time;
-    private EditText et_traffic_cost_display_unit_price;
-    private EditText et_traffic_cost_display_ticket_number;
+    private EditText et_traffic_cost_display_tag;
+    /*private EditText et_traffic_cost_display_unit_price;
+    private EditText et_traffic_cost_display_ticket_number;*/
     private EditText et_traffic_cost_display_total_amount;
     private EditText et_traffic_cost_display_desc;
 
     private ArrayList<String> imageUrls = new ArrayList<String>();
     private RecyclerView rv_tarffic_cost_display_invoice_url;
 
-    //201712251120254793.png|201712251120254792.png|201712251120254796.png
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +65,9 @@ public class TrafficCostDisplayActivity extends Activity {
         et_traffic_cost_display_start_time = (EditText) findViewById(R.id.et_traffic_cost_display_start_time);
         et_traffic_cost_display_end_date = (EditText) findViewById(R.id.et_traffic_cost_display_end_date);
         et_traffic_cost_display_end_time = (EditText) findViewById(R.id.et_traffic_cost_display_end_time);
-        et_traffic_cost_display_unit_price = (EditText) findViewById(R.id.et_traffic_cost_display_unit_price);
-        et_traffic_cost_display_ticket_number = (EditText) findViewById(R.id.et_traffic_cost_display_ticket_number);
+        et_traffic_cost_display_tag = (EditText) findViewById(R.id.et_traffic_cost_display_tag);
+        /*et_traffic_cost_display_unit_price = (EditText) findViewById(R.id.et_traffic_cost_display_unit_price);
+        et_traffic_cost_display_ticket_number = (EditText) findViewById(R.id.et_traffic_cost_display_ticket_number);*/
         et_traffic_cost_display_total_amount = (EditText) findViewById(R.id.et_traffic_cost_display_total_amount);
         et_traffic_cost_display_desc = (EditText) findViewById(R.id.et_traffic_cost_display_desc);
 
@@ -90,8 +91,9 @@ public class TrafficCostDisplayActivity extends Activity {
         et_traffic_cost_display_start_time.setText(traffic_cost.getTraffic_cost_start_datetime().split(" ")[1]);
         et_traffic_cost_display_end_date.setText(traffic_cost.getTraffic_cost_end_datetime().split(" ")[0]);
         et_traffic_cost_display_end_time.setText(traffic_cost.getTraffic_cost_end_datetime().split(" ")[1]);
-        et_traffic_cost_display_unit_price.setText(traffic_cost.getTraffic_cost_unit_price());
-        et_traffic_cost_display_ticket_number.setText(traffic_cost.getTraffic_cost_ticket_number());
+        et_traffic_cost_display_tag.setText(traffic_cost.getTraffic_cost_tag());
+        /*et_traffic_cost_display_unit_price.setText(traffic_cost.getTraffic_cost_unit_price());
+        et_traffic_cost_display_ticket_number.setText(traffic_cost.getTraffic_cost_ticket_number());*/
         et_traffic_cost_display_total_amount.setText(traffic_cost.getTraffic_cost_total_amount());
         et_traffic_cost_display_desc.setText(traffic_cost.getTraffic_cost_desc());
 

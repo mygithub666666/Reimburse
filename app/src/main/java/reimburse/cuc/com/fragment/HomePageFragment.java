@@ -137,11 +137,11 @@ public class HomePageFragment extends BaseFragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         switch (which) {
                                             case 0:
-                                                Intent dailyCostIntent  = new Intent(getActivity(), TrafficCostActivity.class);
+                                                Intent dailyCostIntent  = new Intent(getActivity(),  DailyCostListActivity.class);
                                                 startActivity(dailyCostIntent);
                                                 break;
                                             case 1:
-                                                Intent trafficCostIntent = new Intent(getActivity(), DailyCostListActivity.class);
+                                                Intent trafficCostIntent = new Intent(getActivity(), TrafficCostActivity.class);
                                                 startActivity(trafficCostIntent);
                                                 break;
                                         }
