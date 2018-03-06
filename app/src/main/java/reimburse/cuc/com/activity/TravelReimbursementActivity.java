@@ -356,7 +356,7 @@ public class TravelReimbursementActivity extends Activity {
                 Log.e("差旅费的交通消费字符串: ",travel_reim_traffic_cost_ids);
                 Log.e("差旅费的日常消费字符串: ",travel_reim_daily_cost_ids);
                 // Java对象转JSON串
-                String dailyCost_jsonString = JSON.toJSONString(travel_reimbursement);
+                String travelReim_jsonString = JSON.toJSONString(travel_reimbursement);
                 Float pro_can_reim = Float.parseFloat(p_reimbursable_amount);
                 Float this_time_amount = Float.parseFloat(travel_reimbursement_total_amount);
 
@@ -367,7 +367,7 @@ public class TravelReimbursementActivity extends Activity {
                     Toast.makeText(TravelReimbursementActivity.this,"本次报销总额: "+travel_reimbursement_total_amount+" 大于项目可报销余额："+p_reimbursable_amount,Toast.LENGTH_LONG).show();
                 }else {
 
-                    uploadDailyCost(dailyCost_jsonString);
+                    uploadTravelReim(travelReim_jsonString);
                 }
 
             }
@@ -399,7 +399,7 @@ public class TravelReimbursementActivity extends Activity {
                 try {
                     response = mOkHttpClient.newCall(request).execute();
                     String resultInfo = response.body().string();
-                    Log.e(TAG, "上传日常费用返回的结果: " + resultInfo);
+                    Log.e(TAG, "上传差旅费用返回的结果: " + resultInfo);
                     if(resultInfo.equals("保存成功")) {
                         showToastInAnyThread(resultInfo);
                         finish();
@@ -411,6 +411,57 @@ public class TravelReimbursementActivity extends Activity {
 
             }
         }).start();
+
+    }
+
+
+    public void uploadTravelReim(final String travelReim_jsonString){
+
+
+        new Thread() {
+            public void run() {
+                try {
+                    // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
+                    String path = Constants.AndroidSaveTravel_Reimbursement;
+                    URL url = new URL(path);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    //2.指定请求方式为post
+                    conn.setRequestMethod("POST");
+                    //3.设置http协议的请求头
+                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");//设置发送的数据为表单类型
+
+                    //String data = "user_name="+URLEncoder.encode(un, "utf-8")+"&password="+URLEncoder.encode(pawd);
+                    String data ="travelReim_jsonString="+ URLEncoder.encode(travelReim_jsonString, "utf-8");
+
+                    conn.setRequestProperty("Content-Length", String.valueOf(data.length()));//告诉服务器发送的数据的长度
+                    //post的请求是把数据以流的方式写给了服务器
+                    //指定请求的输出模式
+                    conn.setDoOutput(true);//运行当前的应用程序给服务器写数据
+                    conn.getOutputStream().write(data.getBytes());
+                    Log.e("post size", String.valueOf(data.getBytes().length));
+                    int code = conn.getResponseCode();
+
+                    if(code == 200){
+                        InputStream is = conn.getInputStream();
+                        final String resultInfo = StreamTools.readStream(is);
+                        if(resultInfo.equals("保存成功")) {
+                            showToastInAnyThread(resultInfo);
+                            finish();
+                        }
+
+
+                    }else{
+                        showToastInAnyThread("请求失败");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToastInAnyThread("请求失败");
+                }
+
+            };
+        }.start();
+
 
     }
 
