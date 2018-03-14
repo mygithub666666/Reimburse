@@ -93,7 +93,40 @@ public class Travel_Reimbursement {
 		this.project_uuid = project_uuid;
 	}
 
-	
+	public Travel_Reimbursement(
+			String travel_reimbursement_start_city,
+			String travel_reimbursement_end_city,
+			String travel_reimbursement_start_date,
+			String travel_reimbursement_end_date,
+			String travel_reimbursement_traffic_allowance,
+			String travel_reimbursement_board_allowance,
+			String travel_reimbursement_name,
+			String travel_reimbursement_job_title,
+			String travel_reimbursement_cause,
+			String travel_reimbursement_total_amount,
+			String travel_reimbursement_project_name,
+			String travel_reimbursement_traffic_cost_ids,
+			String travel_reimbursement_daily_cost_ids,
+			Integer travel_reimbursement_user_id,
+			Integer project_uuid) {
+		this.travel_reimbursement_start_city = travel_reimbursement_start_city;
+		this.travel_reimbursement_end_city = travel_reimbursement_end_city;
+		this.travel_reimbursement_start_date = travel_reimbursement_start_date;
+		this.travel_reimbursement_end_date = travel_reimbursement_end_date;
+		this.travel_reimbursement_traffic_allowance = travel_reimbursement_traffic_allowance;
+		this.travel_reimbursement_board_allowance = travel_reimbursement_board_allowance;
+		this.travel_reimbursement_name = travel_reimbursement_name;
+		this.travel_reimbursement_job_title = travel_reimbursement_job_title;
+		this.travel_reimbursement_cause = travel_reimbursement_cause;
+		this.travel_reimbursement_total_amount = travel_reimbursement_total_amount;
+		this.travel_reimbursement_project_name = travel_reimbursement_project_name;
+		this.travel_reimbursement_daily_cost_ids = travel_reimbursement_daily_cost_ids;
+		this.travel_reimbursement_traffic_cost_ids = travel_reimbursement_traffic_cost_ids;
+		this.travel_reimbursement_user_id = travel_reimbursement_user_id;
+		this.project_uuid = project_uuid;
+	}
+
+
 	
 
 

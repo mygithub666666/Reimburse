@@ -32,6 +32,8 @@ public class Traffic_Cost {
 	private Integer traffic_cost_user_id;
 	private String traffic_cost_tag;
 
+	private String traffic_cost_comments;
+	private String traffic_cost_status;
 	
 	
 	public Traffic_Cost() {
@@ -183,7 +185,21 @@ public class Traffic_Cost {
 		this.traffic_cost_tag = traffic_cost_tag;
 	}
 
+	public String getTraffic_cost_comments() {
+		return traffic_cost_comments;
+	}
 
+	public void setTraffic_cost_comments(String traffic_cost_comments) {
+		this.traffic_cost_comments = traffic_cost_comments;
+	}
+
+	public String getTraffic_cost_status() {
+		return traffic_cost_status;
+	}
+
+	public void setTraffic_cost_status(String traffic_cost_status) {
+		this.traffic_cost_status = traffic_cost_status;
+	}
 
 	@Override
 	public String toString() {

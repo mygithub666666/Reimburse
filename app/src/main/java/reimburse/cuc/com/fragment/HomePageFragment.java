@@ -27,6 +27,7 @@ import reimburse.cuc.com.activity.DailyCostActivity;
 import reimburse.cuc.com.activity.DailyCostActivity_back;
 import reimburse.cuc.com.activity.DailyCostListActivity;
 import reimburse.cuc.com.activity.DailyReimbursementActivity;
+import reimburse.cuc.com.activity.LoanActivity;
 import reimburse.cuc.com.activity.MyDailyReimbursementListActivity;
 import reimburse.cuc.com.activity.MyTravelReimbursementListActivity;
 import reimburse.cuc.com.activity.TestActivity;
@@ -84,7 +85,7 @@ public class HomePageFragment extends BaseFragment {
                 switch ((int) id) {
                     case 0:
                         Log.e(TAG,"首页Fragment中点击的id是: " + id);
-                        startActivity(new Intent(getActivity(),TestActivity.class));
+                        startActivity(new Intent(getActivity(),LoanActivity.class));
                         break;
                     case 1:
                         Log.e(TAG,"首页Fragment中点击的id是: " + id);

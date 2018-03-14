@@ -69,6 +69,7 @@ public class CaigoufeiActivity extends Activity{
     private GridView  gridView;
     private ImageView caigoufei_fp_iv;
     private Button saveBtn;
+    private Button btn_download_test;
     private List<Bitmap> bitmaps = new ArrayList<Bitmap>();
     private ArrayList<String> images = new ArrayList<String>();
     private ArrayList<String> imageUrls = new ArrayList<String>();
@@ -87,6 +88,7 @@ public class CaigoufeiActivity extends Activity{
         gridView = (GridView) findViewById(R.id.caigoufei_gridview_fapiao);
         caigoufei_fp_iv = (ImageView) findViewById(R.id.caigoufei_fp_iv);
         saveBtn = (Button) findViewById(R.id.caigoufei_save_btn);
+        btn_download_test = (Button) findViewById(R.id.btn_download_test);
 
         defaultDate(caigoufei_riqi_et);
         caigoufei_riqi_et.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +104,15 @@ public class CaigoufeiActivity extends Activity{
                 ImageSelectorActivity.start(CaigoufeiActivity.this, 6, ImageSelectorActivity.MODE_MULTIPLE, true, true, true);
             }
         });
+
+
+        btn_download_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

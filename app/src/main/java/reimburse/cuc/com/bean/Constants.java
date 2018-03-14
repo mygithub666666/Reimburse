@@ -6,9 +6,10 @@ package reimburse.cuc.com.bean;
 public interface Constants {
     String URL_PREFIX = "http://";
     //10.192.126.142
-    String IPADDR = "1.202.44.151";
+    String IPADDR = "106.120.57.127";
     String APPADDR = ":8080/ssmweb";
     String BASE_URL = URL_PREFIX+IPADDR+APPADDR;
+    String FILE_BASE_DIR = URL_PREFIX+IPADDR+":8080/baoxiaodantu/";
     String OKHTTP_TEST_UPLOAD = BASE_URL+"/okhttpServlet";
     String TRAFFIC_COST_SERVLET = BASE_URL+"/androidSavetrafficCostServlet";
     String FILE_TEST_CONTROLLER_AndroidSaveDailyCostForm = BASE_URL+"/fileTestController/fileTestAndroidSaveDailyCostForm";

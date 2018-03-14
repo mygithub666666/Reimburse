@@ -24,6 +24,8 @@ public class DailyCost {
 	private String daily_cost_invoice_pic_urls;
 	private Integer daily_cost_user_id;
 	private String daily_cost_tag;
+	private String daily_cost_comments;
+	private String daily_cost_status;
 	
 	public DailyCost(){
 		
@@ -133,10 +135,27 @@ public class DailyCost {
 		this.daily_cost_tag = daily_cost_tag;
 	}
 
+	public String getDaily_cost_comments() {
+		return daily_cost_comments;
+	}
+
+	public void setDaily_cost_comments(String daily_cost_comments) {
+		this.daily_cost_comments = daily_cost_comments;
+	}
+
+	public String getDaily_cost_status() {
+		return daily_cost_status;
+	}
+
+	public void setDaily_cost_status(String daily_cost_status) {
+		this.daily_cost_status = daily_cost_status;
+	}
+
 	@Override
 	public String toString() {
 		return "DailyCost{" +
-				"daily_cost_type='" + daily_cost_type + '\'' +
+				"daily_cost_uuid=" + daily_cost_uuid +
+				", daily_cost_type='" + daily_cost_type + '\'' +
 				", daily_cost_date='" + daily_cost_date + '\'' +
 				", daily_cost_unit_price='" + daily_cost_unit_price + '\'' +
 				", daily_cost_ticket_number='" + daily_cost_ticket_number + '\'' +
@@ -145,6 +164,8 @@ public class DailyCost {
 				", daily_cost_invoice_pic_urls='" + daily_cost_invoice_pic_urls + '\'' +
 				", daily_cost_user_id=" + daily_cost_user_id +
 				", daily_cost_tag='" + daily_cost_tag + '\'' +
+				", daily_cost_comments='" + daily_cost_comments + '\'' +
+				", daily_cost_status='" + daily_cost_status + '\'' +
 				'}';
 	}
 }

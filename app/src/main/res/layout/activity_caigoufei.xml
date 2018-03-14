@@ -323,7 +323,7 @@
     <GridView
         android:id="@+id/caigoufei_gridview_fapiao"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="30dp"
         android:numColumns="auto_fit"
         android:columnWidth="80dp"
         android:horizontalSpacing="1dp"
@@ -337,10 +337,20 @@
     <Button
         android:layout_margin="6dp"
         android:layout_gravity="center_horizontal"
+        android:id="@+id/btn_download_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_submit"
+        android:text="下载测试"
+        />
+    <Button
+        android:layout_margin="6dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/caigoufei_save_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_submit"
         android:text="保存"
         />
+
 </LinearLayout>

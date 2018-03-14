@@ -264,25 +264,6 @@ public class TravelReimbursementActivity extends Activity {
                 return true;
             }
         });
-//      projectListView.setBackgroundResource(R.color.white);
-        /**
-         travel_reimbursement_uuid int primary key auto_increment,
-         travel_reimbursement_start_city varchar(30) not null default '',
-         travel_reimbursement_end_city varchar(30) not null default '',
-         travel_reimbursement_start_date varchar(30) not null default '',
-         travel_reimbursement_end_date varchar(30) not null default '',
-         travel_reimbursement_traffic_allowance varchar(30) not null default '',
-         travel_reimbursement_board_allowance varchar(30) not null default '',
-         travel_reimbursement_name varchar(30) not null default '',
-         travel_reimbursement_job_title varchar(30) not null default '',
-         travel_reimbursement_cause varchar(3000) not null default '',
-         travel_reimbursement_total_amount varchar(30) not null default '',
-         travel_reimbursement_submit_date_time varchar(30) not null DEFAULT '',
-         travel_reimbursement_project_name VARCHAR(60) not null DEFAULT '',
-         travel_reimbursement_daily_cost_ids varchar(30) not null default '',
-         travel_reimbursement_traffic_cost_ids varchar(30) not null default '',
-         travel_reimbursement_user_id int not null
-         */
 
         btn_save_travel_reimbursement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,7 +279,7 @@ public class TravelReimbursementActivity extends Activity {
                 String travel_reimbursement_job_title = et_travel_user_title.getText().toString();
                 String travel_reimbursement_cause = et_travel_cause.getText().toString();
                 String travel_reimbursement_total_amount = et_travel_reimbursement_total_amount.getText().toString();
-                String travel_reimbursement_submit_date_time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                //String travel_reimbursement_submit_date_time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                 String travel_reimbursement_project_name = et_travel_reimbursement_project_name.getText().toString();
                 StringBuffer travel_reimbursement_daily_cost_ids = new StringBuffer("");
                 StringBuffer travel_reimbursement_traffic_cost_ids = new StringBuffer("");
@@ -329,7 +310,7 @@ public class TravelReimbursementActivity extends Activity {
                 Log.e(TAG,travel_reimbursement_job_title);
                 Log.e(TAG,travel_reimbursement_cause);
                 Log.e(TAG,travel_reimbursement_total_amount);
-                Log.e(TAG,travel_reimbursement_submit_date_time);
+                //Log.e(TAG,travel_reimbursement_submit_date_time);
                 Log.e(TAG,travel_reimbursement_project_name);
                 Log.e(TAG,travel_reimbursement_daily_cost_ids.toString());
                 Log.e(TAG,travel_reimbursement_traffic_cost_ids.toString());
@@ -350,9 +331,7 @@ public class TravelReimbursementActivity extends Activity {
                                 travel_reim_traffic_cost_ids,
                                 travel_reim_daily_cost_ids,
                                 travel_reimbursement_user_id,
-                                project_uuid,
-                                travel_reimbursement_submit_date_time
-                        );
+                                project_uuid);
                 Log.e("差旅费的交通消费字符串: ",travel_reim_traffic_cost_ids);
                 Log.e("差旅费的日常消费字符串: ",travel_reim_daily_cost_ids);
                 // Java对象转JSON串
@@ -456,7 +435,7 @@ public class TravelReimbursementActivity extends Activity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    showToastInAnyThread("请求失败");
+                    showToastInAnyThread("请求失败，出现异常!");
                 }
 
             };
