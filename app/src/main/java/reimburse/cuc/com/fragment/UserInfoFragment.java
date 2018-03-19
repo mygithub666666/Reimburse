@@ -35,12 +35,12 @@ import reimburse.cuc.com.reimburse.R;
 public class UserInfoFragment extends BaseFragment {
 
     private static final String TAG = UserInfoFragment.class.getSimpleName();
-    @Bind(R.id.iv_title_back)
+   /* @Bind(R.id.iv_title_back)
     ImageView ivTitleBack;
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.iv_title_setting)
-    ImageView ivTitleSetting;
+    ImageView ivTitleSetting;*/
     @Bind(R.id.tv_user_info_user_name)
     TextView tvUserInfoUserName;
     @Bind(R.id.et_user_info_user_name)

@@ -47,6 +47,11 @@ public class Travel_Reimbursement {
 	private String comments;
 	private String checker_name;
 	private Integer project_uuid;
+	private Integer travel_reimbursement_reim_user_uuid;
+	private String  travel_reimbursement_reim_user_name;
+	private String  travel_reimbursement_reim_mobile_phone_number;
+	private String  travel_reimbursement_reim_bank_number;
+	private String  travel_reimbursement_reim_bank_name;
 	
 	private List<Traffic_Cost> traffic_Costs;
 	
@@ -93,6 +98,9 @@ public class Travel_Reimbursement {
 		this.project_uuid = project_uuid;
 	}
 
+
+
+
 	public Travel_Reimbursement(
 			String travel_reimbursement_start_city,
 			String travel_reimbursement_end_city,
@@ -107,8 +115,7 @@ public class Travel_Reimbursement {
 			String travel_reimbursement_project_name,
 			String travel_reimbursement_traffic_cost_ids,
 			String travel_reimbursement_daily_cost_ids,
-			Integer travel_reimbursement_user_id,
-			Integer project_uuid) {
+			Integer project_uuid,Integer travel_reimbursement_reim_user_uuid,String  travel_reimbursement_reim_user_name,String  travel_reimbursement_reim_mobile_phone_number,String  travel_reimbursement_reim_bank_number,String  travel_reimbursement_reim_bank_name) {
 		this.travel_reimbursement_start_city = travel_reimbursement_start_city;
 		this.travel_reimbursement_end_city = travel_reimbursement_end_city;
 		this.travel_reimbursement_start_date = travel_reimbursement_start_date;
@@ -122,8 +129,12 @@ public class Travel_Reimbursement {
 		this.travel_reimbursement_project_name = travel_reimbursement_project_name;
 		this.travel_reimbursement_daily_cost_ids = travel_reimbursement_daily_cost_ids;
 		this.travel_reimbursement_traffic_cost_ids = travel_reimbursement_traffic_cost_ids;
-		this.travel_reimbursement_user_id = travel_reimbursement_user_id;
 		this.project_uuid = project_uuid;
+		this.travel_reimbursement_reim_user_uuid = travel_reimbursement_reim_user_uuid;
+		this.travel_reimbursement_reim_user_name = travel_reimbursement_reim_user_name;
+		this.travel_reimbursement_reim_mobile_phone_number = travel_reimbursement_reim_mobile_phone_number;
+		this.travel_reimbursement_reim_bank_number = travel_reimbursement_reim_bank_number;
+		this.travel_reimbursement_reim_bank_name = travel_reimbursement_reim_bank_name;
 	}
 
 
@@ -312,10 +323,46 @@ public class Travel_Reimbursement {
 		this.checker_name = checker_name;
 	}
 
-	
-	
-	
-	
+	public Integer getTravel_reimbursement_reim_user_uuid() {
+		return travel_reimbursement_reim_user_uuid;
+	}
+
+	public void setTravel_reimbursement_reim_user_uuid(Integer travel_reimbursement_reim_user_uuid) {
+		this.travel_reimbursement_reim_user_uuid = travel_reimbursement_reim_user_uuid;
+	}
+
+	public String getTravel_reimbursement_reim_user_name() {
+		return travel_reimbursement_reim_user_name;
+	}
+
+	public void setTravel_reimbursement_reim_user_name(String travel_reimbursement_reim_user_name) {
+		this.travel_reimbursement_reim_user_name = travel_reimbursement_reim_user_name;
+	}
+
+	public String getTravel_reimbursement_reim_mobile_phone_number() {
+		return travel_reimbursement_reim_mobile_phone_number;
+	}
+
+	public void setTravel_reimbursement_reim_mobile_phone_number(String travel_reimbursement_reim_mobile_phone_number) {
+		this.travel_reimbursement_reim_mobile_phone_number = travel_reimbursement_reim_mobile_phone_number;
+	}
+
+	public String getTravel_reimbursement_reim_bank_number() {
+		return travel_reimbursement_reim_bank_number;
+	}
+
+	public void setTravel_reimbursement_reim_bank_number(String travel_reimbursement_reim_bank_number) {
+		this.travel_reimbursement_reim_bank_number = travel_reimbursement_reim_bank_number;
+	}
+
+	public String getTravel_reimbursement_reim_bank_name() {
+		return travel_reimbursement_reim_bank_name;
+	}
+
+	public void setTravel_reimbursement_reim_bank_name(String travel_reimbursement_reim_bank_name) {
+		this.travel_reimbursement_reim_bank_name = travel_reimbursement_reim_bank_name;
+	}
+
 	public Integer getProject_uuid() {
 		return project_uuid;
 	}

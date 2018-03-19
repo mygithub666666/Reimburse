@@ -500,7 +500,7 @@ public class TrafficCostFormActivity extends Activity {
                 // Java对象转JSON串
 
                 Log.e("最终上传的交通费: ",traffic_cost.toString());
-                showToastInAnyThread("上传的交通费的数据为: " + traffic_cost.toString());
+                Log.e("要准备上传的交通费的数据为: ",traffic_cost.toString());
                 String trafficCost_jsonString = JSON.toJSONString(traffic_cost);
                 builder.addFormDataPart("trafficCost_jsonString", trafficCost_jsonString);
 

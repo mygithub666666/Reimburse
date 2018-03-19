@@ -10,6 +10,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -316,6 +317,15 @@ public class TravelReimbursementActivity extends Activity {
                 Log.e(TAG,travel_reimbursement_traffic_cost_ids.toString());
                 Log.e(TAG,travel_reimbursement_user_id+"");
 
+                Integer daily_reim_user_id = LauncherActivity.ANDROID_USER_ID;
+
+                SharedPreferences sp =  getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+
+                String user_jsonString = sp.getString("user_jsonString", "");
+
+                User user = JSON.parseObject(user_jsonString,User.class);
+
+
                 Travel_Reimbursement travel_reimbursement = new Travel_Reimbursement
                         (travel_reimbursement_start_city,
                                 travel_reimbursement_end_city,
@@ -330,12 +340,13 @@ public class TravelReimbursementActivity extends Activity {
                                 travel_reimbursement_project_name,
                                 travel_reim_traffic_cost_ids,
                                 travel_reim_daily_cost_ids,
-                                travel_reimbursement_user_id,
-                                project_uuid);
+                                project_uuid,user.getUser_uuid(),user.getUser_name(),user.getMobile_phone_number(),
+                                user.getBank_number(),user.getBank_name());
                 Log.e("差旅费的交通消费字符串: ",travel_reim_traffic_cost_ids);
                 Log.e("差旅费的日常消费字符串: ",travel_reim_daily_cost_ids);
                 // Java对象转JSON串
                 String travelReim_jsonString = JSON.toJSONString(travel_reimbursement);
+                Log.e("要准备上传的差率报销单: ",travelReim_jsonString);
                 Float pro_can_reim = Float.parseFloat(p_reimbursable_amount);
                 Float this_time_amount = Float.parseFloat(travel_reimbursement_total_amount);
 

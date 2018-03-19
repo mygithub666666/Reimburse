@@ -121,6 +121,7 @@
         <activity android:name="reimburse.cuc.com.activity.ViewPagerActivity"/>
         <activity android:name="reimburse.cuc.com.util.JiguangTestActivity" />
         <activity android:name="reimburse.cuc.com.activity.OpenCVTestActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.LoanActivity"/>
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

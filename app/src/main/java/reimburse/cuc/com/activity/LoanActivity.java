@@ -10,6 +10,7 @@ public class LoanActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 }

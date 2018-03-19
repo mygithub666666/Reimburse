@@ -88,7 +88,7 @@ public class LauncherActivity extends Activity {
                                 if(!user_jsonString.equals("登陆失败")) {
                                     User loginedUser = JSON.parseObject(user_jsonString, User.class);
                                     Log.e("当前登录用户的信息:",loginedUser.toString());
-                                    showToastInAnyThread(loginedUser.toString());
+                                    //showToastInAnyThread(loginedUser.toString());
                                     ANDROID_USER_ID = loginedUser.getUser_uuid();
                                     saveLoginedUser(user_jsonString);
                                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);

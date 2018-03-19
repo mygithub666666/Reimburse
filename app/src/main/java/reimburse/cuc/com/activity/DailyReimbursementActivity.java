@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -270,12 +271,23 @@ public class DailyReimbursementActivity extends Activity {
 
                 Integer daily_reim_user_id = LauncherActivity.ANDROID_USER_ID;
 
+                SharedPreferences sp =  getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+
+                String user_jsonString = sp.getString("user_jsonString", "");
+
+                User user = JSON.parseObject(user_jsonString,User.class);
+
+
                 DailyReim dailyReim = new DailyReim(daily_reim_cause,daily_reim_project_name,daily_reim_amount,
-                        daily_reim_traffic_cost_ids,daily_reim_daily_cost_ids,daily_reim_user_id,project_uuid);
+                        daily_reim_traffic_cost_ids,daily_reim_daily_cost_ids,project_uuid,user.getUser_uuid(),
+                        user.getUser_name(),user.getMobile_phone_number(),user.getBank_number(),user.getBank_name());
+/*              DailyReim dailyReim = new DailyReim(daily_reim_cause,daily_reim_project_name,daily_reim_amount,
+                        daily_reim_traffic_cost_ids,daily_reim_daily_cost_ids,daily_reim_user_id,project_uuid);*/
 
                 // Java对象转JSON串
-                String dailyCost_jsonString = JSON.toJSONString(dailyReim);
+                String dailyReim_jsonString = JSON.toJSONString(dailyReim);
 
+                Log.e("准备要上传的日常报销的数据",dailyReim_jsonString);
 
                 Float pro_can_reim = Float.parseFloat(p_reimbursable_amount);
                 Float this_time_amount = Float.parseFloat(daily_reim_amount);
@@ -287,7 +299,7 @@ public class DailyReimbursementActivity extends Activity {
                     /**
                      * 保存日常报销单到服务器
                      */
-                    uploadDailyCost(dailyCost_jsonString);
+                    uploadDailyCost(dailyReim_jsonString);
                 }
 
 
