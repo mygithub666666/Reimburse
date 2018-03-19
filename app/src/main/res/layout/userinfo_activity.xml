@@ -3,34 +3,212 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<include layout="@layout/userinfo_activity_title"/>-->
-
+    <include layout="@layout/user_info_title"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp">
-
-        <ImageView
-            android:id="@+id/iv_user_icon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/my_user_default"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            />
-
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+<!--  `user_uuid` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(60) NOT NULL,
+  `password` varchar(2048) NOT NULL DEFAULT 'f1f4e30acef64bd0d346b050e73289e7',
+  `mobile_phone_number` varchar(16) NOT NULL DEFAULT '暂无',
+  `department` varchar(30) NOT NULL DEFAULT '暂无',
+  `email` varchar(60) NOT NULL DEFAULT '暂无',
+  `reim_user_job_number` varchar(1024) NOT NULL DEFAULT '无',
+  `reim_user_dept_time` varchar(30) NOT NULL DEFAULT '无',
+  `reim_user_gender` varchar(30) NOT NULL DEFAULT '无',
+  `reim_usr_age` varchar(16) NOT NULL DEFAULT '无',
+  `reim_user_id_card` varchar(60) NOT NULL DEFAULT '无',
+  `reim_user_id_card_num` varchar(255) NOT NULL DEFAULT '无',
+  `reim_user_education` varchar(60) NOT NULL DEFAULT '无',
+  `reim_user_education_time` varchar(60) NOT NULL DEFAULT '无',
+  `reim_user_title` varchar(30) NOT NULL DEFAULT '无',
+  `reim_user_title_time` varchar(60) NOT NULL DEFAULT '无',
+  `reim_user_positon` varchar(60) NOT NULL DEFAULT '无',
+  `reim_user_position_time` varchar(60) NOT NULL DEFAULT '无',
+  `reim_user_personnel_type` varchar(60) NOT NULL DEFAULT '无',
+  `reim_user_personnel_type_time` varchar(60) NOT NULL DEFAULT '无',
+  `reim_user_note` varchar(30) NOT NULL DEFAULT '无',
+  `reim_user_pro_nums` varchar(255) NOT NULL DEFAULT '0',
+  `reim_user_project_nums` varchar(255) NOT NULL DEFAULT '0',
+  `bank_number` varchar(128) NOT NULL DEFAULT '无',
+  `bank_name` varchar(1024) NOT NULL DEFAULT '无',
+  `isInnerUser` varchar(128) NOT NULL DEFAULT 'InnerUser',
+  `proleader_uuid` varchar(11) NOT NULL DEFAULT '0',-->
         <TextView
-            android:id="@+id/tv_user_change"
+            android:id="@+id/tv_user_info_user_name"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="用户名:"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/et_user_info_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="更改头像"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/iv_user_icon"
-            android:layout_marginTop="10dp"
-            android:textColor="#00baff"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_user_info_user_name"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="14sp"
             />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
 
+        <TextView
+            android:id="@+id/tv_mobile_phone_number"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="手机:"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
 
+        <EditText
+            android:id="@+id/et_user_info_mobile_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_mobile_phone_number"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="14sp"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_user_info_email"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="邮箱:"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/et_user_info_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_user_info_email"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="14sp"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_user_info_bank_number"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="银行卡号:"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/et_user_info_bank_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_user_info_bank_number"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="14sp"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_user_info_bank_name"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="开户行:"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/et_user_info_bank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_user_info_bank_name"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="14sp"
+            />
     </RelativeLayout>
 
     <View

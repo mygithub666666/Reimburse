@@ -1,14 +1,19 @@
 package reimburse.cuc.com.reimburse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -19,6 +24,7 @@ import java.net.URLEncoder;
 
 import cn.jpush.android.api.JPushInterface;
 import reimburse.cuc.com.bean.Constants;
+import reimburse.cuc.com.bean.User;
 import reimburse.cuc.com.util.StreamTools;
 
 public class LauncherActivity extends Activity {
@@ -42,10 +48,6 @@ public class LauncherActivity extends Activity {
         startActivity(intent);
     }
 
-    /*public void login(View view){
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-    }*/
     public void login(View view){
             final String un = username.getText().toString();
             final String pawd = pwd.getText().toString();
@@ -76,31 +78,47 @@ public class LauncherActivity extends Activity {
                             int code = conn.getResponseCode();
                             if(code == 200){
                                 InputStream is = conn.getInputStream();
-                                final String result = StreamTools.readStream(is);
-                                showToastInAnyThread(result);
-                                String infoAnduid = result;
-                                String[] resultArr = infoAnduid.split("AND");
-                                //showToastInAnyThread(resultArr[0]);
-                                //showToastInAnyThread(resultArr[1]);
-                                ANDROID_USER_ID = Integer.parseInt(resultArr[1]);
-                                //showToastInAnyThread(String.valueOf(ANDROID_USER_ID));
-                                if(resultArr[0].equals("登陆成功")) {
+                                final String user_jsonString = StreamTools.readStream(is);
+
+                                // JSON串转JAVA对象
+                                //UserGroup group2 = JSON.parseObject(jsonString, UserGroup.class);
+
+                                //String user_jsonString = Json
+
+                                if(!user_jsonString.equals("登陆失败")) {
+                                    User loginedUser = JSON.parseObject(user_jsonString, User.class);
+                                    Log.e("当前登录用户的信息:",loginedUser.toString());
+                                    showToastInAnyThread(loginedUser.toString());
+                                    ANDROID_USER_ID = loginedUser.getUser_uuid();
+                                    saveLoginedUser(user_jsonString);
                                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                     startActivity(intent);
+                                }else{
+                                    showToastInAnyThread("用户名或者密码错误！");
                                 }
+
+
                             }else{
-                                showToastInAnyThread("请求失败");
+                                showToastInAnyThread("网络请求失败");
                             }
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            showToastInAnyThread("请求失败");
+                            showToastInAnyThread("网络请求失败");
                         }
 
                     };
                 }.start();
             }
 
+
+    }
+
+    public void saveLoginedUser(String user_jsonString){
+        SharedPreferences sp =  this.getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =  sp.edit();
+        editor.putString("user_jsonString",user_jsonString);
+        editor.commit();
 
     }
 

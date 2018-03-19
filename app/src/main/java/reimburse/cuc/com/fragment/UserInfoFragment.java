@@ -1,16 +1,10 @@
 package reimburse.cuc.com.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,62 +12,91 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import reimburse.cuc.com.base.BaseFragment;
+import reimburse.cuc.com.bean.Traffic_Cost;
+import reimburse.cuc.com.bean.User;
 import reimburse.cuc.com.reimburse.R;
-import reimburse.cuc.com.util.BitmapUtils;
-import reimburse.cuc.com.util.UIUtils;
 
 /**
  * Created by hp1 on 2017/8/6.
  */
-public class UserInfoFragment extends BaseFragment{
+public class UserInfoFragment extends BaseFragment {
 
     private static final String TAG = UserInfoFragment.class.getSimpleName();
+    @Bind(R.id.iv_title_back)
+    ImageView ivTitleBack;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
+    @Bind(R.id.iv_title_setting)
+    ImageView ivTitleSetting;
+    @Bind(R.id.tv_user_info_user_name)
+    TextView tvUserInfoUserName;
+    @Bind(R.id.et_user_info_user_name)
+    EditText etUserInfoUserName;
+    @Bind(R.id.tv_mobile_phone_number)
+    TextView tvMobilePhoneNumber;
+    @Bind(R.id.et_user_info_mobile_phone_number)
+    EditText etUserInfoMobilePhoneNumber;
+    @Bind(R.id.tv_user_info_email)
+    TextView tvUserInfoEmail;
+    @Bind(R.id.et_user_info_email)
+    EditText etUserInfoEmail;
+    @Bind(R.id.tv_user_info_bank_number)
+    TextView tvUserInfoBankNumber;
+    @Bind(R.id.et_user_info_bank_number)
+    EditText etUserInfoBankNumber;
+    @Bind(R.id.tv_user_info_bank_name)
+    TextView tvUserInfoBankName;
+    @Bind(R.id.et_user_info_bank_name)
+    EditText etUserInfoBankName;
+    @Bind(R.id.btn_user_logout)
+    Button btnUserLogout;
 
-    private static final int PICTURE = 100;
-    private static final int CAMERA = 200;
-    private TextView tv_user_change;
-    private Button btn_user_logout;
-    private ImageView iv_user_icon;
     @Override
     protected View initView() {
         Log.e(TAG, "个人中心Fragment的页面初始化22222222222222222222222222222222222222222222");
         View view = View.inflate(mContext, R.layout.userinfo_activity, null);
-        tv_user_change = (TextView) view.findViewById(R.id.tv_user_change);
-        btn_user_logout = (Button) view.findViewById(R.id.btn_user_logout);
-        iv_user_icon = (ImageView) view.findViewById(R.id.iv_user_icon);
-        tv_user_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String[] items = new String[]{"图库", "相机"};
-                new AlertDialog.Builder(getActivity()).setTitle("选择来源")
-                        .setItems(items, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0:
-                                        //UIUtils.toast(items[0], false);
-                                        //启动其他应用的activity:使用隐式意图
-                                        Intent picture = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                        startActivityForResult(picture, PICTURE);
-                                        break;
-                                    case 1:
-                                        //UIUtils.toast(items[1],false);
-                                        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        startActivityForResult(camera, CAMERA);
-                                        break;
-                                }
-                            }
-                        }).setNegativeButton("取消", null).show();
-            }
-        });
+        //ButterKnife.bind(this,view);
+
+        //返回一个Unbinder值（进行解绑），注意这里的this不能使用getActivity()
+        ButterKnife.bind(this, view);
+
+        /**
+         *
+         public void saveLoginedUser(String user_jsonString){
+         SharedPreferences sp =  this.getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+         SharedPreferences.Editor editor =  sp.edit();
+         editor.putString("user_jsonString",user_jsonString);
+         editor.commit();
+
+         }
+         */
+        SharedPreferences sp =  this.getActivity().getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+
+        String user_jsonString = sp.getString("user_jsonString", "");
+
+        User user = JSON.parseObject(user_jsonString,User.class);
+
+        etUserInfoUserName.setText(user.getUser_name());
+        etUserInfoMobilePhoneNumber.setText(user.getMobile_phone_number());
+        etUserInfoEmail.setText(user.getEmail());
+        etUserInfoBankNumber.setText(user.getBank_number());
+        etUserInfoBankName.setText(user.getBank_name());
+
+
+
         return view;
     }
 
@@ -84,43 +107,6 @@ public class UserInfoFragment extends BaseFragment{
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA && resultCode == Activity.RESULT_OK&& data != null) {//相机
-            //获取intent中的图片对象
-            Bundle extras = data.getExtras();
-            Bitmap bitmap = (Bitmap) extras.get("data");
-            //对获取到的bitmap进行压缩、圆形处理
-            Bitmap zbitmap = BitmapUtils.zoom(bitmap, iv_user_icon.getWidth(), iv_user_icon.getHeight());
-            iv_user_icon.setImageBitmap(zbitmap);
-
-
-        } else if (requestCode == PICTURE && resultCode == Activity.RESULT_OK && data != null) {//图库
-
-            //图库
-            Uri selectedImage = data.getData();
-            //android各个不同的系统版本,对于获取外部存储上的资源，返回的Uri对象都可能各不一样,
-            // 所以要保证无论是哪个系统版本都能正确获取到图片资源的话就需要针对各种情况进行一个处理了
-            //这里返回的uri情况就有点多了
-            //在4.4.2之前返回的uri是:content://media/external/images/media/3951或者file://....
-            // 在4.4.2返回的是content://com.android.providers.media.documents/document/image
-
-            String pathResult = getPath(selectedImage);
-            //存储--->内存
-            Bitmap decodeFile = BitmapFactory.decodeFile(pathResult);
-            Bitmap zoomBitmap = BitmapUtils.zoom(decodeFile, iv_user_icon.getWidth(),iv_user_icon.getHeight());
-            //bitmap圆形裁剪
-            //Bitmap circleImage = BitmapUtils.circleBitmap(zoomBitmap);
-
-            //加载显示
-            iv_user_icon.setImageBitmap(zoomBitmap);
-            //上传到服务器（省略）
-
-            //保存到本地
-            //saveImage(circleImage);
-        }
-    }
 
     /**
      * 根据系统相册选择的文件获取路径
@@ -232,5 +218,19 @@ public class UserInfoFragment extends BaseFragment{
      */
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }
