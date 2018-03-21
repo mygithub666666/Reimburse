@@ -1,8 +1,10 @@
 package reimburse.cuc.com.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -27,6 +29,7 @@ import butterknife.ButterKnife;
 import reimburse.cuc.com.base.BaseFragment;
 import reimburse.cuc.com.bean.Traffic_Cost;
 import reimburse.cuc.com.bean.User;
+import reimburse.cuc.com.reimburse.LauncherActivity;
 import reimburse.cuc.com.reimburse.R;
 
 /**
@@ -83,7 +86,7 @@ public class UserInfoFragment extends BaseFragment {
 
          }
          */
-        SharedPreferences sp =  this.getActivity().getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+        final SharedPreferences sp =  this.getActivity().getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
 
         String user_jsonString = sp.getString("user_jsonString", "");
 
@@ -95,7 +98,18 @@ public class UserInfoFragment extends BaseFragment {
         etUserInfoBankNumber.setText(user.getBank_number());
         etUserInfoBankName.setText(user.getBank_name());
 
+        btnUserLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //1.将保存在sp中的数据清除
+                //SharedPreferences sp =  this.getActivity().getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+                sp.edit().clear().commit();
 
+                Intent intent = new Intent(getActivity(),LauncherActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         return view;
     }
@@ -107,6 +121,10 @@ public class UserInfoFragment extends BaseFragment {
 
     }
 
+    //销毁所有的activity
+    public void removeAll(){
+        //ActivityManager
+    }
 
     /**
      * 根据系统相册选择的文件获取路径

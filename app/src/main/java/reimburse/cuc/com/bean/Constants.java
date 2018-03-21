@@ -6,7 +6,7 @@ package reimburse.cuc.com.bean;
 public interface Constants {
     String URL_PREFIX = "http://";
     //10.192.126.142
-    String IPADDR = "106.37.255.201";
+    String IPADDR = "192.168.1.125";
     String APPADDR = ":8080/ssmweb";
     String BASE_URL = URL_PREFIX+IPADDR+APPADDR;
     String FILE_BASE_DIR = URL_PREFIX+IPADDR+":8080/baoxiaodantu/";

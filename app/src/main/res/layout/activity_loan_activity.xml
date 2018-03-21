@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+
+    <include layout="@layout/title_loan_activity"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
+            <TextView
+                android:id="@+id/tv_loan_cause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="借款事由: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <EditText
+                android:id="@+id/et_loan_cause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:text="出差借款" />
+        </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:id="@+id/project_loan_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_project_loan"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="选择项目: "
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+        <EditText
+            android:id="@+id/et_project_loan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_project_loan"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint=""
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#5c5c5c"
+            android:textSize="14sp"
+            android:focusableInTouchMode="false"
+            android:drawableRight="@drawable/down_arrow"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
+            <TextView
+                android:id="@+id/tv_loan_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="借款金额: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <EditText
+                android:id="@+id/et_loan_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:text="¥0.0" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_commit_loan"
+            android:text="提交"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -85,9 +85,14 @@ public class LauncherActivity extends Activity {
 
                                 //String user_jsonString = Json
 
+
                                 if(!user_jsonString.equals("登陆失败")) {
                                     User loginedUser = JSON.parseObject(user_jsonString, User.class);
-                                    Log.e("当前登录用户的信息:",loginedUser.toString());
+                                    Log.e("当前登录用户的信息:", loginedUser.toString());
+                                    Integer reimuser_uuid = loginedUser.getUser_uuid();
+                                    String alis = String.valueOf(reimuser_uuid);
+                                    JPushInterface.setAlias(LauncherActivity.this,reimuser_uuid,alis);
+                                    Log.e("------------>极光推送的别名: ",alis);
                                     //showToastInAnyThread(loginedUser.toString());
                                     ANDROID_USER_ID = loginedUser.getUser_uuid();
                                     saveLoginedUser(user_jsonString);

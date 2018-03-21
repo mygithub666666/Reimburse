@@ -33,6 +33,10 @@ public class DailyReim {
     private String daily_reim_mobile_phone_number;
     private String daily_reim_bank_number;
     private String daily_reim_bank_name;
+    private String is_re_check;
+    private String re_check_account_uuid;
+    private String re_check_account_username;
+    private String re_check_comments;
 
     private List<TongyiXiaofeiBean> tongyiXiaofeiBeans;
 
@@ -271,6 +275,38 @@ public class DailyReim {
 
     public void setDaily_reim_bank_name(String daily_reim_bank_name) {
         this.daily_reim_bank_name = daily_reim_bank_name;
+    }
+
+    public String getIs_re_check() {
+        return is_re_check;
+    }
+
+    public void setIs_re_check(String is_re_check) {
+        this.is_re_check = is_re_check;
+    }
+
+    public String getRe_check_account_uuid() {
+        return re_check_account_uuid;
+    }
+
+    public void setRe_check_account_uuid(String re_check_account_uuid) {
+        this.re_check_account_uuid = re_check_account_uuid;
+    }
+
+    public String getRe_check_account_username() {
+        return re_check_account_username;
+    }
+
+    public void setRe_check_account_username(String re_check_account_username) {
+        this.re_check_account_username = re_check_account_username;
+    }
+
+    public String getRe_check_comments() {
+        return re_check_comments;
+    }
+
+    public void setRe_check_comments(String re_check_comments) {
+        this.re_check_comments = re_check_comments;
     }
 
     @Override

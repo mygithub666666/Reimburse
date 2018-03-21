@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import cn.jpush.android.api.JPushInterface;
+import reimburse.cuc.com.reimburse.LauncherActivity;
 
 /**
  * Created by shkstart on 2016/12/2 0002.
@@ -64,46 +65,14 @@ public class MyApplication extends Application {
 
         if (f.exists()){
             Log.e(TAG,"训练集文件已存在");
-            //f.delete();
         }
-        /*if (!f.exists()){
-            try {
-                Log.e(TAG,"训练集文件不存在，创建新的文件!");
-                f.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-        /*InputStream is=null;
-        OutputStream os=null;
-        try {
-            is = this.getAssets().open(DEFAULT_LANGUAGE_NAME);
-            File file = new File(tessDataPath);
-            os = new FileOutputStream(file);
-            byte[] bytes = new byte[2048];
-            int len = 0;
-            while ((len = is.read(bytes)) != -1) {
-                os.write(bytes, 0, len);
-            }
-            os.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (is != null)
-                    is.close();
-                if (os != null)
-                    os.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
 
 
 
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
+
+
 
 
 
