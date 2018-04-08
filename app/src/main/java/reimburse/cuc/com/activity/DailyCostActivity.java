@@ -581,7 +581,7 @@ public class DailyCostActivity extends Activity {
                 Log.e(TAG, "daily_cost_invoice_pic_urls=" + daily_cost_invoice_pic_urls);
                 //builder.addFormDataPart("daily_cost_invoice_pic_urls", daily_cost_invoice_pic_urls);
 
-                DailyCost dailyCost = new DailyCost(daily_cost_pro_uuid,daily_cost_pro_budget_type,daily_cost_pro_name,daily_cost_pro_name,
+                DailyCost dailyCost = new DailyCost(daily_cost_pro_uuid,daily_cost_pro_budget_type,daily_cost_pro_name,daily_cost_pro_budget_type,
                         daily_cost_date,"单价",
                         "票据张数",daily_cost_total_amount,daily_cost_desc,
                         daily_cost_invoice_pic_urls,android_user_id,et_daily_cost_tag.getText().toString());

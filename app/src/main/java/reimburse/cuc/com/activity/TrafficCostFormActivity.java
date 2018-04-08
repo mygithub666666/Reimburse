@@ -679,7 +679,7 @@ public class TrafficCostFormActivity extends Activity {
                 String traffic_cost_pro_name = etTrafficCostProName.getText().toString();
                 String traffic_cost_pro_budget_type = etTrafficCostProBudgetType.getText().toString();
 
-                String traffic_cost_type = etTrafficCostProBudgetType.getText().toString();
+                String traffic_cost_type = et_input.getText().toString();
                 String traffic_cost_tag = et_traffic_cost_tag.getText().toString();
                 String traffic_cost_fare_basis = et_fare_basis.getText().toString();
                 String traffic_cost_start_city = et_traffic_cost_start_city.getText().toString();
