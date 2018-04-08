@@ -1,12 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical"
+    android:fadingEdge="vertical"
+    android:id="@+id/outer_scrollview"
+    >
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/title_daily_reimbursement"/>
 
 
-    <include layout="@layout/title_loan_activity"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/tv_p_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="项目名称:"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <EditText
+                android:id="@+id/et_p_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/tv_p_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="项目类型: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <EditText
+                android:id="@+id/et_p_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:focusableInTouchMode="false"
+                />
+
+            <TextView
+                android:id="@+id/tv_p_leader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="负责人: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <EditText
+                android:id="@+id/et_p_leader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="right|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:focusableInTouchMode="false"
+                />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
 
     <View
@@ -31,208 +157,53 @@
 
 
             <TextView
-                android:id="@+id/tv_loan_cause"
+                android:id="@+id/tv_p_startdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:text="借款事由: "
+                android:text="立项日期: "
                 android:textColor="#333333"
                 android:textSize="14sp"
                 />
+
+
             <EditText
-                android:id="@+id/et_loan_cause"
+                android:id="@+id/et_p_startdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:singleLine="true"
                 android:background="@null"
                 android:textSize="12dip"
                 android:gravity="left|center_vertical"
                 android:layout_gravity="center_vertical"
-                android:text="出差借款" />
-        </LinearLayout>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:listDivider"/>
-    <RelativeLayout
-        android:id="@+id/project_loan_relativelayout"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/white"
-        android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tv_loan_project_name"
-            android:layout_width="95dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="选择项目: "
-            android:textColor="#333333"
-            android:textSize="14sp"/>
-        <EditText
-            android:id="@+id/et_loan_project_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_loan_project_name"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:hint=""
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="#5c5c5c"
-            android:textSize="14sp"
-            android:focusableInTouchMode="false"
-            android:drawableRight="@drawable/down_arrow"
-            />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:listDivider"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/white"
-        android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:gravity="center_vertical">
-
-
-        <LinearLayout
-
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-
+                />
             <TextView
-                android:id="@+id/tv_loan_amount"
+                android:id="@+id/tv_p_enddate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:text="借款金额: "
+                android:text="结项日期: "
                 android:textColor="#333333"
                 android:textSize="14sp"
                 />
+
             <EditText
-                android:id="@+id/et_loan_amount"
+                android:id="@+id/et_p_enddate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:singleLine="true"
-                android:background="@null"
-                android:textSize="12dip"
-                android:gravity="left|center_vertical"
-                android:layout_gravity="center_vertical"
-                android:hint="¥0.0" />
-        </LinearLayout>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:listDivider"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/white"
-        android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:gravity="center_vertical">
-
-
-        <LinearLayout
-
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <!--
-              `loan_cause` varchar(2048) NOT NULL DEFAULT '暂无',
-              `loan_amount` varchar(2048) NOT NULL DEFAULT '0.0',
-              `loan_project_name` varchar(1024) NOT NULL DEFAULT '暂无',
-              `loan_user_name` varchar(30) NOT NULL DEFAULT '暂无',
-              `loan_user_bank_number` varchar(20) NOT NULL DEFAULT '暂无',
-              `loan_user_bank_name` varchar(20) NOT NULL DEFAULT '暂无',
-              `loan_project_uuid` int(11) NOT NULL DEFAULT '0',
-            -->
-
-            <TextView
-                android:id="@+id/tv_loan_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:text="借款人: "
-                android:textColor="#333333"
-                android:textSize="14sp"
-                />
-            <EditText
-                android:id="@+id/et_loan_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:singleLine="true"
                 android:background="@null"
                 android:textSize="12dip"
                 android:gravity="left|center_vertical"
                 android:layout_gravity="center_vertical"
                 />
+
         </LinearLayout>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:listDivider"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/white"
-        android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:gravity="center_vertical">
 
-
-        <LinearLayout
-
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <TextView
-                android:id="@+id/tv_loan_user_bank_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:text="银行卡号: "
-                android:textColor="#333333"
-                android:textSize="14sp"
-                />
-            <EditText
-                android:id="@+id/et_loan_user_bank_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:singleLine="true"
-                android:background="@null"
-                android:textSize="12dip"
-                android:gravity="left|center_vertical"
-                android:layout_gravity="center_vertical"
-                />
-        </LinearLayout>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -256,17 +227,87 @@
 
 
             <TextView
-                android:id="@+id/tv_loan_user_bank_name"
+                android:id="@+id/tv_p_totalmoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:text="开户行: "
+                android:text="总经费: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+
+
+            <EditText
+                android:id="@+id/et_p_totalmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                />
+            <TextView
+                android:id="@+id/tv_p_finished_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="实到金额: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+
+            <EditText
+                android:id="@+id/et_p_finished_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+   <!-- <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
+            <TextView
+                android:id="@+id/tv_p_totalmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="总经费: "
                 android:textColor="#333333"
                 android:textSize="14sp"
                 />
             <EditText
-                android:id="@+id/et_loan_user_bank_name"
+                android:id="@+id/et_p_totalmoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -277,17 +318,85 @@
                 android:layout_gravity="center_vertical"
                 />
         </LinearLayout>
+    </RelativeLayout>-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <TextView
+        android:id="@+id/tv_budget_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="项目预算: "
+        android:textColor="#333333"
+        android:textSize="14sp"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/list_view_pro_budget"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+        </ListView>
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/tv_reim_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:text="项目报销人: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <Button
+                android:id="@+id/addReimUserBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="添加报销人"
+                />
+
+        </LinearLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_commit_loan"
-            android:text="提交"
+
+        <ListView
+            android:id="@+id/list_view_pro_reim_user"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp">
+        </ListView>
+
     </RelativeLayout>
 
 
+
 </LinearLayout>
+</ScrollView>

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +31,16 @@ import reimburse.cuc.com.activity.DailyCostActivity_back;
 import reimburse.cuc.com.activity.DailyCostListActivity;
 import reimburse.cuc.com.activity.DailyReimbursementActivity;
 import reimburse.cuc.com.activity.LoanActivity;
+import reimburse.cuc.com.activity.LoanList;
 import reimburse.cuc.com.activity.MyDailyReimbursementListActivity;
 import reimburse.cuc.com.activity.MyTravelReimbursementListActivity;
+import reimburse.cuc.com.activity.ProjectLeaderProManagActivity;
 import reimburse.cuc.com.activity.TestActivity;
 import reimburse.cuc.com.activity.TrafficCostActivity;
 import reimburse.cuc.com.activity.TrafficCostFormActivity;
 import reimburse.cuc.com.activity.TravelReimbursementActivity;
 import reimburse.cuc.com.base.BaseFragment;
+import reimburse.cuc.com.bean.User;
 import reimburse.cuc.com.reimburse.ListActivity;
 import reimburse.cuc.com.reimburse.R;
 
@@ -45,12 +51,22 @@ public class HomePageFragment extends BaseFragment {
 
     private static final String TAG = HomePageFragment.class.getSimpleName();
     private static final String[] names = new String[]{"借款","记账","报销","账单","查看报销"};
+    private static final String[] namesProLeader = new String[]{"借款","记账","报销","账单","查看报销","项目管理"};
     //private ImageView imageViewView;
     private GridView gridView;
     //private ImageView grad_img;
 
     private List<Map<String, Object>> list;
+
+
+
+
+    //Log.e("---------->登录用户的角色UUID",String.valueOf(user_role_uuid));
+
     private int[] imageIds = {R.drawable.jiekuan_meitu_1, R.drawable.jizhang_meitu_2, R.drawable.baoxiao_meitu_5,R.drawable.zhangdan_meitu_3,R.drawable.chakanbaoxiao_meitu_4};
+    private int[] imageIds_ProLeader = {R.drawable.jiekuan_meitu_1, R.drawable.jizhang_meitu_2, R.drawable.baoxiao_meitu_5,R.drawable.zhangdan_meitu_3,R.drawable.chakanbaoxiao_meitu_4,R.drawable.atguigu_logo};
+
+
 
 
     @Override
@@ -62,30 +78,71 @@ public class HomePageFragment extends BaseFragment {
         gridView = (GridView) view.findViewById(R.id.home_gridview);
         //grad_img = (ImageView) view.findViewById(R.id.gv_image);
 
+        final SharedPreferences sp =  this.getActivity().getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+
+        String user_jsonString = sp.getString("user_jsonString", "");
+
+        User user = JSON.parseObject(user_jsonString, User.class);
+
+        Integer user_role_uuid = user.getUser_role_uuid();
+        //    {R.drawable.jiekuan_meitu_1, R.drawable.jizhang_meitu_2, R.drawable.baoxiao_meitu_5,R.drawable.zhangdan_meitu_3,R.drawable.chakanbaoxiao_meitu_4};
+
+
 
         list = new ArrayList<Map<String, Object>>();
 
+        Log.e("当前登录用户的角色UUID: ",String.valueOf(user_role_uuid));
 
-        for (int i = 0; i < imageIds.length; i++) {
-            Map<String, Object> map = new ConcurrentHashMap<String, Object>();
-            map.put("img", imageIds[i]);
-            map.put("text",names[i]);
-            list.add(map);
+        if(user_role_uuid == 9) {
+            for (int i = 0; i < imageIds_ProLeader.length; i++) {
+                Map<String, Object> map = new ConcurrentHashMap<String, Object>();
+                map.put("img", imageIds_ProLeader[i]);
+                map.put("text",namesProLeader[i]);
+                list.add(map);
+            }
+        }else {
+            for (int i = 0; i < imageIds.length; i++) {
+                Map<String, Object> map = new ConcurrentHashMap<String, Object>();
+                map.put("img", imageIds[i]);
+                map.put("text",names[i]);
+                list.add(map);
+            }
         }
+
+
 
         MyBaseAdaptor myBaseAdaptor = new MyBaseAdaptor();
         gridView.setAdapter(myBaseAdaptor);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 String[] items = new String[]{"日常费用",
                         "交通费"};
                 String[] reim_items = new String[]{"日常报销",
                         "差旅报销"};
+                String[] loan_list = new String[]{"借款申请",
+                        "查看申请"};
                 switch ((int) id) {
                     case 0:
-                        Log.e(TAG,"首页Fragment中点击的id是: " + id);
-                        startActivity(new Intent(getActivity(),LoanActivity.class));
+                        Log.e(TAG, "首页Fragment中点击的id是: " + id);
+                        //startActivity(new Intent(getActivity(),LoanActivity.class));
+                        new AlertDialog.Builder(getActivity()).setTitle("消费类型")
+                                .setItems(loan_list, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        switch (which) {
+                                            case 0:
+                                                Intent dailyCostIntent  = new Intent(getActivity(), LoanActivity.class);
+                                                startActivity(dailyCostIntent);
+                                                break;
+                                            case 1:
+                                                Intent trafficCostIntent = new Intent(getActivity(), LoanList.class);
+                                                startActivity(trafficCostIntent);
+                                                break;
+                                        }
+                                    }
+                                }).setNegativeButton("取消", null).show();
                         break;
                     case 1:
                         Log.e(TAG,"首页Fragment中点击的id是: " + id);
@@ -177,6 +234,10 @@ public class HomePageFragment extends BaseFragment {
                                 }).setNegativeButton("取消", null).show();
 
                         break;
+                    case 5:
+                        Intent dailyCostIntent  = new Intent(getActivity(), ProjectLeaderProManagActivity.class);
+                        startActivity(dailyCostIntent);
+                        break;
 
                 }
             }
@@ -199,12 +260,6 @@ public class HomePageFragment extends BaseFragment {
         startActivityForResult(intent, 0);
     }
 
-   /* @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        Bitmap bp = (Bitmap) data.getExtras().get("data");
-        imageViewView.setImageBitmap(bp);
-    }*/
 
     static class ViewHolder {
         ImageView iv;

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="80dp">
+    <!--
+    `pro_budget_name` varchar(60) NOT NULL DEFAULT '',
+  `pro_budget_percentage` varchar(30) NOT NULL DEFAULT '',
+  `pro_budget_amount
+    -->
+    <TextView
+        android:id="@+id/lv_item_pro_budget_name"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="20sp"
+        android:text="预算类型"
+        android:ellipsize="marquee"
+        />
+    <TextView
+        android:id="@+id/lv_item_pro_budget_percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/lv_item_pro_budget_name"
+        android:layout_marginLeft="15dp"
+        android:singleLine="true"
+        android:textSize="20sp"
+        android:text="预算比例"
+        />
+    <TextView
+        android:id="@+id/lv_item_pro_budget_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:textSize="30sp"
+        android:text="预算金额"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        />
+</RelativeLayout>

@@ -57,7 +57,7 @@ public class MyApplication extends Application {
         mainThread = Thread.currentThread();//实例化当前Application的线程即为主线程
         mainThreadId = android.os.Process.myTid();//获取当前线程的id
 
-        File dir = new File(Environment.getExternalStorageDirectory(), "tessdata");
+       /* File dir = new File(Environment.getExternalStorageDirectory(), "tessdata");
         dir.mkdirs();
         Log.e(TAG, "OCR样本集：存放目录" + dir.toString());
         String tessDataPath =  dir.getAbsolutePath() + File.separator +DEFAULT_LANGUAGE_NAME;
@@ -65,7 +65,7 @@ public class MyApplication extends Application {
 
         if (f.exists()){
             Log.e(TAG,"训练集文件已存在");
-        }
+        }*/
 
 
 

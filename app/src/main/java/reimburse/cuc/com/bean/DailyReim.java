@@ -37,6 +37,9 @@ public class DailyReim {
     private String re_check_account_uuid;
     private String re_check_account_username;
     private String re_check_comments;
+    private String re_check_commit_time;
+    private String re_check_complete_time;
+    private String daily_reim_final_passed_amount;
 
     private List<TongyiXiaofeiBean> tongyiXiaofeiBeans;
 
@@ -307,6 +310,30 @@ public class DailyReim {
 
     public void setRe_check_comments(String re_check_comments) {
         this.re_check_comments = re_check_comments;
+    }
+
+    public String getRe_check_commit_time() {
+        return re_check_commit_time;
+    }
+
+    public void setRe_check_commit_time(String re_check_commit_time) {
+        this.re_check_commit_time = re_check_commit_time;
+    }
+
+    public String getRe_check_complete_time() {
+        return re_check_complete_time;
+    }
+
+    public void setRe_check_complete_time(String re_check_complete_time) {
+        this.re_check_complete_time = re_check_complete_time;
+    }
+
+    public String getDaily_reim_final_passed_amount() {
+        return daily_reim_final_passed_amount;
+    }
+
+    public void setDaily_reim_final_passed_amount(String daily_reim_final_passed_amount) {
+        this.daily_reim_final_passed_amount = daily_reim_final_passed_amount;
     }
 
     @Override

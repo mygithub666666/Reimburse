@@ -156,24 +156,6 @@ public class DailyReimbursementActivity extends Activity {
                     popupWindow = null;
                 }
 
-                /**
-                 * ========================================================
-                 * ========================================================
-                 * ========================================================
-                 * ========================================================
-                 * ========================================================
-                 */
-                /*String pro_uuid_pname = projectNameList.get(position);
-                project_uuid = Integer.parseInt(pro_uuid_pname.split("\\|")[0]);
-                selectedProjectUUID = Integer.parseInt(pro_uuid_pname.split("\\|")[0]);
-                String proName = pro_uuid_pname.split("\\|")[1];
-                //1.得到数据
-                //String proName = projectNameList.get(position);
-                etProjectNameDailyReim.setText(proName);
-                if (popupWindow != null && popupWindow.isShowing()) {
-                    popupWindow.dismiss();
-                    popupWindow = null;
-                }*/
             }
         });
 
@@ -281,8 +263,6 @@ public class DailyReimbursementActivity extends Activity {
                 DailyReim dailyReim = new DailyReim(daily_reim_cause,daily_reim_project_name,daily_reim_amount,
                         daily_reim_traffic_cost_ids,daily_reim_daily_cost_ids,project_uuid,user.getUser_uuid(),
                         user.getUser_name(),user.getMobile_phone_number(),user.getBank_number(),user.getBank_name());
-/*              DailyReim dailyReim = new DailyReim(daily_reim_cause,daily_reim_project_name,daily_reim_amount,
-                        daily_reim_traffic_cost_ids,daily_reim_daily_cost_ids,daily_reim_user_id,project_uuid);*/
 
                 // Java对象转JSON串
                 String dailyReim_jsonString = JSON.toJSONString(dailyReim);
@@ -355,42 +335,6 @@ public class DailyReimbursementActivity extends Activity {
 
             };
         }.start();
-
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                OkHttpClient mOkHttpClient = new OkHttpClient();
-
-
-                MultipartBody.Builder builder = new MultipartBody.Builder();
-
-
-                builder.addFormDataPart("jsonString", jsonString);
-
-                RequestBody requestBody = builder.build();
-                Request.Builder reqBuilder = new Request.Builder();
-                Request request = reqBuilder
-                        .url(Constants.AndroidSaveDailyReimbursement)
-                        .post(requestBody)
-                        .build();
-
-                Response response = null;
-                try {
-                    response = mOkHttpClient.newCall(request).execute();
-                    String resultInfo = response.body().string();
-                    Log.e(TAG, "上传日常费用返回的结果: " + resultInfo);
-                    if(resultInfo.equals("保存成功")) {
-                        showToastInAnyThread(resultInfo);
-                        finish();
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();*/
 
     }
 

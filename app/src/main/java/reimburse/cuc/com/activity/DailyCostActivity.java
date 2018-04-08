@@ -11,6 +11,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -58,6 +59,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import butterknife.ButterKnife;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -67,6 +69,11 @@ import okhttp3.Response;
 import reimburse.cuc.com.bean.Constants;
 import reimburse.cuc.com.bean.DailyCost;
 import reimburse.cuc.com.bean.ExpenseCategory;
+import reimburse.cuc.com.bean.Pro_Budget;
+import reimburse.cuc.com.bean.Project;
+import reimburse.cuc.com.bean.Traffic_Fare_Basis;
+import reimburse.cuc.com.bean.Traffic_Type;
+import reimburse.cuc.com.bean.User;
 import reimburse.cuc.com.reimburse.LauncherActivity;
 import reimburse.cuc.com.reimburse.R;
 import reimburse.cuc.com.util.DensityUtil;
@@ -83,34 +90,44 @@ public class DailyCostActivity extends Activity {
     private static final int PHOTOVIEW = 03;
     private static final int PHOTOVIEW_RESULT = 04;
     private static final int SHOW_ALL_EXPENSE_CATEGORY = 05;
+    private static final int SHOW_ALL_PROJECT = 06;
     private static final String TAG = DailyCostActivity.class.getSimpleName();
 
-    private List<ExpenseCategory> expenseCategoryList;
-    
-    private EditText et_daily_cost_type;
 
     private EditText et_daily_cost__date;
     private EditText et_daily_cost_tag;
-    /*rivate EditText et_daily_cost_unit_price;
-    private EditText et_daily_cost_ticket_number;*/
     private EditText et_daily_cost_total_amount;
     private EditText et_daily_cost_desc;
-
-    private PopupWindow daily_cost_type_popupWindow;
-    private ListView daily_cost_type_popupWindow_listview;
-
+    private  EditText  et_daily_cost_pro_name;
+    private  EditText  et_daily_cost_pro_budget_type;
 
     private GridView gw_daily_cost_invoice;
     private Button btn_save_daily_cost;
     private List<String> picUrls;
     DailyCostAddOrDelGridViewAdapter dailyCostAddOrDelGridViewAdapter;
-    
-    
+
+
+    /**
+     * 用于选择消费项目和预算类型
+     */
+    private ListView listview_project;
+    private ListView listview_project_budget;
+
+    private PopupWindow popupWindowOfProject;
+    private PopupWindow popupWindowOfProBudget;
+
+    List<Project> projectList;
+    List<Pro_Budget> pro_budgetList;
+
+    User user;
+    Integer daily_cost_pro_uuid;
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if(msg.what == SHOW_ALL_EXPENSE_CATEGORY) {
-                daily_cost_type_popupWindow_listview.setAdapter(new DailyCostTypePopwindowListViewAdapter());
+            if(msg.what == SHOW_ALL_PROJECT) {
+                //daily_cost_type_popupWindow_listview.setAdapter(new DailyCostTypePopwindowListViewAdapter());
+                listview_project.setAdapter(new ListViewProjectAdapter());
             }
         }
     };
@@ -119,14 +136,16 @@ public class DailyCostActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_cost);
+        //ButterKnife.bind(this);
+        et_daily_cost_pro_name = (EditText) findViewById(R.id.et_daily_cost_pro_name);
+        et_daily_cost_pro_budget_type = (EditText) findViewById(R.id.et_daily_cost_pro_budget_type);
 
-        et_daily_cost_type = (EditText) findViewById(R.id.et_daily_cost_type);
+
+
 
         et_daily_cost_tag = (EditText) findViewById(R.id.et_daily_cost_tag);
 
         et_daily_cost__date = (EditText) findViewById(R.id.et_daily_cost__date);
-        /*et_daily_cost_unit_price = (EditText) findViewById(R.id.et_daily_cost_unit_price);
-        et_daily_cost_ticket_number  = (EditText) findViewById(R.id.et_daily_cost_ticket_number)*/;
         et_daily_cost_total_amount = (EditText) findViewById(R.id.et_daily_cost_total_amount);
         et_daily_cost_desc = (EditText) findViewById(R.id.et_daily_cost_desc);
 
@@ -134,13 +153,102 @@ public class DailyCostActivity extends Activity {
 
         gw_daily_cost_invoice = (GridView) findViewById(R.id.gw_daily_cost_invoice);
 
+        dailyCostAddOrDelGridViewAdapter = new DailyCostAddOrDelGridViewAdapter(7);
 
-        expenseCategoryList = new ArrayList<>();
+        /**
+         * 初始化二级级联
+         */
+
+        projectList = new ArrayList<>();
+        pro_budgetList = new ArrayList<>();
+
+        listview_project = new ListView(this);
+        listview_project.setBackgroundResource(R.drawable.listview_background);
+
+        listview_project_budget = new ListView(this);
+        listview_project_budget.setBackgroundResource(R.drawable.listview_background);
+
+        getUserOwnProjectWithBudget();
+
+
+
+        et_daily_cost_pro_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (popupWindowOfProject == null) {
+                    popupWindowOfProject = new PopupWindow(DailyCostActivity.this);
+                    popupWindowOfProject.setWidth(et_daily_cost_pro_name.getWidth());
+                    int height = DensityUtil.dip2px(DailyCostActivity.this, 200);//dp->px
+                    //Toast.makeText(TrafficCostFormActivity.this, "height==" + height, Toast.LENGTH_SHORT).show();
+                    popupWindowOfProject.setHeight(height);//px
+
+                    popupWindowOfProject.setContentView(listview_project);
+                    popupWindowOfProject.setFocusable(true);//设置焦点
+                }
+
+                popupWindowOfProject.showAsDropDown(et_daily_cost_pro_name, 0, 0);
+            }
+        });
+
+        listview_project.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               Project project = projectList.get(position);
+                //1.得到数据
+                String pro_name = project.getP_name();
+                daily_cost_pro_uuid = project.getId();
+                //2.设置输入框
+                et_daily_cost_pro_name.setText(pro_name);
+                et_daily_cost_pro_budget_type.setText("预算类别");
+                pro_budgetList = project.getPro_Budgets();
+                listview_project_budget.setAdapter(new ProBudgetBaseAdapter());
+
+                if (popupWindowOfProject != null && popupWindowOfProject.isShowing()) {
+                    popupWindowOfProject.dismiss();
+                    popupWindowOfProject = null;
+                }
+            }
+        });
+
+        et_daily_cost_pro_budget_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (popupWindowOfProBudget == null) {
+                    popupWindowOfProBudget = new PopupWindow(DailyCostActivity.this);
+                    popupWindowOfProBudget.setWidth(et_daily_cost_pro_budget_type.getWidth());
+                    int height = DensityUtil.dip2px(DailyCostActivity.this, 200);//dp->px
+                    Toast.makeText(DailyCostActivity.this, "height==" + height, Toast.LENGTH_SHORT).show();
+                    popupWindowOfProBudget.setHeight(height);//px
+
+                    popupWindowOfProBudget.setContentView(listview_project_budget);
+                    popupWindowOfProBudget.setFocusable(true);//设置焦点
+                }
+
+                popupWindowOfProBudget.showAsDropDown(et_daily_cost_pro_budget_type, 0, 0);
+            }
+        });
+
+
+        listview_project_budget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Pro_Budget pro_budget = pro_budgetList.get(position);
+                //1.得到数据
+                String budget_name = pro_budget.getPro_budget_name();
+                //2.设置输入框
+                et_daily_cost_pro_budget_type.setText(budget_name);
+
+                if (popupWindowOfProBudget != null && popupWindowOfProBudget.isShowing()) {
+
+                    popupWindowOfProBudget.dismiss();
+                    popupWindowOfProBudget = null;
+                }
+            }
+        });
 
         picUrls = new ArrayList<>();
-        dailyCostAddOrDelGridViewAdapter = new DailyCostAddOrDelGridViewAdapter(7);
-        daily_cost_type_popupWindow_listview = new ListView(DailyCostActivity.this);
-        daily_cost_type_popupWindow_listview.setBackgroundResource(R.drawable.listview_background);
 
         defaultDate(et_daily_cost__date);
 
@@ -152,71 +260,10 @@ public class DailyCostActivity extends Activity {
         });
 
 
-        /**
-         * 设置总金额
-         *//*
-        et_daily_cost_ticket_number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-
-                } else {
-
-                    String daily_cost_unit_price = et_daily_cost_unit_price.getText().toString();
-                    String daily_cost_ticket_number = et_daily_cost_ticket_number.getText().toString();
-
-                    if (daily_cost_ticket_number != null && daily_cost_unit_price != null) {
-
-                        BigDecimal unit_price = new BigDecimal(daily_cost_unit_price);
-                        BigDecimal ticket_number = new BigDecimal(daily_cost_ticket_number);
-                        BigDecimal total_amount = unit_price.multiply(ticket_number);
-                        et_daily_cost_total_amount.setText(total_amount.toString());
-                    }
-
-                }
-            }
-        });*/
 
 
+        //getAllDailyExpenseCategoryList();
 
-        getAllDailyExpenseCategoryList();
-
-
-        et_daily_cost_type.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (daily_cost_type_popupWindow == null) {
-                    daily_cost_type_popupWindow = new PopupWindow(DailyCostActivity.this);
-                    daily_cost_type_popupWindow.setWidth(et_daily_cost_type.getWidth());
-                    int height = DensityUtil.dip2px(DailyCostActivity.this, 200);//dp->px
-                    //Toast.makeText(TrafficCostFormActivity.this, "height==" + height, Toast.LENGTH_SHORT).show();
-                    daily_cost_type_popupWindow.setHeight(height);//px
-
-                    daily_cost_type_popupWindow.setContentView(daily_cost_type_popupWindow_listview);
-                    daily_cost_type_popupWindow.setFocusable(true);//设置焦点
-                }
-
-                daily_cost_type_popupWindow.showAsDropDown(et_daily_cost_type, 0, 0);
-            }
-        });
-
-        daily_cost_type_popupWindow_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ExpenseCategory ec = expenseCategoryList.get(position);
-                //1.得到数据
-                String msg = ec.getEc_name();
-                //2.设置输入框
-                et_daily_cost_type.setText(msg);
-
-                if (daily_cost_type_popupWindow != null && daily_cost_type_popupWindow.isShowing()) {
-
-                    daily_cost_type_popupWindow.dismiss();
-                    daily_cost_type_popupWindow = null;
-                }
-            }
-        });
 
         /**
          * GridView的相关设置
@@ -308,7 +355,157 @@ public class DailyCostActivity extends Activity {
 
     }
 
+    class ListViewProjectAdapter extends BaseAdapter {
 
+        @Override
+        public int getCount() {
+            return projectList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return projectList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = View.inflate(DailyCostActivity.this, R.layout.project_list_popwindow_item, null);
+                viewHolder = new ViewHolder();
+                viewHolder.tv_project_popwindow_name = (TextView) convertView.findViewById(R.id.tv_project_popwindow_name);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            //根据位置得到数据
+            final Project project = projectList.get(position);
+            viewHolder.tv_project_popwindow_name.setText(project.getP_name());
+
+            return convertView;
+        }
+    }
+
+    static class ViewHolder {
+        TextView tv_project_popwindow_name;
+    }
+
+    class ProBudgetBaseAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return pro_budgetList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return pro_budgetList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            FareBasisBaseViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = View.inflate(DailyCostActivity.this, R.layout.pro_budget_item_popwindow, null);
+                viewHolder = new FareBasisBaseViewHolder();
+                viewHolder.tv_pro_budget_name = (TextView) convertView.findViewById(R.id.tv_pro_budget_name);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (FareBasisBaseViewHolder) convertView.getTag();
+            }
+
+            //根据位置得到数据
+            final Pro_Budget pro_budget = pro_budgetList.get(position);
+            viewHolder.tv_pro_budget_name.setText(pro_budget.getPro_budget_name());
+
+            return convertView;
+        }
+    }
+
+    static class FareBasisBaseViewHolder {
+        TextView tv_pro_budget_name;
+    }
+
+
+    /**
+     * 得到所有的项目信息，展示成下拉框
+     */
+    public void getUserOwnProjectWithBudget(){
+        new Thread() {
+            public void run() {
+                try {
+
+
+                    final SharedPreferences sp =  getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+
+                    String user_jsonString = sp.getString("user_jsonString", "");
+
+                    User user_logined = JSON.parseObject(user_jsonString, User.class);
+
+                    Integer user_uuid = user_logined.getUser_uuid();
+
+                    // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
+                    String path = Constants.AndroidGetAllProjectJson;
+                    URL url = new URL(path);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    //2.指定请求方式为post
+                    conn.setRequestMethod("POST");
+                    //3.设置http协议的请求头
+                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");//设置发送的数据为表单类型
+
+                    String data ="&user_id="+ URLEncoder.encode(String.valueOf(user_uuid), "utf-8");
+
+                    conn.setRequestProperty("Content-Length", String.valueOf(data.length()));//告诉服务器发送的数据的长度
+                    //post的请求是把数据以流的方式写给了服务器
+                    //指定请求的输出模式
+                    conn.setDoOutput(true);//运行当前的应用程序给服务器写数据
+                    conn.getOutputStream().write(data.getBytes());
+                    Log.e("post size", String.valueOf(data.getBytes().length));
+                    int code = conn.getResponseCode();
+
+                    if(code == 200){
+                        InputStream is = conn.getInputStream();
+                        final String result = StreamTools.readStream(is);
+
+                        //projectNameList = JSON.parseArray(result, String.class);
+
+
+
+                        user = JSON.parseObject(result,User.class);
+
+                        projectList = user.getProjects();
+
+                        Message msg = Message.obtain();
+                        msg.what = SHOW_ALL_PROJECT;
+                        msg.obj = projectList;
+                        handler.sendMessage(msg);
+                        Log.e("返回的JSON数据", result);
+                        //showToastInAnyThread(result);
+                        if(result.equals("保存成功")) {
+                        }
+                    }else{
+                        showToastInAnyThread("请求失败");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToastInAnyThread("请求失败");
+                }
+
+            };
+        }.start();
+    }
 
     public void uploadDailyCost(final String content){
 
@@ -327,7 +524,11 @@ public class DailyCostActivity extends Activity {
                      private Integer daily_cost_user_id;
                  */
 
-                String daily_cost_type = et_daily_cost_type.getText().toString();
+                //String daily_cost_type = et_daily_cost_type.getText().toString();
+                //Integer daily_cost_pro_uuid ;
+                String daily_cost_pro_name = et_daily_cost_pro_name.getText().toString();
+                String daily_cost_pro_budget_type = et_daily_cost_pro_budget_type.getText().toString();
+                String daily_cost_type = null;
                 String daily_cost_date = et_daily_cost__date.getText().toString();
                 /*String daily_cost_unit_price = et_daily_cost_unit_price.getText().toString();
                 String daily_cost_ticket_number = et_daily_cost_ticket_number.getText().toString();*/
@@ -380,7 +581,8 @@ public class DailyCostActivity extends Activity {
                 Log.e(TAG, "daily_cost_invoice_pic_urls=" + daily_cost_invoice_pic_urls);
                 //builder.addFormDataPart("daily_cost_invoice_pic_urls", daily_cost_invoice_pic_urls);
 
-                DailyCost dailyCost = new DailyCost(daily_cost_type,daily_cost_date,"单价",
+                DailyCost dailyCost = new DailyCost(daily_cost_pro_uuid,daily_cost_pro_budget_type,daily_cost_pro_name,daily_cost_pro_name,
+                        daily_cost_date,"单价",
                         "票据张数",daily_cost_total_amount,daily_cost_desc,
                         daily_cost_invoice_pic_urls,android_user_id,et_daily_cost_tag.getText().toString());
                 // Java对象转JSON串
@@ -523,46 +725,6 @@ public class DailyCostActivity extends Activity {
     }
 
 
-    class DailyCostTypePopwindowListViewAdapter extends BaseAdapter{
-
-        @Override
-        public int getCount() {
-            return expenseCategoryList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return expenseCategoryList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-            if(convertView  == null){
-                convertView = View.inflate(DailyCostActivity.this,R.layout.popwindow_item,null);
-                viewHolder = new ViewHolder();
-                viewHolder.tv_msg = (TextView) convertView.findViewById(R.id.tv_msg);
-                convertView.setTag(viewHolder);
-            }else{
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            //根据位置得到数据
-            final ExpenseCategory ec = expenseCategoryList.get(position);
-            viewHolder.tv_msg.setText(ec.getEc_name());
-
-            return convertView;
-        }
-    }
-
-    class ViewHolder{
-        TextView tv_msg;
-    }
 
 
     /**
@@ -752,61 +914,6 @@ public class DailyCostActivity extends Activity {
         return null;
     }
 
-    public void getAllDailyExpenseCategoryList(){
-        new Thread() {
-            public void run() {
-                try {
-                    // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
-                    String path = Constants.AndroidGetAllCategoryListJson;
-                    URL url = new URL(path);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    //2.指定请求方式为post
-                    conn.setRequestMethod("POST");
-                    //3.设置http协议的请求头
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");//设置发送的数据为表单类型
-
-                    String data ="&user_id="+ URLEncoder.encode(String.valueOf(LauncherActivity.ANDROID_USER_ID), "utf-8");
-
-                    conn.setRequestProperty("Content-Length", String.valueOf(data.length()));//告诉服务器发送的数据的长度
-                    //post的请求是把数据以流的方式写给了服务器
-                    //指定请求的输出模式
-                    conn.setDoOutput(true);//运行当前的应用程序给服务器写数据
-                    conn.getOutputStream().write(data.getBytes());
-                    Log.e("post size", String.valueOf(data.getBytes().length));
-                    int code = conn.getResponseCode();
-
-                    if(code == 200){
-                        InputStream is = conn.getInputStream();
-                        final String result = StreamTools.readStream(is);
-                        Log.e("返回的消费类型的JSON数据",result);
-                        expenseCategoryList = JSON.parseArray(result, ExpenseCategory.class);
-
-                        for (int i=0;i<expenseCategoryList.size();i++){
-                            ExpenseCategory expenseCategory = expenseCategoryList.get(i);
-                            Log.e(TAG,"交通类型"+i+": "+expenseCategory.getEc_name());
-                        }
-
-                        Message msg = Message.obtain();
-                        msg.what = SHOW_ALL_EXPENSE_CATEGORY;
-                        msg.obj = expenseCategoryList;
-                        handler.sendMessage(msg);
-
-                        if(result.equals("保存成功")) {
-                            //finish();
-                          /* Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                           startActivity(intent);*/
-                        }
-                    }else{
-                        showToastInAnyThread("请求失败");
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            };
-        }.start();
-    }
 
     private void showToastInAnyThread(final String result) {
         runOnUiThread(new Runnable() {

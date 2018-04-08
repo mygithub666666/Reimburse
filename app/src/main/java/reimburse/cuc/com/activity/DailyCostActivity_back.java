@@ -120,7 +120,7 @@ public class DailyCostActivity_back extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_cost);
 
-        et_daily_cost_type = (EditText) findViewById(R.id.et_daily_cost_type);
+        //et_daily_cost_type = (EditText) findViewById(R.id.et_daily_cost_type);
 
         et_daily_cost_tag = (EditText) findViewById(R.id.et_daily_cost_tag);
         et_daily_cost__date = (EditText) findViewById(R.id.et_daily_cost__date);

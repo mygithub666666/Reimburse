@@ -8,7 +8,11 @@
 
     <include layout="@layout/title_loan_activity"/>
 
-
+    <Button
+        android:id="@+id/btn_export_loan_excel"
+        android:text="导出Excel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -50,6 +54,7 @@
                 android:textSize="12dip"
                 android:gravity="left|center_vertical"
                 android:layout_gravity="center_vertical"
+                android:editable="false"
                 android:text="出差借款" />
         </LinearLayout>
     </RelativeLayout>
@@ -71,7 +76,7 @@
             android:layout_width="95dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="选择项目: "
+            android:text="借款项目: "
             android:textColor="#333333"
             android:textSize="14sp"/>
         <EditText
@@ -89,7 +94,7 @@
             android:textColor="#5c5c5c"
             android:textSize="14sp"
             android:focusableInTouchMode="false"
-            android:drawableRight="@drawable/down_arrow"
+            android:editable="false"
             />
 
     </RelativeLayout>
@@ -135,6 +140,7 @@
                 android:textSize="12dip"
                 android:gravity="left|center_vertical"
                 android:layout_gravity="center_vertical"
+                android:editable="false"
                 android:hint="¥0.0" />
         </LinearLayout>
     </RelativeLayout>
@@ -158,16 +164,6 @@
             android:layout_height="wrap_content"
             >
 
-            <!--
-              `loan_cause` varchar(2048) NOT NULL DEFAULT '暂无',
-              `loan_amount` varchar(2048) NOT NULL DEFAULT '0.0',
-              `loan_project_name` varchar(1024) NOT NULL DEFAULT '暂无',
-              `loan_user_name` varchar(30) NOT NULL DEFAULT '暂无',
-              `loan_user_bank_number` varchar(20) NOT NULL DEFAULT '暂无',
-              `loan_user_bank_name` varchar(20) NOT NULL DEFAULT '暂无',
-              `loan_project_uuid` int(11) NOT NULL DEFAULT '0',
-            -->
-
             <TextView
                 android:id="@+id/tv_loan_user_name"
                 android:layout_width="wrap_content"
@@ -188,6 +184,7 @@
                 android:textSize="12dip"
                 android:gravity="left|center_vertical"
                 android:layout_gravity="center_vertical"
+                android:editable="false"
                 />
         </LinearLayout>
     </RelativeLayout>
@@ -231,6 +228,7 @@
                 android:textSize="12dip"
                 android:gravity="left|center_vertical"
                 android:layout_gravity="center_vertical"
+                android:editable="false"
                 />
         </LinearLayout>
     </RelativeLayout>
@@ -275,19 +273,100 @@
                 android:textSize="12dip"
                 android:gravity="left|center_vertical"
                 android:layout_gravity="center_vertical"
+                android:editable="false"
                 />
         </LinearLayout>
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_commit_loan"
-            android:text="提交"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/tv_loan_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="审核状态: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <EditText
+                android:id="@+id/et_loan_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:editable="false"
+                />
+        </LinearLayout>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/tv_loan_check_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="审批意见: "
+                android:textColor="#333333"
+                android:textSize="14sp"
+                />
+            <EditText
+                android:id="@+id/et_loan_check_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:inputType="textMultiLine"
+                android:editable="false"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
 
 
 </LinearLayout>

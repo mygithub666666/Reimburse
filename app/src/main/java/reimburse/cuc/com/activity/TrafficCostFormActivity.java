@@ -11,6 +11,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -48,7 +49,6 @@ import com.bumptech.glide.Priority;
 
 import java.io.File;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -68,10 +68,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import reimburse.cuc.com.bean.Constants;
-import reimburse.cuc.com.bean.DailyCost;
+import reimburse.cuc.com.bean.Pro_Budget;
+import reimburse.cuc.com.bean.Project;
 import reimburse.cuc.com.bean.Traffic_Cost;
 import reimburse.cuc.com.bean.Traffic_Fare_Basis;
 import reimburse.cuc.com.bean.Traffic_Type;
+import reimburse.cuc.com.bean.User;
 import reimburse.cuc.com.reimburse.LauncherActivity;
 import reimburse.cuc.com.reimburse.R;
 import reimburse.cuc.com.util.DensityUtil;
@@ -87,6 +89,11 @@ public class TrafficCostFormActivity extends Activity {
     private static final int CAMERA = 02;
     private static final int PHOTOVIEW = 03;
     private static final int PHOTOVIEW_RESULT = 04;
+    private static final int SHOW_ALL_PROJECT = 05;
+    @Bind(R.id.et_traffic_cost_pro_name)
+    EditText etTrafficCostProName;
+    @Bind(R.id.et_traffic_cost_pro_budget_type)
+    EditText etTrafficCostProBudgetType;
 
     private List<String> picUrls;
 
@@ -148,11 +155,31 @@ public class TrafficCostFormActivity extends Activity {
 
     TrafficCostAddOrDelGridViewAdapter trafficCostAddOrDelGridViewAdapter;
 
+
+    /**
+     * 用于选择消费项目和预算类型
+     */
+    private ListView listview_project;
+    private ListView listview_project_budget;
+
+    private PopupWindow popupWindowOfProject;
+    private PopupWindow popupWindowOfProBudget;
+
+    List<Project> projectList;
+    List<Pro_Budget> pro_budgetList;
+
+    User user;
+    Integer traffic_cost_pro_uuid;
+
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == SHOW_ALL_TRAFFIC_TYPE) {
                 listview.setAdapter(new MyBaseAdapter());
+            }else if(msg.what == SHOW_ALL_PROJECT) {
+                //daily_cost_type_popupWindow_listview.setAdapter(new DailyCostTypePopwindowListViewAdapter());
+                listview_project.setAdapter(new ListViewProjectAdapter());
             }
         }
     };
@@ -188,28 +215,104 @@ public class TrafficCostFormActivity extends Activity {
          * 设置日期和时间
          */
         setDateAndTime();
-/*
-        et_traffic_cost_ticket_number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+
+        getUserOwnProjectWithBudget();
+
+
+        /**
+         * 初始化二级级联
+         */
+
+        projectList = new ArrayList<>();
+        pro_budgetList = new ArrayList<>();
+
+        listview_project = new ListView(this);
+        listview_project.setBackgroundResource(R.drawable.listview_background);
+
+        listview_project_budget = new ListView(this);
+        listview_project_budget.setBackgroundResource(R.drawable.listview_background);
+
+        getUserOwnProjectWithBudget();
+
+
+
+        etTrafficCostProName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+            public void onClick(View v) {
 
-                } else {
+                if (popupWindowOfProject == null) {
+                    popupWindowOfProject = new PopupWindow(TrafficCostFormActivity.this);
+                    popupWindowOfProject.setWidth(etTrafficCostProName.getWidth());
+                    int height = DensityUtil.dip2px(TrafficCostFormActivity.this, 200);//dp->px
+                    //Toast.makeText(TrafficCostFormActivity.this, "height==" + height, Toast.LENGTH_SHORT).show();
+                    popupWindowOfProject.setHeight(height);//px
 
-                    String traffic_cost_unit_price = et_traffic_cost_unit_price.getText().toString();
-                    String traffic_cost_ticket_number = et_traffic_cost_ticket_number.getText().toString();
+                    popupWindowOfProject.setContentView(listview_project);
+                    popupWindowOfProject.setFocusable(true);//设置焦点
+                }
 
-                    if (traffic_cost_ticket_number != null && traffic_cost_unit_price != null) {
+                popupWindowOfProject.showAsDropDown(etTrafficCostProName, 0, 0);
+            }
+        });
 
-                        BigDecimal unit_price = new BigDecimal(traffic_cost_unit_price);
-                        BigDecimal ticket_number = new BigDecimal(traffic_cost_ticket_number);
-                        BigDecimal total_amount = unit_price.multiply(ticket_number);
-                        et_traffic_cost_total_amount.setText(total_amount.toString());
-                    }
+        listview_project.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Project project = projectList.get(position);
+                //1.得到数据
+                String pro_name = project.getP_name();
+                traffic_cost_pro_uuid = project.getId();
+                //2.设置输入框
+                etTrafficCostProName.setText(pro_name);
+                etTrafficCostProBudgetType.setText("预算类别");
+                pro_budgetList = project.getPro_Budgets();
+                listview_project_budget.setAdapter(new ProBudgetBaseAdapter());
 
+                if (popupWindowOfProject != null && popupWindowOfProject.isShowing()) {
+                    popupWindowOfProject.dismiss();
+                    popupWindowOfProject = null;
                 }
             }
-        });*/
+        });
+
+        etTrafficCostProBudgetType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (popupWindowOfProBudget == null) {
+                    popupWindowOfProBudget = new PopupWindow(TrafficCostFormActivity.this);
+                    popupWindowOfProBudget.setWidth(etTrafficCostProBudgetType.getWidth());
+                    int height = DensityUtil.dip2px(TrafficCostFormActivity.this, 200);//dp->px
+                    Toast.makeText(TrafficCostFormActivity.this, "height==" + height, Toast.LENGTH_SHORT).show();
+                    popupWindowOfProBudget.setHeight(height);//px
+
+                    popupWindowOfProBudget.setContentView(listview_project_budget);
+                    popupWindowOfProBudget.setFocusable(true);//设置焦点
+                }
+
+                popupWindowOfProBudget.showAsDropDown(etTrafficCostProBudgetType, 0, 0);
+            }
+        });
+
+
+        listview_project_budget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Pro_Budget pro_budget = pro_budgetList.get(position);
+                //1.得到数据
+                String budget_name = pro_budget.getPro_budget_name();
+                //2.设置输入框
+                etTrafficCostProBudgetType.setText(budget_name);
+
+                if (popupWindowOfProBudget != null && popupWindowOfProBudget.isShowing()) {
+
+                    popupWindowOfProBudget.dismiss();
+                    popupWindowOfProBudget = null;
+                }
+            }
+        });
+
 
 
         traffic_typeList = new ArrayList<>();
@@ -301,7 +404,6 @@ public class TrafficCostFormActivity extends Activity {
         });
 
 
-
         /**
          *
          *                   GridView的相关设置
@@ -385,42 +487,182 @@ public class TrafficCostFormActivity extends Activity {
         });
 
 
-
         btnSaveTrafficCost.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadTrafficCost();
             }
         });
-        
 
-        /**
-         * intent.putExtra("TrafficCostJsonString",jsonString);
-         */
-        /*Intent intent = getIntent();
 
-        String TrafficCostJsonString = intent.getStringExtra("TrafficCostJsonString");
-        // JSON串转用户组对象
-        Traffic_Cost traffic_cost = JSON.parseObject(TrafficCostJsonString,Traffic_Cost.class);
-
-        et_traffic_cost_start_city.setText(traffic_cost.getTraffic_cost_start_city());
-        et_traffic_cost_end_city.setText(traffic_cost.getTraffic_cost_end_city());*/
 
 
     }
 
 
+
+    class ListViewProjectAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return projectList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return projectList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ProjectViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = View.inflate(TrafficCostFormActivity.this, R.layout.project_list_popwindow_item, null);
+                viewHolder = new ProjectViewHolder();
+                viewHolder.tv_project_popwindow_name = (TextView) convertView.findViewById(R.id.tv_project_popwindow_name);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ProjectViewHolder) convertView.getTag();
+            }
+
+            //根据位置得到数据
+            final Project project = projectList.get(position);
+            viewHolder.tv_project_popwindow_name.setText(project.getP_name());
+
+            return convertView;
+        }
+    }
+
+    static class ProjectViewHolder {
+        TextView tv_project_popwindow_name;
+    }
+
+    class ProBudgetBaseAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return pro_budgetList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return pro_budgetList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ProBudgetViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = View.inflate(TrafficCostFormActivity.this, R.layout.pro_budget_item_popwindow, null);
+                viewHolder = new ProBudgetViewHolder();
+                viewHolder.tv_pro_budget_name = (TextView) convertView.findViewById(R.id.tv_pro_budget_name);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ProBudgetViewHolder) convertView.getTag();
+            }
+
+            //根据位置得到数据
+            final Pro_Budget pro_budget = pro_budgetList.get(position);
+            viewHolder.tv_pro_budget_name.setText(pro_budget.getPro_budget_name());
+
+            return convertView;
+        }
+    }
+
+    static class ProBudgetViewHolder {
+        TextView tv_pro_budget_name;
+    }
+
+
     /**
-     *
-     *                                向服务端保存数据
-     *  ======================================================================================
-     *  ======================================================================================
-     *  ======================================================================================
-     *  ======================================================================================
-     *  ======================================================================================
-     *
+     * 得到所有的项目信息，展示成下拉框
      */
-    public void uploadTrafficCost(){
+    public void getUserOwnProjectWithBudget(){
+        new Thread() {
+            public void run() {
+                try {
+
+
+                    final SharedPreferences sp =  getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+
+                    String user_jsonString = sp.getString("user_jsonString", "");
+
+                    User user_logined = JSON.parseObject(user_jsonString, User.class);
+
+                    Integer user_uuid = user_logined.getUser_uuid();
+
+                    // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
+                    String path = Constants.AndroidGetAllProjectJson;
+                    URL url = new URL(path);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    //2.指定请求方式为post
+                    conn.setRequestMethod("POST");
+                    //3.设置http协议的请求头
+                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");//设置发送的数据为表单类型
+
+                    String data ="&user_id="+ URLEncoder.encode(String.valueOf(user_uuid), "utf-8");
+
+                    conn.setRequestProperty("Content-Length", String.valueOf(data.length()));//告诉服务器发送的数据的长度
+                    //post的请求是把数据以流的方式写给了服务器
+                    //指定请求的输出模式
+                    conn.setDoOutput(true);//运行当前的应用程序给服务器写数据
+                    conn.getOutputStream().write(data.getBytes());
+                    Log.e("post size", String.valueOf(data.getBytes().length));
+                    int code = conn.getResponseCode();
+
+                    if(code == 200){
+                        InputStream is = conn.getInputStream();
+                        final String result = StreamTools.readStream(is);
+
+                        //projectNameList = JSON.parseArray(result, String.class);
+
+
+
+                        user = JSON.parseObject(result,User.class);
+
+                        projectList = user.getProjects();
+
+                        Message msg = Message.obtain();
+                        msg.what = SHOW_ALL_PROJECT;
+                        msg.obj = projectList;
+                        handler.sendMessage(msg);
+                        Log.e("返回的JSON数据", result);
+                        //showToastInAnyThread(result);
+                        if(result.equals("保存成功")) {
+                        }
+                    }else{
+                        showToastInAnyThread("请求失败");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToastInAnyThread("请求失败");
+                }
+
+            };
+        }.start();
+    }
+
+
+    /**
+     * 向服务端保存数据
+     * ======================================================================================
+     * ======================================================================================
+     * ======================================================================================
+     * ======================================================================================
+     * ======================================================================================
+     */
+    public void uploadTrafficCost() {
 
         new Thread(new Runnable() {
             @Override
@@ -434,43 +676,38 @@ public class TrafficCostFormActivity extends Activity {
 
                 Integer traffic_cost_user_id = LauncherActivity.ANDROID_USER_ID;
 
-                String traffic_cost_type = et_input.getText().toString();
+                String traffic_cost_pro_name = etTrafficCostProName.getText().toString();
+                String traffic_cost_pro_budget_type = etTrafficCostProBudgetType.getText().toString();
+
+                String traffic_cost_type = etTrafficCostProBudgetType.getText().toString();
                 String traffic_cost_tag = et_traffic_cost_tag.getText().toString();
                 String traffic_cost_fare_basis = et_fare_basis.getText().toString();
-                String traffic_cost_start_city =  et_traffic_cost_start_city.getText().toString();
+                String traffic_cost_start_city = et_traffic_cost_start_city.getText().toString();
                 String traffic_cost_end_city = et_traffic_cost_end_city.getText().toString();
-                String traffic_cost_start_datetime = et_start_date.getText().toString()+" "+et_start_time.getText().toString();
-                String traffic_cost_end_datetime = et_end_date.getText().toString()+" "+et_end_time.getText().toString();
-               /* String traffic_cost_unit_price = et_traffic_cost_unit_price.getText().toString();
-                String traffic_cost_ticket_number = et_traffic_cost_ticket_number.getText().toString();*/
+                String traffic_cost_start_datetime = et_start_date.getText().toString() + " " + et_start_time.getText().toString();
+                String traffic_cost_end_datetime = et_end_date.getText().toString() + " " + et_end_time.getText().toString();
                 String traffic_cost_total_amount = et_traffic_cost_total_amount.getText().toString();
-                String traffic_cost_desc =  et_traffic_cost_desc.getText().toString();
-               /* showToastInAnyThread(traffic_cost_type+","+traffic_cost_fare_basis+","+traffic_cost_start_city
-                        +","+traffic_cost_end_city+","+traffic_cost_start_datetime+","+traffic_cost_end_datetime+","
-                        +traffic_cost_unit_price+","+traffic_cost_ticket_number+","+traffic_cost_total_amount+","
-                        +traffic_cost_desc+","+traffic_cost_user_id);*/
-
+                String traffic_cost_desc = et_traffic_cost_desc.getText().toString();
 
 
                 StringBuffer traffic_cost_invoice_pic_urls_StringBufffer = new StringBuffer();
 
 
-
-                for (int i=0;i<picUrls.size();i++){
-                    Log.e(TAG,"遍历最终选择的图片url,第"+i+"个图片的url: "+picUrls.get(i));
-                    if(i == picUrls.size()-1) {
-                        String pic_save_name_last = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())+new Random().nextInt(10)+".png";
-                        Log.e(TAG,"发票url集合中第"+i+"个元素,pic_save_name_last = "+pic_save_name_last);
+                for (int i = 0; i < picUrls.size(); i++) {
+                    Log.e(TAG, "遍历最终选择的图片url,第" + i + "个图片的url: " + picUrls.get(i));
+                    if (i == picUrls.size() - 1) {
+                        String pic_save_name_last = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + new Random().nextInt(10) + ".png";
+                        Log.e(TAG, "发票url集合中第" + i + "个元素,pic_save_name_last = " + pic_save_name_last);
                         builder.addFormDataPart("image_1", pic_save_name_last,
                                 RequestBody.create(MediaType.parse("image/jpeg"), new File(picUrls.get(i))));
                         traffic_cost_invoice_pic_urls_StringBufffer.append(pic_save_name_last);
-                    }else{
+                    } else {
 
-                        String pic_save_name_before_last = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())+new Random().nextInt(10)+".png";
-                        Log.e(TAG,"发票url集合中第"+i+"个元素,pic_save_name_last = "+pic_save_name_before_last);
+                        String pic_save_name_before_last = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + new Random().nextInt(10) + ".png";
+                        Log.e(TAG, "发票url集合中第" + i + "个元素,pic_save_name_last = " + pic_save_name_before_last);
                         builder.addFormDataPart("image_1", pic_save_name_before_last,
                                 RequestBody.create(MediaType.parse("image/jpeg"), new File(picUrls.get(i))));
-                        traffic_cost_invoice_pic_urls_StringBufffer.append(pic_save_name_before_last+"|");
+                        traffic_cost_invoice_pic_urls_StringBufffer.append(pic_save_name_before_last + "|");
                     }
                 }
 
@@ -494,13 +731,14 @@ public class TrafficCostFormActivity extends Activity {
                  this.traffic_cost_user_id = traffic_cost_user_id;
                  *
                  */
-                Traffic_Cost traffic_cost = new Traffic_Cost(traffic_cost_type,traffic_cost_fare_basis,traffic_cost_start_city,
-                        traffic_cost_end_city,traffic_cost_start_datetime,traffic_cost_end_datetime,"交通费单价",
-                        "交通费票数",traffic_cost_total_amount,traffic_cost_invoice_pic_url, traffic_cost_desc,traffic_cost_user_id,traffic_cost_tag);
+                Traffic_Cost traffic_cost = new Traffic_Cost(traffic_cost_pro_uuid,traffic_cost_pro_name,
+                        traffic_cost_pro_budget_type,traffic_cost_type, traffic_cost_fare_basis, traffic_cost_start_city,
+                        traffic_cost_end_city, traffic_cost_start_datetime, traffic_cost_end_datetime, "交通费单价",
+                        "交通费票数", traffic_cost_total_amount, traffic_cost_invoice_pic_url, traffic_cost_desc, traffic_cost_user_id, traffic_cost_tag);
                 // Java对象转JSON串
 
-                Log.e("最终上传的交通费: ",traffic_cost.toString());
-                Log.e("要准备上传的交通费的数据为: ",traffic_cost.toString());
+                Log.e("最终上传的交通费: ", traffic_cost.toString());
+                Log.e("要准备上传的交通费的数据为: ", traffic_cost.toString());
                 String trafficCost_jsonString = JSON.toJSONString(traffic_cost);
                 builder.addFormDataPart("trafficCost_jsonString", trafficCost_jsonString);
 
@@ -517,7 +755,7 @@ public class TrafficCostFormActivity extends Activity {
                     response = mOkHttpClient.newCall(request).execute();
                     String resultInfo = response.body().string();
                     Log.e(TAG, "上传日常费用返回的结果: " + resultInfo);
-                    if(resultInfo.equals("保存成功")) {
+                    if (resultInfo.equals("保存成功")) {
                         showToastInAnyThread(resultInfo);
                         finish();
                     }
@@ -532,26 +770,24 @@ public class TrafficCostFormActivity extends Activity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA && resultCode == Activity.RESULT_OK&& data != null) {//相机
+        if (requestCode == CAMERA && resultCode == Activity.RESULT_OK && data != null) {//相机
             //获取intent中的图片对象
             Bundle extras = data.getExtras();
             Bitmap bitmap = (Bitmap) extras.get("data");
             //img_test.setImageBitmap(bitmap);
 
-            Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null,null));
+            Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null));
             String photoPath = getPath(uri);
             Log.e("从相机返回的图片的绝对路径: ", photoPath);
-            Intent intent = new Intent(TrafficCostFormActivity.this,ShowInvoiceLargePicTestActivity.class);
+            Intent intent = new Intent(TrafficCostFormActivity.this, ShowInvoiceLargePicTestActivity.class);
             intent.putExtra("invoice_pic_url", photoPath);
-            startActivityForResult(intent,PHOTOVIEW);
+            startActivityForResult(intent, PHOTOVIEW);
             /**
              * 从相机返回的图片的绝对路径:: /storage/emulated/0/DCIM/Camera/1514598888572.jpg
              */
-
 
 
             //对获取到的bitmap进行压缩、圆形处理
@@ -570,7 +806,7 @@ public class TrafficCostFormActivity extends Activity {
             // 在4.4.2返回的是content://com.android.providers.media.documents/document/image
 
             String pathResult = getPath(selectedImage);
-            Log.e("从相册返回的绝对路径: ",pathResult);
+            Log.e("从相册返回的绝对路径: ", pathResult);
             /**
              * 从相册返回的绝对路径:: /storage/emulated/0/DCIM/Camera/1514599043591.jpg
              * 从相册返回的绝对路径:: /storage/emulated/0/lagou/image/https:www.lgstatic.comiimageM007472CgpEMlo4uOSAF3PFAALGeI1RKvM745.JPG
@@ -578,9 +814,9 @@ public class TrafficCostFormActivity extends Activity {
             //存储--->内存
             Bitmap decodeFile = BitmapFactory.decodeFile(pathResult);
             //img_test.setImageBitmap(decodeFile);
-            Intent intent = new Intent(TrafficCostFormActivity.this,ShowInvoiceLargePicTestActivity.class);
-            intent.putExtra("invoice_pic_url",pathResult);
-            startActivityForResult(intent,PHOTOVIEW);
+            Intent intent = new Intent(TrafficCostFormActivity.this, ShowInvoiceLargePicTestActivity.class);
+            intent.putExtra("invoice_pic_url", pathResult);
+            startActivityForResult(intent, PHOTOVIEW);
             //Bitmap zoomBitmap = BitmapUtils.zoom(decodeFile, iv_user_icon.getWidth(),iv_user_icon.getHeight());
             //bitmap圆形裁剪
             //Bitmap circleImage = BitmapUtils.circleBitmap(zoomBitmap);
@@ -591,10 +827,10 @@ public class TrafficCostFormActivity extends Activity {
 
             //保存到本地
             //saveImage(circleImage);
-        }else if(requestCode == PHOTOVIEW && resultCode == PHOTOVIEW_RESULT && data != null){
+        } else if (requestCode == PHOTOVIEW && resultCode == PHOTOVIEW_RESULT && data != null) {
 
             String resultPath = data.getStringExtra("Photo返回的filePath");
-            Log.e("Photo返回的filePath",resultPath);
+            Log.e("Photo返回的filePath", resultPath);
             picUrls.add(resultPath);
             trafficCostAddOrDelGridViewAdapter.notifyDataSetChanged();
 
@@ -602,41 +838,41 @@ public class TrafficCostFormActivity extends Activity {
     }
 
     /**
-     *                               GridView的适配器
+     * GridView的适配器
      * =======================================================================
      * =======================================================================
      * =======================================================================
      * =======================================================================
      * =======================================================================
      * =======================================================================
-     *
      */
 
-    class TrafficCostAddOrDelGridViewAdapter extends BaseAdapter{
+    class TrafficCostAddOrDelGridViewAdapter extends BaseAdapter {
 
         private Integer maxInvoicePicNum;
 
-        TrafficCostAddOrDelGridViewAdapter(){
+        TrafficCostAddOrDelGridViewAdapter() {
 
         }
-        TrafficCostAddOrDelGridViewAdapter(Integer maxInvoicePicNum){
+
+        TrafficCostAddOrDelGridViewAdapter(Integer maxInvoicePicNum) {
             this.maxInvoicePicNum = maxInvoicePicNum;
         }
-
 
 
         /**
          * 让GridView中的数据数目加1最后一个显示+号
          * 当到达最大张数时不再显示+号
+         *
          * @return 返回GridView中的数量
          */
         @Override
         public int getCount() {
-            Log.e(TAG,"Adapter: getCount");
-            int count = (picUrls == null ? 1:picUrls.size()+1);
-            if(count >= maxInvoicePicNum) {
+            Log.e(TAG, "Adapter: getCount");
+            int count = (picUrls == null ? 1 : picUrls.size() + 1);
+            if (count >= maxInvoicePicNum) {
                 return picUrls.size();
-            }else {
+            } else {
 
                 return count;
             }
@@ -654,7 +890,7 @@ public class TrafficCostFormActivity extends Activity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            Log.e(TAG,"getView方法开始执行");
+            Log.e(TAG, "getView方法开始执行");
             GridViewHolder holder = null;
             if (convertView == null) {
                 LayoutInflater lf = (LayoutInflater) TrafficCostFormActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -668,8 +904,8 @@ public class TrafficCostFormActivity extends Activity {
             }
 
             /**代表+号之前有图片，需要显示图片**/
-            if(picUrls != null && position < picUrls.size()) {
-                Log.e(TAG,"getView: position="+position+", "+"picUrls.size(): "+picUrls.size());
+            if (picUrls != null && position < picUrls.size()) {
+                Log.e(TAG, "getView: position=" + position + ", " + "picUrls.size(): " + picUrls.size());
                 final String picPath = picUrls.get(position);
                 File file = new File(picPath);
                 Glide.with(TrafficCostFormActivity.this)
@@ -681,19 +917,19 @@ public class TrafficCostFormActivity extends Activity {
                  *
                  */
                 holder.btdel.setVisibility(View.VISIBLE);
-                holder.btdel.setOnClickListener(new View.OnClickListener() {
+                holder.btdel.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         picUrls.remove(position);
                         notifyDataSetChanged();
                     }
                 });
-            }else {
+            } else {
                 /**
                  * 还没有选择图片，图片为空，只需要显示+号图片
                  *
                  */
-                Log.e(TAG,"getView: position="+position+", "+"picUrls.size(): "+picUrls.size());
+                Log.e(TAG, "getView: position=" + position + ", " + "picUrls.size(): " + picUrls.size());
                 Glide.with(TrafficCostFormActivity.this)
                         .load(R.drawable.icon_addpic_unfocused)
                         .priority(Priority.HIGH)
@@ -708,90 +944,11 @@ public class TrafficCostFormActivity extends Activity {
         }
     }
 
-    class GridViewHolder{
+    class GridViewHolder {
 
         ImageView ivimage;
         Button btdel;
     }
-
-
-
-
-    /**
-     * 向服务端保存交通费
-     */
-    /*public void saveTrafficCost() {
-
-        new Thread() {
-            public void run() {
-                try {
-
-                    // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
-                    String path = Constants.AndroidSaveTraffic_Cost;
-                    URL url = new URL(path);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    //2.指定请求方式为post
-                    conn.setRequestMethod("POST");
-                    //3.设置http协议的请求头
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");//设置发送的数据为表单类型
-
-
-                    String traffic_cost_type = et_input.getText().toString();
-                    String traffic_cost_fare_basis = et_fare_basis.getText().toString();
-                    String traffic_cost_start_city =  et_traffic_cost_start_city.getText().toString();
-                    String traffic_cost_end_city = et_traffic_cost_end_city.getText().toString();
-                    String traffic_cost_start_datetime = et_start_date.getText().toString();
-                    String traffic_cost_end_datetime = et_end_date.getText().toString();
-                    *//*String traffic_cost_unit_price = et_traffic_cost_unit_price.getText().toString();
-                    String traffic_cost_ticket_number = et_traffic_cost_ticket_number.getText().toString();*//*
-                    String traffic_cost_total_amount = et_traffic_cost_total_amount.getText().toString();
-                    String traffic_cost_desc =  et_traffic_cost_desc.getText().toString();
-                    String traffic_cost_user_id = String.valueOf(LauncherActivity.ANDROID_USER_ID);
-
-                    String data = "traffic_cost_type=" + URLEncoder.encode(et_input.getText().toString(), "utf-8") +
-                            "&traffic_cost_fare_basis=" + URLEncoder.encode(et_fare_basis.getText().toString(), "utf-8")
-                            + "&traffic_cost_start_city=" + URLEncoder.encode(et_traffic_cost_start_city.getText().toString(), "utf-8")
-                            + "&traffic_cost_end_city=" + URLEncoder.encode(et_traffic_cost_end_city.getText().toString(), "utf-8")
-                            + "&traffic_cost_start_datetime=" + URLEncoder.encode(et_start_date.getText().toString() + " " + et_start_time.getText().toString(), "utf-8")
-                            + "&traffic_cost_end_datetime=" + URLEncoder.encode(et_end_date.getText().toString() + " " + et_end_time.getText().toString(), "utf-8")
-                            + "&traffic_cost_unit_price=" + URLEncoder.encode(et_traffic_cost_unit_price.getText().toString(), "utf-8")
-                            + "&traffic_cost_ticket_number=" + URLEncoder.encode(et_traffic_cost_ticket_number.getText().toString(), "utf-8")
-                            + "&traffic_cost_total_amount=" + URLEncoder.encode(et_traffic_cost_total_amount.getText().toString(), "utf-8")
-                            + "&traffic_cost_desc=" + URLEncoder.encode(et_traffic_cost_desc.getText().toString(), "utf-8")
-                            + "&traffic_cost_invoice_pic_url=" + URLEncoder.encode(invoice_pic_urls.toString(), "utf-8")
-                            + "&traffic_cost_user_id=" + URLEncoder.encode(String.valueOf(LauncherActivity.ANDROID_USER_ID), "utf-8");
-
-                    Log.e(TAG + "交通费参数：", data);
-
-                    conn.setRequestProperty("Content-Length", String.valueOf(data.length()));//告诉服务器发送的数据的长度
-                    //post的请求是把数据以流的方式写给了服务器
-                    //指定请求的输出模式
-                    conn.setDoOutput(true);//运行当前的应用程序给服务器写数据
-                    conn.getOutputStream().write(data.getBytes());
-                    Log.e("post size", String.valueOf(data.getBytes().length));
-                    int code = conn.getResponseCode();
-                    if (code == 200) {
-                        InputStream is = conn.getInputStream();
-                        final String result = StreamTools.readStream(is);
-                        showToastInAnyThread(result);
-                        if (result.equals("保存成功")) {
-                            finish();
-                          *//* Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                           startActivity(intent);*//*
-                        }
-                    } else {
-                        showToastInAnyThread("请求失败");
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            ;
-        }.start();
-    }*/
 
 
     private void showToastInAnyThread(final String result) {
@@ -946,11 +1103,6 @@ public class TrafficCostFormActivity extends Activity {
     }
 
 
-
-
-
-
-
     /**
      * 抽取日期设置相关操作
      */
@@ -1070,11 +1222,6 @@ public class TrafficCostFormActivity extends Activity {
     }
 
 
-
-
-
-
-
     /**
      *                             文件处理相关
      * =======================================================================
@@ -1095,6 +1242,7 @@ public class TrafficCostFormActivity extends Activity {
      */
     /**
      * 文件处理相关
+     *
      * @param uri
      * @return
      */

@@ -6,7 +6,7 @@ package reimburse.cuc.com.bean;
 public interface Constants {
     String URL_PREFIX = "http://";
     //10.192.126.142
-    String IPADDR = "192.168.1.125";
+    String IPADDR = "106.37.85.183";
     String APPADDR = ":8080/ssmweb";
     String BASE_URL = URL_PREFIX+IPADDR+APPADDR;
     String FILE_BASE_DIR = URL_PREFIX+IPADDR+":8080/baoxiaodantu/";
@@ -36,6 +36,12 @@ public interface Constants {
      */
 
     String AndroidGetAllProjectJson = BASE_URL+"/user/androidGetAllProjectJson";
+
+    /**
+     * 得到项目负责人所管理的项目信息
+     */
+    ///project/androidGetProLeaderAllProjectByJobNum
+    String AndroidGetProLeaderAllProjectByJobNum = BASE_URL+"/project/androidGetProLeaderAllProjectByJobNum";
 
     /*安卓用户得到柱状图JSON*/
     String AndroidGetBarChart_URL = BASE_URL+"/baoXiaoDan/androidGetBarChart";
@@ -92,4 +98,15 @@ public interface Constants {
      */
     String ANDROID_GET_OWN_TRAVEL_REIM_LIST_BY_USER_ID =  BASE_URL+"/travel_Reimbursement_Controller/androidGetOwnTravelReimListByUserID";
     String android_GET_All_DAILY_AND_TRAFFIC_COST_JSON_BY_TAG = BASE_URL+"/allXiaofeiController/android_GET_All_DAILY_AND_TRAFFIC_COST_JSON_BY_TAG";
+    /**
+     * 提交保存借款单路径
+     */
+    String AndroidSaveLoan = BASE_URL+"/loanController/androidSaveLoan";
+    String ANDROID_GET_OWN_LOAN_LIST_BY_USER_ID =  BASE_URL+"/loanController/androidGetOwnLoanListByUserID";
+    /**
+     * 安卓根据工号查询员工信息
+     */
+    String AndroidSearchEmpByJobNum = BASE_URL+"/employee/androidSearchEmpByJobNum";
+    String addProjectReimUser = BASE_URL+"/employee/addProjectReimUser";
+    String androidGetGetAllProjectWithPro_BudgetByLeaderJonNum = BASE_URL+"/project/androidGetGetAllProjectWithPro_BudgetByLeaderJonNum";
 }

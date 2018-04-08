@@ -52,6 +52,13 @@ public class Travel_Reimbursement {
 	private String  travel_reimbursement_reim_mobile_phone_number;
 	private String  travel_reimbursement_reim_bank_number;
 	private String  travel_reimbursement_reim_bank_name;
+	private String  travel_reimbursement_is_re_check;
+	private Integer travel_reimbursement_re_check_account_uuid;
+	private String  travel_reimbursement_re_check_account_username;
+	private String  travel_reimbursement_re_check_comments;
+	private String  travel_reimbursement_re_check_commit_time;
+	private String  travel_reim_recheck_complete_time;
+	private String  travel_reim_final_passed_amount;
 	
 	private List<Traffic_Cost> traffic_Costs;
 	
@@ -393,6 +400,62 @@ public class Travel_Reimbursement {
 
 	public void setTongyiXiaofeiBeans(List<TongyiXiaofeiBean> tongyiXiaofeiBeans) {
 		this.tongyiXiaofeiBeans = tongyiXiaofeiBeans;
+	}
+
+	public String getTravel_reimbursement_is_re_check() {
+		return travel_reimbursement_is_re_check;
+	}
+
+	public void setTravel_reimbursement_is_re_check(String travel_reimbursement_is_re_check) {
+		this.travel_reimbursement_is_re_check = travel_reimbursement_is_re_check;
+	}
+
+	public Integer getTravel_reimbursement_re_check_account_uuid() {
+		return travel_reimbursement_re_check_account_uuid;
+	}
+
+	public void setTravel_reimbursement_re_check_account_uuid(Integer travel_reimbursement_re_check_account_uuid) {
+		this.travel_reimbursement_re_check_account_uuid = travel_reimbursement_re_check_account_uuid;
+	}
+
+	public String getTravel_reimbursement_re_check_account_username() {
+		return travel_reimbursement_re_check_account_username;
+	}
+
+	public void setTravel_reimbursement_re_check_account_username(String travel_reimbursement_re_check_account_username) {
+		this.travel_reimbursement_re_check_account_username = travel_reimbursement_re_check_account_username;
+	}
+
+	public String getTravel_reimbursement_re_check_comments() {
+		return travel_reimbursement_re_check_comments;
+	}
+
+	public void setTravel_reimbursement_re_check_comments(String travel_reimbursement_re_check_comments) {
+		this.travel_reimbursement_re_check_comments = travel_reimbursement_re_check_comments;
+	}
+
+	public String getTravel_reimbursement_re_check_commit_time() {
+		return travel_reimbursement_re_check_commit_time;
+	}
+
+	public void setTravel_reimbursement_re_check_commit_time(String travel_reimbursement_re_check_commit_time) {
+		this.travel_reimbursement_re_check_commit_time = travel_reimbursement_re_check_commit_time;
+	}
+
+	public String getTravel_reim_recheck_complete_time() {
+		return travel_reim_recheck_complete_time;
+	}
+
+	public void setTravel_reim_recheck_complete_time(String travel_reim_recheck_complete_time) {
+		this.travel_reim_recheck_complete_time = travel_reim_recheck_complete_time;
+	}
+
+	public String getTravel_reim_final_passed_amount() {
+		return travel_reim_final_passed_amount;
+	}
+
+	public void setTravel_reim_final_passed_amount(String travel_reim_final_passed_amount) {
+		this.travel_reim_final_passed_amount = travel_reim_final_passed_amount;
 	}
 
 	@Override

@@ -30,6 +30,7 @@ public class User {
 	private String bank_name;
 	private String isInnerUser;
 	private String proleader_uuid;
+	private Integer user_role_uuid;
 
 	private List<Project> projects;
 
@@ -306,6 +307,14 @@ public class User {
 
 	public void setProleader_uuid(String proleader_uuid) {
 		this.proleader_uuid = proleader_uuid;
+	}
+
+	public Integer getUser_role_uuid() {
+		return user_role_uuid;
+	}
+
+	public void setUser_role_uuid(Integer user_role_uuid) {
+		this.user_role_uuid = user_role_uuid;
 	}
 
 	@Override

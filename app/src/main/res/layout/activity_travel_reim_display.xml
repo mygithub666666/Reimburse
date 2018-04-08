@@ -12,12 +12,11 @@
         android:layout_height="1dp"
         android:background="?android:listDivider"/>
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:listDivider"/>
-
+    <Button
+        android:id="@+id/btn_export_travel_reim_excel"
+        android:text="导出Excel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <View
         android:layout_width="match_parent"

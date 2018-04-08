@@ -18,8 +18,71 @@
         android:layout_height="1dp"
         android:background="?android:listDivider"/>
 
-
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <EditText
+                android:ellipsize="middle"
+                android:paddingRight="40dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="#5c5c5c"
+                android:textSize="14sp"
+                android:id="@+id/et_daily_cost_pro_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_centerVertical="true"
+                android:focusableInTouchMode="false"
+                android:background="@null"
+                android:hint="项目: "
+                android:drawableRight="@drawable/down_arrow"
+                />
+
+            <EditText
+                android:id="@+id/et_daily_cost_pro_budget_type"
+                android:ellipsize="middle"
+                android:paddingRight="40dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="#5c5c5c"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:layout_centerVertical="true"
+                android:focusableInTouchMode="false"
+                android:background="@null"
+                android:hint="预算类别: "
+                android:drawableRight="@drawable/down_arrow"
+                />
+
+
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@color/white"
@@ -54,7 +117,7 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <View
         android:layout_width="match_parent"
