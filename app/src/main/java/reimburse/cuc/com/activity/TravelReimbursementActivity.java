@@ -112,7 +112,10 @@ public class TravelReimbursementActivity extends Activity {
      * 项目的可报销余额
      */
     String p_reimbursable_amount;
+    String elecPassedDailyReimAmount;
+    String elecPassedTravelReimAmount;
 
+    String projectTotalAmount;
     /**
      * 选择项目的PRO_UUID
      */
@@ -198,6 +201,11 @@ public class TravelReimbursementActivity extends Activity {
                 String proName = project.getP_name();
                 p_reimbursable_amount = project.getP_reimbursable_amount();
                 Log.e(TAG, "---> 项目的剩余报销余额: " + p_reimbursable_amount);
+
+                elecPassedDailyReimAmount = project.getElecPassedDailyReimAmount();
+                elecPassedTravelReimAmount = project.getElecPassedTravelReimAmount();
+                projectTotalAmount = project.getP_totalmoney();
+
                 et_travel_reimbursement_project_name.setText(proName);
                 if (popupWindow != null && popupWindow.isShowing()) {
                     popupWindow.dismiss();
@@ -350,10 +358,20 @@ public class TravelReimbursementActivity extends Activity {
                 Float pro_can_reim = Float.parseFloat(p_reimbursable_amount);
                 Float this_time_amount = Float.parseFloat(travel_reimbursement_total_amount);
 
+                Float elecPassedDailyReimAmount_float = Float.parseFloat(elecPassedDailyReimAmount);
+                Float elecPassedTravelReimAmount_float = Float.parseFloat(elecPassedTravelReimAmount);
+
+                Float projectTotalAmount_float = Float.parseFloat(projectTotalAmount);
+
+                Float leftAmount = projectTotalAmount_float - elecPassedDailyReimAmount_float - elecPassedTravelReimAmount_float;
+
+                Log.e("====>,项目报销预警: ",elecPassedDailyReimAmount_float+", "+elecPassedTravelReimAmount_float+", "+projectTotalAmount_float+", "+leftAmount);
+
+
                 Log.e(TAG,"项目剩余可报销余额： " + p_reimbursable_amount + ", 本次报销总额: " + travel_reimbursement_total_amount);
 
 
-                if(this_time_amount > pro_can_reim) {
+                if(this_time_amount > leftAmount) {
                     Toast.makeText(TravelReimbursementActivity.this,"本次报销总额: "+travel_reimbursement_total_amount+" 大于项目可报销余额："+p_reimbursable_amount,Toast.LENGTH_LONG).show();
                 }else {
 

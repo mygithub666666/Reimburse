@@ -1,5 +1,6 @@
 package reimburse.cuc.com.activity;
 
+import android.animation.FloatEvaluator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -100,6 +101,11 @@ public class DailyReimbursementActivity extends Activity {
      */
     String p_reimbursable_amount;
 
+    String elecPassedDailyReimAmount;
+    String elecPassedTravelReimAmount;
+
+    String projectTotalAmount;
+
     List<TongyiXiaofeiBean> tongyiXiaofeiBeanList;
     private User user;
     private List<Project> projectList;
@@ -149,6 +155,9 @@ public class DailyReimbursementActivity extends Activity {
                 project_uuid = project.getId();
                 String proName = project.getP_name();
                 p_reimbursable_amount = project.getP_reimbursable_amount();
+                elecPassedDailyReimAmount = project.getElecPassedDailyReimAmount();
+                elecPassedTravelReimAmount = project.getElecPassedTravelReimAmount();
+                projectTotalAmount = project.getP_totalmoney();
                 Log.e(TAG, "---> 项目的剩余报销余额: " + p_reimbursable_amount);
                 etProjectNameDailyReim.setText(proName);
                 if (popupWindow != null && popupWindow.isShowing()) {
@@ -257,7 +266,7 @@ public class DailyReimbursementActivity extends Activity {
 
                 String user_jsonString = sp.getString("user_jsonString", "");
 
-                User user = JSON.parseObject(user_jsonString,User.class);
+                User user = JSON.parseObject(user_jsonString, User.class);
 
 
                 DailyReim dailyReim = new DailyReim(daily_reim_cause,daily_reim_project_name,daily_reim_amount,
@@ -273,12 +282,19 @@ public class DailyReimbursementActivity extends Activity {
                 Float this_time_amount = Float.parseFloat(daily_reim_amount);
                 Log.e(TAG,"项目剩余可报销余额： " + p_reimbursable_amount + ", 本次报销总额: " + daily_reim_amount);
 
-                if(this_time_amount > pro_can_reim) {
-                    Toast.makeText(DailyReimbursementActivity.this,"本次报销总额: "+this_time_amount+" 大于项目可报销余额："+p_reimbursable_amount,Toast.LENGTH_LONG).show();
+                Float elecPassedDailyReimAmount_float = Float.parseFloat(elecPassedDailyReimAmount);
+                Float elecPassedTravelReimAmount_float = Float.parseFloat(elecPassedTravelReimAmount);
+
+                Float projectTotalAmount_float = Float.parseFloat(projectTotalAmount);
+
+                Float leftAmount = projectTotalAmount_float - elecPassedDailyReimAmount_float - elecPassedTravelReimAmount_float;
+
+                Log.e("====>,项目报销预警: ",elecPassedDailyReimAmount_float+", "+elecPassedTravelReimAmount_float+", "+projectTotalAmount_float+", "+leftAmount);
+
+                if(this_time_amount > leftAmount) {
+                    Toast.makeText(DailyReimbursementActivity.this,elecPassedDailyReimAmount_float+", "+elecPassedTravelReimAmount_float+", "+projectTotalAmount_float+", "+leftAmount,Toast.LENGTH_LONG).show();
                 }else {
-                    /**
-                     * 保存日常报销单到服务器
-                     */
+                    //showToastInAnyThread(elecPassedDailyReimAmount_float+", "+elecPassedTravelReimAmount_float+", "+projectTotalAmount_float+", "+leftAmount);
                     uploadDailyCost(dailyReim_jsonString);
                 }
 

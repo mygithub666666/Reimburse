@@ -35,6 +35,8 @@ public class Project {
 	private String pro_mems;
 	private String pro_has_budget;
 	private String pro_final_passed_money_reim;
+	private String elecPassedDailyReimAmount;
+	private String elecPassedTravelReimAmount;
 
 	private List<BudgetDetail> projectBudgetDetailList;
 
@@ -122,6 +124,28 @@ public class Project {
 		this.p_finished_money = p_finished_money;
 		this.p_new_money = p_new_money;
 		this.p_reimbursable_amount = p_reimbursable_amount;
+	}
+
+	public Project(Integer id, String p_id, String p_leader, String p_name, String p_type, String p_startdate, String p_enddate, String p_totalmoney, String p_money_source, String p_finished_money, String p_new_money, String p_reimbursable_amount, String pro_virtual_left_reimbursable_amount, String pro_leader_job_num, String pro_mems, String pro_has_budget, String pro_final_passed_money_reim, String elecPassedDailyReimAmount, String elecPassedTravelReimAmount) {
+		this.id = id;
+		this.p_id = p_id;
+		this.p_leader = p_leader;
+		this.p_name = p_name;
+		this.p_type = p_type;
+		this.p_startdate = p_startdate;
+		this.p_enddate = p_enddate;
+		this.p_totalmoney = p_totalmoney;
+		this.p_money_source = p_money_source;
+		this.p_finished_money = p_finished_money;
+		this.p_new_money = p_new_money;
+		this.p_reimbursable_amount = p_reimbursable_amount;
+		this.pro_virtual_left_reimbursable_amount = pro_virtual_left_reimbursable_amount;
+		this.pro_leader_job_num = pro_leader_job_num;
+		this.pro_mems = pro_mems;
+		this.pro_has_budget = pro_has_budget;
+		this.pro_final_passed_money_reim = pro_final_passed_money_reim;
+		this.elecPassedDailyReimAmount = elecPassedDailyReimAmount;
+		this.elecPassedTravelReimAmount = elecPassedTravelReimAmount;
 	}
 
 	public Integer getId() {
@@ -218,6 +242,22 @@ public class Project {
 
 	public void setP_reimbursable_amount(String p_reimbursable_amount) {
 		this.p_reimbursable_amount = p_reimbursable_amount;
+	}
+
+	public String getElecPassedDailyReimAmount() {
+		return elecPassedDailyReimAmount;
+	}
+
+	public void setElecPassedDailyReimAmount(String elecPassedDailyReimAmount) {
+		this.elecPassedDailyReimAmount = elecPassedDailyReimAmount;
+	}
+
+	public String getElecPassedTravelReimAmount() {
+		return elecPassedTravelReimAmount;
+	}
+
+	public void setElecPassedTravelReimAmount(String elecPassedTravelReimAmount) {
+		this.elecPassedTravelReimAmount = elecPassedTravelReimAmount;
 	}
 
 	public List<BudgetDetail> getProjectBudgetDetailList() {
