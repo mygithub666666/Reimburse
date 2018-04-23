@@ -50,8 +50,8 @@ import reimburse.cuc.com.reimburse.R;
 public class HomePageFragment extends BaseFragment {
 
     private static final String TAG = HomePageFragment.class.getSimpleName();
-    private static final String[] names = new String[]{"借款","记账","报销","账单","查看报销"};
-    private static final String[] namesProLeader = new String[]{"借款","记账","报销","账单","查看报销","项目管理"};
+    private static final String[] names = new String[]{"记账","报销","账单","查看报销"};
+    private static final String[] namesProLeader = new String[]{"记账","报销","账单","查看报销","项目管理"};
     //private ImageView imageViewView;
     private GridView gridView;
     //private ImageView grad_img;
@@ -63,8 +63,8 @@ public class HomePageFragment extends BaseFragment {
 
     //Log.e("---------->登录用户的角色UUID",String.valueOf(user_role_uuid));
 
-    private int[] imageIds = {R.drawable.jiekuan_meitu_1, R.drawable.jizhang_meitu_2, R.drawable.baoxiao_meitu_5,R.drawable.zhangdan_meitu_3,R.drawable.chakanbaoxiao_meitu_4};
-    private int[] imageIds_ProLeader = {R.drawable.jiekuan_meitu_1, R.drawable.jizhang_meitu_2, R.drawable.baoxiao_meitu_5,R.drawable.zhangdan_meitu_3,R.drawable.chakanbaoxiao_meitu_4,R.drawable.atguigu_logo};
+    private int[] imageIds = {R.drawable.bill_final_meitu, R.drawable.reimburse_final_meitu, R.drawable.bill_list_final_meitu,R.drawable.reimburse_list_final_meitu};
+    private int[] imageIds_ProLeader = {R.drawable.bill_final_meitu, R.drawable.reimburse_final_meitu, R.drawable.bill_list_final_meitu,R.drawable.reimburse_list_final_meitu,R.drawable.project_management_final_meitu};
 
 
 
@@ -124,7 +124,7 @@ public class HomePageFragment extends BaseFragment {
                 String[] loan_list = new String[]{"借款申请",
                         "查看申请"};
                 switch ((int) id) {
-                    case 0:
+                    /*case 0:
                         Log.e(TAG, "首页Fragment中点击的id是: " + id);
                         //startActivity(new Intent(getActivity(),LoanActivity.class));
                         new AlertDialog.Builder(getActivity()).setTitle("消费类型")
@@ -143,8 +143,8 @@ public class HomePageFragment extends BaseFragment {
                                         }
                                     }
                                 }).setNegativeButton("取消", null).show();
-                        break;
-                    case 1:
+                        break;*/
+                    case 0:
                         Log.e(TAG,"首页Fragment中点击的id是: " + id);
                         new AlertDialog.Builder(getActivity()).setTitle("消费类型")
                                 .setItems(items, new DialogInterface.OnClickListener() {
@@ -164,7 +164,7 @@ public class HomePageFragment extends BaseFragment {
                                 }).setNegativeButton("取消", null).show();
 
                         break;
-                    case 2:
+                    case 1:
                         Log.e(TAG,"首页Fragment中点击的id是: " + id);
                         new AlertDialog.Builder(getActivity()).setTitle("报销类型")
                                 .setItems(reim_items, new DialogInterface.OnClickListener() {
@@ -184,7 +184,7 @@ public class HomePageFragment extends BaseFragment {
                                 }).setNegativeButton("取消", null).show();
                         //startActivity(new Intent(getActivity(), ReimburseFormAllActivity.class));
                         break;
-                    case 3:
+                    case 2:
                         Log.e(TAG,"首页Fragment中点击的id是: " + id);
                         String[] my_costs = new String[]{"日常消费",
                                 "交通费"};
@@ -207,9 +207,7 @@ public class HomePageFragment extends BaseFragment {
                                 }).setNegativeButton("取消", null).show();
 
                         break;
-                        /*startActivity(new Intent(getActivity(), ShowCostCategory.class));
-                        break;*/
-                    case 4:
+                    case 3:
                        /* Log.e(TAG,"首页Fragment中点击的id是: " + id);
                         startActivity(new Intent(getActivity(), MyBaoxiaodanList.class));*/
 
@@ -234,7 +232,7 @@ public class HomePageFragment extends BaseFragment {
                                 }).setNegativeButton("取消", null).show();
 
                         break;
-                    case 5:
+                    case 4:
                         Intent dailyCostIntent  = new Intent(getActivity(), ProjectLeaderProManagActivity.class);
                         startActivity(dailyCostIntent);
                         break;

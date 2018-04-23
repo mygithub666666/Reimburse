@@ -85,6 +85,41 @@ public class User {
 		this.email = email;
 	}
 
+
+	public User(String user_name, String mobile_phone_number,
+				String department, String email, String reim_user_job_number,
+				String reim_user_dept_time, String reim_user_gender,
+				String reim_usr_age, String reim_user_id_card,
+				String reim_user_id_card_num, String reim_user_education,
+				String reim_user_education_time, String reim_user_title,
+				String reim_user_title_time, String reim_user_positon,
+				String reim_user_position_time, String reim_user_personnel_type,
+				String reim_user_personnel_type_time, String reim_user_note,
+				String bank_number, String bank_name) {
+		super();
+		this.user_name = user_name;
+		this.mobile_phone_number = mobile_phone_number;
+		this.department = department;
+		this.email = email;
+		this.reim_user_job_number = reim_user_job_number;
+		this.reim_user_dept_time = reim_user_dept_time;
+		this.reim_user_gender = reim_user_gender;
+		this.reim_usr_age = reim_usr_age;
+		this.reim_user_id_card = reim_user_id_card;
+		this.reim_user_id_card_num = reim_user_id_card_num;
+		this.reim_user_education = reim_user_education;
+		this.reim_user_education_time = reim_user_education_time;
+		this.reim_user_title = reim_user_title;
+		this.reim_user_title_time = reim_user_title_time;
+		this.reim_user_positon = reim_user_positon;
+		this.reim_user_position_time = reim_user_position_time;
+		this.reim_user_personnel_type = reim_user_personnel_type;
+		this.reim_user_personnel_type_time = reim_user_personnel_type_time;
+		this.reim_user_note = reim_user_note;
+		this.bank_number = bank_number;
+		this.bank_name = bank_name;
+	}
+
 	public Integer getUser_uuid() {
 		return user_uuid;
 	}

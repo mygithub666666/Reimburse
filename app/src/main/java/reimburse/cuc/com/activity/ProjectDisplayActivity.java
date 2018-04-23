@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -25,6 +27,7 @@ import butterknife.ButterKnife;
 import reimburse.cuc.com.bean.Employee;
 import reimburse.cuc.com.bean.Pro_Budget;
 import reimburse.cuc.com.bean.Project;
+import reimburse.cuc.com.bean.TongyiXiaofeiBean;
 import reimburse.cuc.com.bean.User;
 import reimburse.cuc.com.reimburse.R;
 
@@ -34,6 +37,8 @@ import reimburse.cuc.com.reimburse.R;
 public class ProjectDisplayActivity extends Activity {
     private static final int REQUEST_SEARCH_REIM_USER = 01;
     private static final int REIM_USER_ADD_COMPLETED = 02;
+    public static final int RESPONSE_AND_REIM_USER_SUCCESS = 03;
+    public static final int RESPONSE_ADD_REIM_USER_SUCCESS = 06;
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.tv_p_name)
@@ -74,7 +79,8 @@ public class ProjectDisplayActivity extends Activity {
     ListView listViewProBudget;
     @Bind(R.id.list_view_pro_reim_user)
     ListView listViewProReimUser;
-
+    List<User> userList = new ArrayList<>();
+    UserListAdapter userListAdapter = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +98,7 @@ public class ProjectDisplayActivity extends Activity {
         Project project = JSON.parseObject(projectJSONStr, Project.class);
 
         List<Pro_Budget> pro_budgets = project.getPro_Budgets();
-        List<User> userList = project.getUsers();
+        userList = project.getUsers();
 
         etPName.setText(project.getP_name());
         etPType.setText(project.getP_type());
@@ -102,7 +108,9 @@ public class ProjectDisplayActivity extends Activity {
         etPTotalmoney.setText(project.getP_totalmoney());
         etPFinishedMoney.setText(project.getP_finished_money());
         listViewProBudget.setAdapter(new PrpBudgetListAdapter(pro_budgets));
-        listViewProReimUser.setAdapter(new UserListAdapter(userList));
+
+        userListAdapter = new UserListAdapter(userList);
+        listViewProReimUser.setAdapter(userListAdapter);
 
         listViewProBudget.setOnTouchListener(new View.OnTouchListener() {
 
@@ -143,6 +151,8 @@ public class ProjectDisplayActivity extends Activity {
 
 
     }
+
+
 
 
     class PrpBudgetListAdapter extends BaseAdapter {
@@ -259,13 +269,20 @@ public class ProjectDisplayActivity extends Activity {
         public TextView tv_pro_reim_user_job_number;
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SEARCH_REIM_USER && resultCode == REIM_USER_ADD_COMPLETED) {
-            Bundle bundle = data.getExtras();
-            Log.e("resultCode", String.valueOf(resultCode));
-            employee = (Employee) bundle.getSerializable("employee");
-            Log.e("添加报销人返回的员工信息:", employee.toString());
+        if(requestCode == REQUEST_SEARCH_REIM_USER && resultCode == RESPONSE_ADD_REIM_USER_SUCCESS){
+            //Bundle bundle = data.getExtras();
+            String new_user_json = data.getStringExtra("new_user_json");
+            Log.e("添加报销人员成功返回的结果码: ", String.valueOf(resultCode));
+            User newUser = JSON.parseObject(new_user_json,User.class);
+            Log.e("新添加的报销用户: ",newUser.toString());
+            if(newUser != null) {
+                userList.add(newUser);
+                //listViewProReimUser.setAdapter(new UserListAdapter(userList));
+                userListAdapter.notifyDataSetChanged();
+            }
         }
     }
 

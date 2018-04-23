@@ -3,12 +3,78 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <!--public List<ReimStatus> ANDROID_GET_USER_HISTORY_REIMBURSEMENT_LINE(
+			String min_check_complete_time, String max_check_complete_time,
+			Integer user_id)-->
     <include layout="@layout/title_time_stat"></include>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:gravity="center_vertical">
 
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <EditText
+                android:id="@+id/et_min_check_complete_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:focusableInTouchMode="false"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/arrow_select_huafei"
+                />
+
+            <EditText
+                android:id="@+id/et_max_check_complete_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:background="@null"
+                android:textSize="12dip"
+                android:gravity="left|center_vertical"
+                android:layout_gravity="center_vertical"
+                android:focusableInTouchMode="false"
+                />
+            <Button
+                android:id="@+id/btnSearchHistoryReim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="查询"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_vertical"
         android:background="@color/white"
@@ -17,7 +83,7 @@
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/line_chart"
             android:layout_width="match_parent"
-            android:layout_height="500dp">
+            android:layout_height="480dp">
 
         </com.github.mikephil.charting.charts.LineChart>
 

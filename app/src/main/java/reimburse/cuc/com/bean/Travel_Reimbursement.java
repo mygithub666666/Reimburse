@@ -59,6 +59,10 @@ public class Travel_Reimbursement {
 	private String  travel_reimbursement_re_check_commit_time;
 	private String  travel_reim_recheck_complete_time;
 	private String  travel_reim_final_passed_amount;
+
+	private String travel_reimbursement_reim_paper_check_status;
+	private String travel_reimbursement_reim_paper_final_passed_amount;
+	private String travel_reimbursement_reim_paper_check_end_time;
 	
 	private List<Traffic_Cost> traffic_Costs;
 	
@@ -145,8 +149,29 @@ public class Travel_Reimbursement {
 	}
 
 
-	
+	public String getTravel_reimbursement_reim_paper_check_status() {
+		return travel_reimbursement_reim_paper_check_status;
+	}
 
+	public void setTravel_reimbursement_reim_paper_check_status(String travel_reimbursement_reim_paper_check_status) {
+		this.travel_reimbursement_reim_paper_check_status = travel_reimbursement_reim_paper_check_status;
+	}
+
+	public String getTravel_reimbursement_reim_paper_final_passed_amount() {
+		return travel_reimbursement_reim_paper_final_passed_amount;
+	}
+
+	public void setTravel_reimbursement_reim_paper_final_passed_amount(String travel_reimbursement_reim_paper_final_passed_amount) {
+		this.travel_reimbursement_reim_paper_final_passed_amount = travel_reimbursement_reim_paper_final_passed_amount;
+	}
+
+	public String getTravel_reimbursement_reim_paper_check_end_time() {
+		return travel_reimbursement_reim_paper_check_end_time;
+	}
+
+	public void setTravel_reimbursement_reim_paper_check_end_time(String travel_reimbursement_reim_paper_check_end_time) {
+		this.travel_reimbursement_reim_paper_check_end_time = travel_reimbursement_reim_paper_check_end_time;
+	}
 
 	public Integer getTravel_reimbursement_uuid() {
 		return travel_reimbursement_uuid;

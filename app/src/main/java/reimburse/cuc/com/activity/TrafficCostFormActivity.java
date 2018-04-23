@@ -1116,14 +1116,14 @@ public class TrafficCostFormActivity extends Activity {
         et_start_date.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDate(v);
+                setDate(et_start_date);
             }
         });
 
         et_end_date.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDate(v);
+                setDate(et_end_date);
             }
         });
 
@@ -1131,14 +1131,14 @@ public class TrafficCostFormActivity extends Activity {
         et_start_time.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setTime(v);
+                setTime(et_start_time);
             }
         });
 
         et_end_time.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setTime(v);
+                setTime(et_end_time);
             }
         });
 
@@ -1167,14 +1167,21 @@ public class TrafficCostFormActivity extends Activity {
         et_end_time.setText(hour + ":" + minute);
     }
 
-    public void setDate(View view) {
-        SetDateDialog sdd = new SetDateDialog();
+    public void setDate(EditText view) {
+        SetDateDialog sdd = new SetDateDialog(view);
         sdd.show(getFragmentManager(), "datepicker");
     }
 
     //创建日期选择对话框
     @SuppressLint("ValidFragment")
     class SetDateDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+        EditText editTextview;
+
+        SetDateDialog(EditText editTextview){
+            this.editTextview = editTextview;
+        }
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar calendar = Calendar.getInstance();
@@ -1188,14 +1195,22 @@ public class TrafficCostFormActivity extends Activity {
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            et_start_date.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-            et_end_date.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+            //et_start_date.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+            editTextview.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+
         }
     }
 
     //创建时间选择对话框
     @SuppressLint("ValidFragment")
     class SetTimeDialog extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+
+        EditText editText;
+
+        SetTimeDialog(EditText editText){
+            this.editText = editText;
+        }
+
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -1211,13 +1226,13 @@ public class TrafficCostFormActivity extends Activity {
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            et_start_time.setText(hourOfDay + ":" + minute);
-            et_end_time.setText(hourOfDay + ":" + minute);
+            //et_start_time.setText(hourOfDay + ":" + minute);
+            editText.setText(hourOfDay + ":" + minute);
         }
     }
 
-    public void setTime(View view) {
-        SetTimeDialog setTimeDialog = new SetTimeDialog();
+    public void setTime(EditText view) {
+        SetTimeDialog setTimeDialog = new SetTimeDialog(view);
         setTimeDialog.show(getFragmentManager(), "mytimePicker");
     }
 

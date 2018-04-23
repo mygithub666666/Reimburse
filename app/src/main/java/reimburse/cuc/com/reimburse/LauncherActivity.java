@@ -43,11 +43,6 @@ public class LauncherActivity extends Activity {
     }
 
 
-    public void startMainActivity(){
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-    }
-
     public void login(View view){
             final String un = username.getText().toString();
             final String pawd = pwd.getText().toString();
@@ -109,7 +104,7 @@ public class LauncherActivity extends Activity {
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            showToastInAnyThread("网络请求失败");
+                            showToastInAnyThread("网络请求成功，程序逻辑有异常！");
                         }
 
                     };

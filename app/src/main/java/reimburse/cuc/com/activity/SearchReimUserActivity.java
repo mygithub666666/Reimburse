@@ -25,6 +25,7 @@ import java.net.URLEncoder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import reimburse.cuc.com.bean.CompanyUser;
 import reimburse.cuc.com.bean.Constants;
 import reimburse.cuc.com.bean.Employee;
 import reimburse.cuc.com.bean.Project;
@@ -36,8 +37,11 @@ import reimburse.cuc.com.util.StreamTools;
  * Created by hp1 on 2018/4/5.
  */
 public class SearchReimUserActivity extends Activity {
-    private static final int SHOW_EMP = 01;
+    private static final int SHOW_COMPANY_USER = 01;
     private static final int REIM_USER_ADD_COMPLETED = 02;
+    public static final int RESPONSE_AND_REIM_USER_SUCCESS = 03;
+    private static final int SHOW_ADD_PROJECT_REIM_USER_SUCCESS = 04;
+    public static final int RESPONSE_ADD_REIM_USER_SUCCESS = 06;
     @Bind(R.id.tv_project_daily_reim)
     TextView tvProjectDailyReim;
     @Bind(R.id.et_emp_jobnum)
@@ -60,6 +64,7 @@ public class SearchReimUserActivity extends Activity {
     EditText etEmpInfoEmail;
 
     Employee employee = null;
+    CompanyUser companyUser = null;
     @Bind(R.id.btn_add_reim_user)
     Button btnAddReimUser;
     @Bind(R.id.et_emp_bank_number)
@@ -67,15 +72,30 @@ public class SearchReimUserActivity extends Activity {
     @Bind(R.id.et_emp_bank_name)
     EditText etEmpBankName;
 
+    String addReimUserIsSuccess = null;
+    User success_add_user = null;
+    @Bind(R.id.btn_back_pro_display)
+    Button btnBackProDisplay;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Employee emp = (Employee) msg.obj;
-            etEmpInfoUserName.setText(emp.getUser_name());
-            etEmpInfoMobilePhoneNumber.setText(emp.getE_phone());
-            etEmpInfoEmail.setText(emp.getEmail());
-            etEmpBankNumber.setText(emp.getEmp_bank_number());
-            etEmpBankName.setText(emp.getEmp_bank_name());
+
+            switch (msg.what) {
+                case SHOW_COMPANY_USER:
+                    CompanyUser companyUser = (CompanyUser) msg.obj;
+                    etEmpInfoUserName.setText(companyUser.getCom_user_name());
+                    etEmpInfoMobilePhoneNumber.setText(companyUser.getCom_user_mobile_phone_num());
+                    etEmpInfoEmail.setText(companyUser.getCom_user_email());
+                    etEmpBankNumber.setText(companyUser.getBank_number());
+                    etEmpBankName.setText(companyUser.getBank_name());
+                    break;
+                case SHOW_ADD_PROJECT_REIM_USER_SUCCESS:
+                    showToastInAnyThread("添加成功!");
+                    break;
+                default:
+                    break;
+            }
+
 
         }
     };
@@ -103,7 +123,7 @@ public class SearchReimUserActivity extends Activity {
                 final String com_user_job_number = etEmpJobnum.getText().toString();
                 if (com_user_job_number != null) {
                     Log.e("请求的工号：", com_user_job_number);
-                    androidSearchEmpByJobNum(com_user_job_number);
+                    androidSearchCompanyUserByJobNum(com_user_job_number);
                 } else {
                     showToastInAnyThread("工号不能为空!");
                 }
@@ -113,26 +133,34 @@ public class SearchReimUserActivity extends Activity {
         btnAddReimUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // 用户组对象转JSON串
                 //String jsonString = JSON.toJSONString(cost);
-                String empJsonString = JSON.toJSONString(employee);
+                String companyUserJsonString = JSON.toJSONString(companyUser);
 
                 String pro_uuid = String.valueOf(project.getId());
 
-                addProjectReimUser(empJsonString, pro_uuid);
+                addProjectReimUser(companyUserJsonString, pro_uuid);
 
-                /*Bundle bundle = new Bundle();
-                bundle.putSerializable("employee", (Serializable) employee);
+
+            }
+        });
+
+        btnBackProDisplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String new_user_json = JSON.toJSONString(success_add_user);
+                //设置返回的数据
                 Intent intent = new Intent();
-                intent.putExtras(bundle);
-                setResult(REIM_USER_ADD_COMPLETED, intent);
-                finish();*/
+                intent.putExtra("new_user_json", new_user_json);
+                setResult(RESPONSE_ADD_REIM_USER_SUCCESS, intent);
+                //关闭当前activity
+                finish();
             }
         });
     }
 
-    public void androidSearchEmpByJobNum(final String com_user_job_number) {
+    public void androidSearchCompanyUserByJobNum(final String com_user_job_number) {
         new Thread() {
             public void run() {
                 try {
@@ -143,7 +171,8 @@ public class SearchReimUserActivity extends Activity {
 
                     User user = JSON.parseObject(user_jsonString, User.class);
                     // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
-                    String path = Constants.AndroidSearchEmpByJobNum;
+                    //androidSearchCompanyUserByJobNum
+                    String path = Constants.ANDROID_SEARCH_COMPANY_USER_BY_JOBNUM;
                     URL url = new URL(path);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     //2.指定请求方式为post
@@ -166,10 +195,10 @@ public class SearchReimUserActivity extends Activity {
                         final String result = StreamTools.readStream(is);
                         Log.e("根据工号查询员工返回的数据JSON数据", result);
                         //JSON.parseObject(projectJSONStr, Project.class);
-                        employee = JSON.parseObject(result, Employee.class);
+                        companyUser = JSON.parseObject(result, CompanyUser.class);
                         Message message = Message.obtain();
-                        message.obj = employee;
-                        message.what = SHOW_EMP;
+                        message.obj = companyUser;
+                        message.what = SHOW_COMPANY_USER;
                         handler.sendMessage(message);
 
                         //showToastInAnyThread(result);
@@ -191,14 +220,15 @@ public class SearchReimUserActivity extends Activity {
         }.start();
     }
 
-    public void addProjectReimUser(final String empJsonString, final String pro_uuid) {
+    public void addProjectReimUser(final String companyUserJsonString, final String pro_uuid) {
 
         // 数据应该提交给服务器 由服务器比较是否正确
         new Thread() {
             public void run() {
                 try {
                     // 1.指定提交数据的路径,post的方式不需要组拼任何的参数
-                    String path = Constants.addProjectReimUser;
+                    //String path = Constants.addProjectReimUser;
+                    String path = Constants.ADD_PROJECT_REIM_USER_WITH_COMPANY_USER;
                     URL url = new URL(path);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     //2.指定请求方式为post
@@ -206,7 +236,7 @@ public class SearchReimUserActivity extends Activity {
                     //3.设置http协议的请求头
                     conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");//设置发送的数据为表单类型
                     //username=abc&password=123
-                    String data = "empJsonString=" + URLEncoder.encode(empJsonString, "utf-8")
+                    String data = "companyUserJsonString=" + URLEncoder.encode(companyUserJsonString, "utf-8")
                             + "&pro_uuid=" + URLEncoder.encode(pro_uuid, "utf-8");
                     conn.setRequestProperty("Content-Length", String.valueOf(data.length()));//告诉服务器发送的数据的长度
                     //post的请求是把数据以流的方式写给了服务器
@@ -222,16 +252,13 @@ public class SearchReimUserActivity extends Activity {
                         //UserGroup group2 = JSON.parseObject(jsonString, UserGroup.class);
 
                         //String user_jsonString = Json
-                        if (reponseString.equals("添加报销人员成功")) {
-                           /* showToastInAnyThread("添加报销人员成功!");
-                            Intent intent = new Intent();
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("employee", (Serializable) employee);
-                            intent.putExtras(bundle);*/
-                            /*setResult(REIM_USER_ADD_COMPLETED, intent);*/
-                            showToastInAnyThread("添加报销人员成功!");
-                            finish();
-
+                        if (!reponseString.equals("添加报销人员失败")) {
+                            success_add_user = JSON.parseObject(reponseString, User.class);
+                            Message message = Message.obtain();
+                            message.obj = reponseString;
+                            message.what = SHOW_ADD_PROJECT_REIM_USER_SUCCESS;
+                            handler.sendMessage(message);
+                            addReimUserIsSuccess = "success_add";
 
                         } else {
                             showToastInAnyThread("添加报销人员失败");
@@ -249,7 +276,6 @@ public class SearchReimUserActivity extends Activity {
 
             }
 
-            ;
         }.start();
 
 
