@@ -32,7 +32,8 @@ public class DailyCost {
 	private String  daily_cost_pro_budget_type;
 	private String  daily_cost_pro_elec_check;
 	private String daily_cost_pro_paper_check;
-	
+	private String daily_cost_check_status;
+
 	public DailyCost(){
 		
 	}
@@ -73,7 +74,26 @@ public class DailyCost {
 		this.daily_cost_tag = daily_cost_tag;
 	}
 
-
+	public DailyCost(Integer daily_cost_uuid, String daily_cost_type, String daily_cost_date, String daily_cost_unit_price, String daily_cost_ticket_number, String daily_cost_total_amount, String daily_cost_desc, String daily_cost_invoice_pic_urls, Integer daily_cost_user_id, String daily_cost_tag, String daily_cost_comments, String daily_cost_status, Integer daily_cost_pro_uuid, String daily_cost_pro_name, String daily_cost_pro_budget_type, String daily_cost_pro_elec_check, String daily_cost_pro_paper_check, String daily_cost_check_status) {
+		this.daily_cost_uuid = daily_cost_uuid;
+		this.daily_cost_type = daily_cost_type;
+		this.daily_cost_date = daily_cost_date;
+		this.daily_cost_unit_price = daily_cost_unit_price;
+		this.daily_cost_ticket_number = daily_cost_ticket_number;
+		this.daily_cost_total_amount = daily_cost_total_amount;
+		this.daily_cost_desc = daily_cost_desc;
+		this.daily_cost_invoice_pic_urls = daily_cost_invoice_pic_urls;
+		this.daily_cost_user_id = daily_cost_user_id;
+		this.daily_cost_tag = daily_cost_tag;
+		this.daily_cost_comments = daily_cost_comments;
+		this.daily_cost_status = daily_cost_status;
+		this.daily_cost_pro_uuid = daily_cost_pro_uuid;
+		this.daily_cost_pro_name = daily_cost_pro_name;
+		this.daily_cost_pro_budget_type = daily_cost_pro_budget_type;
+		this.daily_cost_pro_elec_check = daily_cost_pro_elec_check;
+		this.daily_cost_pro_paper_check = daily_cost_pro_paper_check;
+		this.daily_cost_check_status = daily_cost_check_status;
+	}
 
 	public Integer getDaily_cost_uuid() {
 		return daily_cost_uuid;
@@ -216,6 +236,14 @@ public class DailyCost {
 
 	public void setDaily_cost_pro_paper_check(String daily_cost_pro_paper_check) {
 		this.daily_cost_pro_paper_check = daily_cost_pro_paper_check;
+	}
+
+	public String getDaily_cost_check_status() {
+		return daily_cost_check_status;
+	}
+
+	public void setDaily_cost_check_status(String daily_cost_check_status) {
+		this.daily_cost_check_status = daily_cost_check_status;
 	}
 
 	@Override

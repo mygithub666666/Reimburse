@@ -114,7 +114,7 @@ public class TravelReimbursementActivity extends Activity {
     String p_reimbursable_amount;
     String elecPassedDailyReimAmount;
     String elecPassedTravelReimAmount;
-
+    String pro_final_passed_money_reim;
     String projectTotalAmount;
     /**
      * 选择项目的PRO_UUID
@@ -205,7 +205,7 @@ public class TravelReimbursementActivity extends Activity {
                 elecPassedDailyReimAmount = project.getElecPassedDailyReimAmount();
                 elecPassedTravelReimAmount = project.getElecPassedTravelReimAmount();
                 projectTotalAmount = project.getP_totalmoney();
-
+                pro_final_passed_money_reim = project.getPro_final_passed_money_reim();
                 et_travel_reimbursement_project_name.setText(proName);
                 if (popupWindow != null && popupWindow.isShowing()) {
                     popupWindow.dismiss();
@@ -360,10 +360,10 @@ public class TravelReimbursementActivity extends Activity {
 
                 Float elecPassedDailyReimAmount_float = Float.parseFloat(elecPassedDailyReimAmount);
                 Float elecPassedTravelReimAmount_float = Float.parseFloat(elecPassedTravelReimAmount);
-
+                Float pro_final_passed_money_reim_float = Float.parseFloat(pro_final_passed_money_reim);
                 Float projectTotalAmount_float = Float.parseFloat(projectTotalAmount);
 
-                Float leftAmount = projectTotalAmount_float - elecPassedDailyReimAmount_float - elecPassedTravelReimAmount_float;
+                Float leftAmount = projectTotalAmount_float - elecPassedDailyReimAmount_float - elecPassedTravelReimAmount_float - pro_final_passed_money_reim_float;
 
                 Log.e("====>,项目报销预警: ",elecPassedDailyReimAmount_float+", "+elecPassedTravelReimAmount_float+", "+projectTotalAmount_float+", "+leftAmount);
 
@@ -372,7 +372,9 @@ public class TravelReimbursementActivity extends Activity {
 
 
                 if(this_time_amount > leftAmount) {
-                    Toast.makeText(TravelReimbursementActivity.this,"本次报销总额: "+travel_reimbursement_total_amount+" 大于项目可报销余额："+p_reimbursable_amount,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(TravelReimbursementActivity.this,"本次报销总额: "+travel_reimbursement_total_amount+" 大于项目可报销余额："+p_reimbursable_amount,Toast.LENGTH_LONG).show();
+                    Toast.makeText(TravelReimbursementActivity.this,"已通过"+pro_final_passed_money_reim_float+"元，有"+(elecPassedDailyReimAmount_float+elecPassedTravelReimAmount_float)+"元电子审核通过待纸质终审, 剩余可报"+leftAmount+"元",Toast.LENGTH_LONG).show();
+
                 }else {
 
                     uploadTravelReim(travelReim_jsonString);
@@ -528,7 +530,7 @@ public class TravelReimbursementActivity extends Activity {
             Project  project = projectList.get(position);
             String pro_name = project.getP_name();
             String pro_left_reim = project.getP_reimbursable_amount();
-            viewHolder.projectName.setText(pro_name+", 可报销 "+pro_left_reim);
+            viewHolder.projectName.setText(pro_name);
             //viewHolder.projectName.setText(project.getP_name());
             return convertView;
         }

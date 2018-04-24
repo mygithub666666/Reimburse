@@ -6,7 +6,7 @@ package reimburse.cuc.com.bean;
 public interface Constants {
     String URL_PREFIX = "http://";
     //10.192.126.142   1.202.41.149
-    String IPADDR = "192.168.1.102";
+    String IPADDR = "192.168.199.139";
     String APPADDR = ":8080/ssmweb";
     String BASE_URL = URL_PREFIX+IPADDR+APPADDR;
     String FILE_BASE_DIR = URL_PREFIX+IPADDR+":8080/baoxiaodantu/";
@@ -112,4 +112,5 @@ public interface Constants {
     String ANDROID_GET_USER_HISTORY_REIMBURSEMENT_LINE = BASE_URL+"/account/ANDROID_GET_USER_HISTORY_REIMBURSEMENT_LINE";
     String ANDROID_SEARCH_COMPANY_USER_BY_JOBNUM = BASE_URL+"/companyUserController/androidSearchCompanyUserByJobNum";
     String ADD_PROJECT_REIM_USER_WITH_COMPANY_USER = BASE_URL+"/user/ADD_PROJECT_REIM_USER_WITH_COMPANY_USER";
+    String ANDROID_GET_TOTAL_COST_BY_USER_ID = BASE_URL+"/project/ANDROID_GET_TOTAL_COST_BY_USER_ID";
 }

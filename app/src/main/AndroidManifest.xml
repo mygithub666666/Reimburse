@@ -127,6 +127,7 @@
         <activity android:name="reimburse.cuc.com.activity.ProjectLeaderProManagActivity"/>
         <activity android:name="reimburse.cuc.com.activity.ProjectDisplayActivity"/>
         <activity android:name="reimburse.cuc.com.activity.SearchReimUserActivity"/>
+        <activity android:name="reimburse.cuc.com.activity.UpdatePwdActivity"/>
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

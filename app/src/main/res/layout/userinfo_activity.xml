@@ -217,7 +217,18 @@
         android:background="@color/divider_line"
         ></View>
 
-
+    <Button
+        android:id="@+id/btn_to_updatepwd_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="重置密码"
+        android:textSize="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="6dp"
+        android:background="@color/green_70"
+        />
     <Button
         android:id="@+id/btn_user_logout"
         android:layout_width="match_parent"
@@ -230,5 +241,6 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/btn_01"
         />
+
 
 </LinearLayout>

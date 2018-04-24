@@ -104,6 +104,8 @@ public class DailyReimbursementActivity extends Activity {
     String elecPassedDailyReimAmount;
     String elecPassedTravelReimAmount;
 
+    String pro_final_passed_money_reim;
+
     String projectTotalAmount;
 
     List<TongyiXiaofeiBean> tongyiXiaofeiBeanList;
@@ -158,6 +160,8 @@ public class DailyReimbursementActivity extends Activity {
                 elecPassedDailyReimAmount = project.getElecPassedDailyReimAmount();
                 elecPassedTravelReimAmount = project.getElecPassedTravelReimAmount();
                 projectTotalAmount = project.getP_totalmoney();
+                pro_final_passed_money_reim = project.getPro_final_passed_money_reim();
+
                 Log.e(TAG, "---> 项目的剩余报销余额: " + p_reimbursable_amount);
                 etProjectNameDailyReim.setText(proName);
                 if (popupWindow != null && popupWindow.isShowing()) {
@@ -284,15 +288,15 @@ public class DailyReimbursementActivity extends Activity {
 
                 Float elecPassedDailyReimAmount_float = Float.parseFloat(elecPassedDailyReimAmount);
                 Float elecPassedTravelReimAmount_float = Float.parseFloat(elecPassedTravelReimAmount);
-
+                Float pro_final_passed_money_reim_float = Float.parseFloat(pro_final_passed_money_reim);
                 Float projectTotalAmount_float = Float.parseFloat(projectTotalAmount);
 
-                Float leftAmount = projectTotalAmount_float - elecPassedDailyReimAmount_float - elecPassedTravelReimAmount_float;
+                Float leftAmount = projectTotalAmount_float - elecPassedDailyReimAmount_float - elecPassedTravelReimAmount_float - pro_final_passed_money_reim_float;
 
                 Log.e("====>,项目报销预警: ",elecPassedDailyReimAmount_float+", "+elecPassedTravelReimAmount_float+", "+projectTotalAmount_float+", "+leftAmount);
 
                 if(this_time_amount > leftAmount) {
-                    Toast.makeText(DailyReimbursementActivity.this,elecPassedDailyReimAmount_float+", "+elecPassedTravelReimAmount_float+", "+projectTotalAmount_float+", "+leftAmount,Toast.LENGTH_LONG).show();
+                    Toast.makeText(DailyReimbursementActivity.this,"已通过"+pro_final_passed_money_reim_float+"元，有"+(elecPassedDailyReimAmount_float+elecPassedTravelReimAmount_float)+"元电子审核通过待纸质终审, 剩余可报"+leftAmount+"元",Toast.LENGTH_LONG).show();
                 }else {
                     //showToastInAnyThread(elecPassedDailyReimAmount_float+", "+elecPassedTravelReimAmount_float+", "+projectTotalAmount_float+", "+leftAmount);
                     uploadDailyCost(dailyReim_jsonString);
@@ -412,7 +416,7 @@ public class DailyReimbursementActivity extends Activity {
             Project  project = projectList.get(position);
             String pro_name = project.getP_name();
             String pro_left_reim = project.getP_reimbursable_amount();
-            viewHolder.projectName.setText(pro_name+", 可报销 "+pro_left_reim);
+            viewHolder.projectName.setText(pro_name);
             return convertView;
         }
     }

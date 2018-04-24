@@ -132,7 +132,6 @@ public class LineChartActivity extends Activity {
                 getHistoryReimByUserId(minCheckCompleteTime, maxCheckCompleteTime, user_id);
             }
         });
-        //getAllBaoxiaoDanByUserId();
 
 
     }
@@ -263,7 +262,6 @@ public class LineChartActivity extends Activity {
 
             }
         }.start();
-        //return lineData;
     }
 
     private void showToastInAnyThread(final String result) {
@@ -288,9 +286,6 @@ public class LineChartActivity extends Activity {
         for (int i = 0; i < baoXiaoDanList.size(); i++) {
             e1.add(new Entry(Float.parseFloat(baoXiaoDanList.get(i).getBaoxiaodan_jine()), i));
         }
-/*        for (int i = 0; i < 12; i++) {
-            e1.add(new Entry((int) (Math.random() * 65) + 40, i));
-        }*/
 
         LineDataSet d1 = new LineDataSet(e1, "报销金额");
         //设置折线的宽度

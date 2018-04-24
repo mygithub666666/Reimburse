@@ -40,8 +40,7 @@ public class Traffic_Cost {
 	private String  traffic_cost_pro_budget_type;
 	private String  traffic_cost_pro_elec_check;
 	private String traffic_cost_pro_paper_check;
-	
-	
+	private String traffic_cost_check_status;
 	public Traffic_Cost() {
 		
 	}
@@ -97,7 +96,30 @@ public class Traffic_Cost {
 		this.traffic_cost_tag = traffic_cost_tag;
 	}
 
-
+	public Traffic_Cost(Integer traffic_cost_uuid, String traffic_cost_type, String traffic_cost_fare_basis, String traffic_cost_start_city, String traffic_cost_end_city, String traffic_cost_start_datetime, String traffic_cost_end_datetime, String traffic_cost_unit_price, String traffic_cost_ticket_number, String traffic_cost_total_amount, String traffic_cost_invoice_pic_url, String traffic_cost_desc, Integer traffic_cost_user_id, String traffic_cost_tag, String traffic_cost_comments, String traffic_cost_status, Integer traffic_cost_pro_uuid, String traffic_cost_pro_name, String traffic_cost_pro_budget_type, String traffic_cost_pro_elec_check, String traffic_cost_pro_paper_check, String traffic_cost_check_status) {
+		this.traffic_cost_uuid = traffic_cost_uuid;
+		this.traffic_cost_type = traffic_cost_type;
+		this.traffic_cost_fare_basis = traffic_cost_fare_basis;
+		this.traffic_cost_start_city = traffic_cost_start_city;
+		this.traffic_cost_end_city = traffic_cost_end_city;
+		this.traffic_cost_start_datetime = traffic_cost_start_datetime;
+		this.traffic_cost_end_datetime = traffic_cost_end_datetime;
+		this.traffic_cost_unit_price = traffic_cost_unit_price;
+		this.traffic_cost_ticket_number = traffic_cost_ticket_number;
+		this.traffic_cost_total_amount = traffic_cost_total_amount;
+		this.traffic_cost_invoice_pic_url = traffic_cost_invoice_pic_url;
+		this.traffic_cost_desc = traffic_cost_desc;
+		this.traffic_cost_user_id = traffic_cost_user_id;
+		this.traffic_cost_tag = traffic_cost_tag;
+		this.traffic_cost_comments = traffic_cost_comments;
+		this.traffic_cost_status = traffic_cost_status;
+		this.traffic_cost_pro_uuid = traffic_cost_pro_uuid;
+		this.traffic_cost_pro_name = traffic_cost_pro_name;
+		this.traffic_cost_pro_budget_type = traffic_cost_pro_budget_type;
+		this.traffic_cost_pro_elec_check = traffic_cost_pro_elec_check;
+		this.traffic_cost_pro_paper_check = traffic_cost_pro_paper_check;
+		this.traffic_cost_check_status = traffic_cost_check_status;
+	}
 
 	public Integer getTraffic_cost_uuid() {
 		return traffic_cost_uuid;
@@ -271,6 +293,14 @@ public class Traffic_Cost {
 
 	public void setTraffic_cost_pro_paper_check(String traffic_cost_pro_paper_check) {
 		this.traffic_cost_pro_paper_check = traffic_cost_pro_paper_check;
+	}
+
+	public String getTraffic_cost_check_status() {
+		return traffic_cost_check_status;
+	}
+
+	public void setTraffic_cost_check_status(String traffic_cost_check_status) {
+		this.traffic_cost_check_status = traffic_cost_check_status;
 	}
 
 	@Override

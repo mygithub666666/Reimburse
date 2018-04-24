@@ -1,7 +1,6 @@
 package reimburse.cuc.com.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -19,15 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import reimburse.cuc.com.activity.UpdatePwdActivity;
 import reimburse.cuc.com.base.BaseFragment;
-import reimburse.cuc.com.bean.Traffic_Cost;
 import reimburse.cuc.com.bean.User;
 import reimburse.cuc.com.reimburse.LauncherActivity;
 import reimburse.cuc.com.reimburse.R;
@@ -38,12 +36,12 @@ import reimburse.cuc.com.reimburse.R;
 public class UserInfoFragment extends BaseFragment {
 
     private static final String TAG = UserInfoFragment.class.getSimpleName();
-   /* @Bind(R.id.iv_title_back)
-    ImageView ivTitleBack;
-    @Bind(R.id.tv_title)
-    TextView tvTitle;
-    @Bind(R.id.iv_title_setting)
-    ImageView ivTitleSetting;*/
+    /* @Bind(R.id.iv_title_back)
+     ImageView ivTitleBack;
+     @Bind(R.id.tv_title)
+     TextView tvTitle;
+     @Bind(R.id.iv_title_setting)
+     ImageView ivTitleSetting;*/
     @Bind(R.id.tv_user_info_user_name)
     TextView tvUserInfoUserName;
     @Bind(R.id.et_user_info_user_name)
@@ -66,7 +64,7 @@ public class UserInfoFragment extends BaseFragment {
     EditText etUserInfoBankName;
     @Bind(R.id.btn_user_logout)
     Button btnUserLogout;
-
+    private Button btn_to_updatepwdactivity;
     @Override
     protected View initView() {
         Log.e(TAG, "个人中心Fragment的页面初始化22222222222222222222222222222222222222222222");
@@ -75,7 +73,7 @@ public class UserInfoFragment extends BaseFragment {
 
         //返回一个Unbinder值（进行解绑），注意这里的this不能使用getActivity()
         ButterKnife.bind(this, view);
-
+        btn_to_updatepwdactivity = (Button) view.findViewById(R.id.btn_to_updatepwd_activity);
         /**
          *
          public void saveLoginedUser(String user_jsonString){
@@ -86,11 +84,11 @@ public class UserInfoFragment extends BaseFragment {
 
          }
          */
-        final SharedPreferences sp =  this.getActivity().getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
+        final SharedPreferences sp = this.getActivity().getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
 
         String user_jsonString = sp.getString("user_jsonString", "");
 
-        User user = JSON.parseObject(user_jsonString,User.class);
+        User user = JSON.parseObject(user_jsonString, User.class);
 
         etUserInfoUserName.setText(user.getUser_name());
         etUserInfoMobilePhoneNumber.setText(user.getMobile_phone_number());
@@ -105,11 +103,20 @@ public class UserInfoFragment extends BaseFragment {
                 //SharedPreferences sp =  this.getActivity().getSharedPreferences("user_jsonString", Context.MODE_PRIVATE);
                 sp.edit().clear().commit();
 
-                Intent intent = new Intent(getActivity(),LauncherActivity.class);
+                Intent intent = new Intent(getActivity(), LauncherActivity.class);
                 startActivity(intent);
 
             }
         });
+
+        btn_to_updatepwdactivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), UpdatePwdActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }
@@ -122,7 +129,7 @@ public class UserInfoFragment extends BaseFragment {
     }
 
     //销毁所有的activity
-    public void removeAll(){
+    public void removeAll() {
         //ActivityManager
     }
 
