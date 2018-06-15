@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.media.IMediaBrowserServiceCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;

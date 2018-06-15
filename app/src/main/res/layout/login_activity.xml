@@ -108,4 +108,16 @@
         android:textColor="#ffffff"
         android:onClick="login"
         android:textSize="18sp"/>
+    <!--<Button
+        android:id="@+id/btn_forget_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/green"
+        android:text="忘记密码?"
+        android:textColor="#ffffff"
+        android:onClick="login"
+        android:textSize="18sp"/>-->
 </LinearLayout>

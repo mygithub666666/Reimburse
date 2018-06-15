@@ -70,11 +70,11 @@ public class PieChartActivity extends Activity {
         //加载本地的字体库
         mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
         //设置图表的描述信息
-        pieChart.setDescription("报销的消费类型占比");
+        pieChart.setDescription("消费类型占比");
         //设置内层圆的半径
-        pieChart.setHoleRadius(52f);
+        pieChart.setHoleRadius(40f);
         //设置包裹内层圆的圆的半径（不是最外层圆）
-        pieChart.setTransparentCircleRadius(57f);
+        pieChart.setTransparentCircleRadius(52f);
 
         //设置内层圆中的文本内容
         pieChart.setCenterText("消费类型占比");
@@ -99,6 +99,8 @@ public class PieChartActivity extends Activity {
         l.setYEntrySpace(10f);
         //设置最上面的项距离顶部的值
         l.setYOffset(30f);
+        l.setFormSize(18f);
+        //l.setTextSize(11f);
 
         // do not forget to refresh the chart
         // pieChart.invalidate();

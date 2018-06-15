@@ -21,7 +21,10 @@
 
         </com.github.mikephil.charting.charts.PieChart>
 
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/navigation"/>
 
 
     </LinearLayout>
